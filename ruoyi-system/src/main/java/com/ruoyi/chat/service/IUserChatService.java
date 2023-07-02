@@ -11,4 +11,6 @@ public interface IUserChatService
      * @return 聊天列表
      */
     List<UserChat> selectChatList();
+
+    List<UserChat> selectUserChat(UserChat userChat);
 }

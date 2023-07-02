@@ -17,4 +17,11 @@ public class UserChatServiceImpl implements IUserChatService
     public List<UserChat> selectChatList() {
         return userChatMapper.selectChatList();
     }
+
+    @Override
+    public List<UserChat> selectUserChat(UserChat userChat) {
+        return userChatMapper.selectUserChat(userChat);
+    }
+
+
 }

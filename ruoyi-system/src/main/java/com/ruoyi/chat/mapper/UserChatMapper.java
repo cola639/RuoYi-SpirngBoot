@@ -8,7 +8,9 @@ import com.ruoyi.chat.model.UserChat;
  *
  * @author your-name
  */
+
 public interface UserChatMapper
 {
     List<UserChat> selectChatList();
+    List<UserChat> selectUserChat(UserChat userChat);
 }
