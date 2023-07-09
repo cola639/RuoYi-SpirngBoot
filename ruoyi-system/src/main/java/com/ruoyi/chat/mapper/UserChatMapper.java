@@ -1,7 +1,8 @@
 package com.ruoyi.chat.mapper;
 
-import java.util.List;
 import com.ruoyi.chat.model.UserChat;
+
+import java.util.List;
 
 /**
  * 聊天表 数据层
@@ -9,8 +10,13 @@ import com.ruoyi.chat.model.UserChat;
  * @author your-name
  */
 
-public interface UserChatMapper
-{
-    List<UserChat> selectChatList();
-    List<UserChat> selectUserChat(UserChat userChat);
+public interface UserChatMapper {
+    public List<UserChat> selectChatList();
+
+    public List<UserChat> selectUserChat(UserChat userChat);
+
+    public int insertChat(UserChat userChat);
+
+    public int deleteChatById(Long userId);
+
 }

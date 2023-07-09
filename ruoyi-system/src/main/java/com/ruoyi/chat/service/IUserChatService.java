@@ -1,16 +1,20 @@
 package com.ruoyi.chat.service;
 
-import java.util.List;
 import com.ruoyi.chat.model.UserChat;
 
-public interface IUserChatService
-{
+import java.util.List;
+
+public interface IUserChatService {
     /**
      * 获取用户聊天列表
      *
      * @return 聊天列表
      */
-    List<UserChat> selectChatList();
+    public List<UserChat> selectChatList();
 
-    List<UserChat> selectUserChat(UserChat userChat);
+    public List<UserChat> selectUserChat(UserChat userChat);
+
+    public int insertChat(UserChat userChat);
+
+    public int deleteChatById(Long userId);
 }

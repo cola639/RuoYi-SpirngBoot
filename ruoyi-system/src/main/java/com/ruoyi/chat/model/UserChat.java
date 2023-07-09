@@ -4,7 +4,6 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import java.io.Serializable;
-
 import java.util.Date;
 
 /**
@@ -14,22 +13,36 @@ import java.util.Date;
  */
 public class UserChat implements Serializable {
 
-    /** 聊天记录ID */
+    /**
+     * 聊天记录ID
+     */
     private Long id;
 
-    /** 用户ID */
+    /**
+     * 用户ID
+     */
     private Long userId;
 
-    /** 创建时间 */
+    /**
+     * 创建时间
+     */
+
+
     private Date createTime;
 
-    /** 更新时间 */
+    /**
+     * 更新时间
+     */
     private Date updateTime;
 
-    /** 聊天信息 */
+    /**
+     * 聊天信息
+     */
     private String message;
 
-    /** 消息类型 */
+    /**
+     * 消息类型
+     */
     private String messageType;
 
     public Long getId() {
