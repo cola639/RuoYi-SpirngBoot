@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  jenkins-compose:
+    image: jenkins
+    privileged: true
+    user: root
+    ports:
+      - "8088:8080"
+      - "50000:50000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /usr/lib64/libltdl.so.7:/usr/lib/x86_64-linux-gnu/libltdl.so.7
+      - /home/demo/jenkins-compose:/var/jenkins_home
