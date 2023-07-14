@@ -28,7 +28,7 @@ pipeline{
             steps {
                sh 'pwd && ls -alh'
                sh 'mvn -v'
-               sh 'cd ${WS} && call mvn clean package -Dmaven.test.skip=true'
+               sh 'cd ${WS} && mvn clean package -Dmaven.test.skip=true'
             }
         }
 
