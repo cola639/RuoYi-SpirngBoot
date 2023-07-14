@@ -16,7 +16,7 @@ USER spring:spring
 # 复制本地的 ruoyi-admin.jar 文件到容器的 /app.jar
 COPY ruoyi-admin.jar /app.jar
 
-# 暴露容器的 8080 端口
+# 声明作用 实际作用由 run port 暴露容器的 8080 端口
 EXPOSE 8080
 
 # 定义容器启动时执行的命令
