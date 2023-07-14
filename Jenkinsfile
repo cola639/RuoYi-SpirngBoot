@@ -45,7 +45,7 @@ pipeline{
             steps {
                sh 'pwd && ls -alh'
                sh 'docker rm -f ${IMAGE_NAME} || true && docker rmi $(docker images -q -f dangling=true) || true'
-               sh 'docker run -d -p 8888:8080 --name ${IMAGE_NAME} -v /mydata/logs/${IMAGE_NAME}:/logs/${IMAGE_NAME} ${IMAGE_NAME}'
+               sh 'docker run -d -p 8888:8080 --name ${IMAGE_NAME} --link ruoyi-mysql:mysql --link ruoyi-redis:redis -v /mydata/logs/${IMAGE_NAME}:/logs/${IMAGE_NAME} ${IMAGE_NAME}'
             }
         }
     }
