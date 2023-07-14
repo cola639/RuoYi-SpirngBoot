@@ -18,7 +18,7 @@ pipeline{
             }
         }
 
-        stage('2.编译'){
+        stage('2.编译 '){
             agent {
                 docker {
                     image 'maven:3-alpine'
