@@ -54,6 +54,7 @@ pipeline{
             steps {
                sh 'pwd && ls -alh'
                sh 'docker rm -f ${IMAGE_NAME} || true && docker rmi $(docker images -q -f dangling=true) || true'
+               sh 'docker start ruoyi-mysql && docker start ruoyi-redis'
                //运行 Docker 镜像，链接到 MySQL 和 Redis 服务，并挂载宿主机日志目录
                sh 'docker run -d -p 8888:8080 --name ${IMAGE_NAME} --link ruoyi-mysql:mysql --link ruoyi-redis:redis -v /mydata/logs/${IMAGE_NAME}:/logs/${IMAGE_NAME} ${IMAGE_NAME}'
             }
