@@ -19,14 +19,8 @@ USER spring:spring
 # 复制本地的 ruoyi-admin.jar 文件到容器的 /app.jar
 COPY ruoyi-admin.jar /app.jar
 
-# 列出当前目录的文件
-# RUN ls
-
-# 再次列出当前/etc/nginx/conf.d的文件
-# RUN ls  /etc/nginx/conf.d
-
 # 创建 Nginx 配置文件
-COPY ruoyi_nginx.conf abc_nginx
+COPY ruoyi_nginx.conf /etc/ruoyi_nginx.conf
 
 # 声明作用 实际作用由 run port 暴露容器的 80 端口
 EXPOSE 80
