@@ -1,9 +1,6 @@
 # 使用 openjdk:8-jre-alpine 作为基础镜像
 FROM openjdk:8-jre-alpine
 
-# 安装 Nginx
-# RUN apk add --no-cache nginx
-
 # 创建一个新的用户和用户组
 RUN addgroup -S spring && adduser -S spring -G spring
 
