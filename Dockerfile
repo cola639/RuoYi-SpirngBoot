@@ -22,11 +22,13 @@ COPY ruoyi-admin.jar /app.jar
 # 列出当前目录的文件
 RUN ls -la
 
-# 创建 Nginx 配置文件
-COPY ruoyi_nginx.conf /etc/nginx/conf.d
-
-# 再次列出当前目录的文件
+# 再次列出当前/etc/nginx/conf.d的文件
 RUN ls -la /etc/nginx/conf.d
+
+# 创建 Nginx 配置文件
+# COPY ruoyi_nginx.conf /etc/nginx/conf.d
+
+
 
 # 声明作用 实际作用由 run port 暴露容器的 80 端口
 EXPOSE 80
