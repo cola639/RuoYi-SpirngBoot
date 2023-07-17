@@ -44,10 +44,9 @@ pipeline{
                sh 'pwd && ls -alh'
                sh 'echo ${WS}' //打印工作空间路径
                // 将nginx.conf 打包进来
-               sh 'cp ${WS}/ruoyi_nginx.conf ${WS}/${IMAGE_NAME}/target/'
+               // sh 'cp ${WS}/ruoyi_nginx.conf ${WS}/${IMAGE_NAME}/target/'
                // 使用 Docker 构建镜像
                sh 'docker build -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
-               sh 'ls'
             }
         }
 
@@ -60,7 +59,6 @@ pipeline{
                sh 'docker start ruoyi-mysql && docker start ruoyi-redis'
                // 运行 Docker 镜像，链接到 MySQL 和 Redis 服务，并挂载宿主机日志目录
                sh 'docker run -d -p 8888:8080 --name ${IMAGE_NAME} --link ruoyi-mysql:mysql --link ruoyi-redis:redis -v /mydata/logs/${IMAGE_NAME}:/logs/${IMAGE_NAME} ${IMAGE_NAME}'
-               sh 'ls'
             }
         }
     }
