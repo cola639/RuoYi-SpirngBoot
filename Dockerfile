@@ -20,7 +20,7 @@ USER spring:spring
 COPY ruoyi-admin.jar /app.jar
 
 # 创建 Nginx 配置文件
-COPY nginx_conf_dir /etc/nginx/conf.d
+COPY ruoyi_nginx.conf /etc/nginx/conf.d
 
 # 声明作用 实际作用由 run port 暴露容器的 80 端口
 EXPOSE 80
