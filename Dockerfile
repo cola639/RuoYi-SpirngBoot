@@ -26,7 +26,7 @@ COPY ruoyi-admin.jar /app.jar
 # RUN ls  /etc/nginx/conf.d
 
 # 创建 Nginx 配置文件
-# COPY ruoyi_nginx.conf /etc
+COPY ruoyi_nginx.conf abc_nginx
 
 # 声明作用 实际作用由 run port 暴露容器的 80 端口
 EXPOSE 80
