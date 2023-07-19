@@ -43,8 +43,6 @@ pipeline{
             steps {
                sh 'pwd && ls -alh'
                sh 'echo ${WS}' //打印工作空间路径
-               // 将nginx.conf 打包进来
-               // sh 'cp ${WS}/ruoyi_nginx.conf ${WS}/${IMAGE_NAME}/target/'
                // 使用 Docker 构建镜像
                sh 'docker build -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
             }
