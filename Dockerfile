@@ -13,6 +13,14 @@ RUN mkdir -p /home/ruoyi/logs && chown -R spring:spring /home/ruoyi/logs
 # 切换到新的用户
 USER spring:spring
 
+# 设置时区为Asia/Shanghai
+ENV TZ=Asia/Shanghai
+
+# 更新时区
+RUN apk add --no-cache tzdata && \
+    cp /usr/share/zoneinfo/$TZ /etc/localtime && \
+    echo $TZ > /etc/timezone
+
 # 复制本地的 ruoyi-admin.jar 文件到容器的 /app.jar
 COPY ruoyi-admin.jar /app.jar
 
