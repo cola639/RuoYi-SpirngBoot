@@ -20,5 +20,5 @@ COPY ruoyi-admin.jar /app.jar
 EXPOSE 80
 
 # 定义容器启动时执行的命令
-ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -Dspring.active=prod -jar /app.jar"]
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -Dspring.active=dev -jar /app.jar"]
 
