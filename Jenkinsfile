@@ -34,7 +34,7 @@ pipeline{
                sh 'pwd && ls -alh'
                sh 'mvn -v' // 显示 Maven 版本
                // 执行 Maven 编译和打包，跳过测试
-               sh 'cd ${WS} && mvn clean package -Dmaven.test.skip=true -Dspring.active=prod'
+               sh 'cd ${WS} && mvn clean package -Dmaven.test.skip=true'
             }
         }
 
