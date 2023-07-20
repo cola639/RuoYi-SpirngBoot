@@ -5,7 +5,7 @@ pipeline{
     environment {
       IMAGE_NAME = "ruoyi-admin"  // 定义 Docker 镜像的名字
       WS = "${WORKSPACE}"         // 定义工作空间路径
-      PROFILE = "prod"
+      PROFILE = prod
     }
 
     // stages 包含所有执行阶段
