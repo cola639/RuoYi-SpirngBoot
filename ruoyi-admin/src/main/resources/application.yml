@@ -1,3 +1,4 @@
 spring:
   profiles:
-    active: prod
+    # 传不同参数启动
+    active: $spring.active$
