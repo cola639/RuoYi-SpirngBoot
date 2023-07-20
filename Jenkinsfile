@@ -4,7 +4,8 @@ pipeline{
     // environment 用于在 pipeline 或者阶段级别定义环境变量
     environment {
       IMAGE_NAME = "ruoyi-admin"  // 定义 Docker 镜像的名字
-      WS = "${WORKSPACE}"         //定义工作空间路径
+      WS = "${WORKSPACE}"         // 定义工作空间路径
+      PROFILE = "prod"
     }
 
     // stages 包含所有执行阶段
@@ -44,7 +45,7 @@ pipeline{
                sh 'pwd && ls -alh'
                sh 'echo ${WS}' //打印工作空间路径
                // 使用 Docker 构建镜像
-               sh 'docker build -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
+               sh 'docker --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
             }
         }
 
