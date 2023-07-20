@@ -1,6 +1,9 @@
 # 使用 openjdk:8-jre-alpine 作为基础镜像
 FROM openjdk:8-jre-alpine
 
+# Jenkinsfile构建镜像时定义参数
+ARG PROFILE
+
 # 创建一个新的用户和用户组
 RUN addgroup -S spring && adduser -S spring -G spring
 
@@ -20,4 +23,4 @@ COPY ruoyi-admin.jar /app.jar
 EXPOSE 80
 
 # 定义容器启动时执行的命令
-ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.profiles.active=prod"]
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.profiles.active=${PROFILE}"]
