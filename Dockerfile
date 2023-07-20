@@ -4,6 +4,9 @@ FROM openjdk:8-jre-alpine
 # Jenkinsfile构建镜像时定义参数
 ARG PROFILE
 
+# 将ARG转化为ENV，使其可以在运行容器时使用
+ENV PROFILE=${PROFILE}
+
 # 创建一个新的用户和用户组
 RUN addgroup -S spring && adduser -S spring -G spring
 
