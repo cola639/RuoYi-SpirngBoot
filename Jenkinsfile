@@ -45,7 +45,7 @@ pipeline{
                sh 'pwd && ls -alh'
                sh 'echo ${WS}' //打印工作空间路径
                // 使用 Docker 构建镜像
-               sh 'docker --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
+               sh 'docker build --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
             }
         }
 
