@@ -1,12 +1,12 @@
 @echo off
 echo.
-echo [ĞÅÏ¢] ´ò°üWeb¹¤³Ì£¬Éú³Éwar/jar°üÎÄ¼ş¡£
+echo [ä¿¡æ¯] æ‰“åŒ…Webå·¥ç¨‹ï¼Œç”Ÿæˆwar/jaråŒ…æ–‡ä»¶ã€‚
 echo.
 
 %~d0
 cd %~dp0
 
 cd ..
-call mvn clean package -Dmaven.test.skip=true
+call mvn clean package -Dmaven.test.skip=true -Dspring.active=prod
 
 pause
