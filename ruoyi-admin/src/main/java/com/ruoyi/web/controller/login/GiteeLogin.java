@@ -1,0 +1,56 @@
+package com.ruoyi.web.controller.login;
+
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.uuid.IdUtils;
+import com.ruoyi.framework.web.service.SysLoginService;
+import me.zhyd.oauth.config.AuthConfig;
+import me.zhyd.oauth.request.AuthGiteeRequest;
+import me.zhyd.oauth.request.AuthRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpSession;
+
+
+@RestController
+public class GiteeLogin {
+
+    @Autowired
+    private SysLoginService loginService;
+
+    @GetMapping("/PreLoginByGitee")
+    public AjaxResult PreLoginByGitee(HttpSession session) {
+        AjaxResult ajax = AjaxResult.success();
+        String uuid = IdUtils.fastUUID();
+        AuthRequest authRequest = new AuthGiteeRequest(AuthConfig.builder()
+                .clientId("1d62c1d8bd139bde2d0c9c4429fc455cfe11b325e0b2b190124bc7680bf7731c")
+                .clientSecret("a9d63856aa2e89d90449acf5888278a9056e31502065ac393d00b697196fb05b")
+                .redirectUri("http://localhost?uuid=" + uuid) // 将 UUID 作为参数添加到回调 URL
+                .build());
+        session.setAttribute("UUID", uuid);
+        String authorizeUrl = authRequest.authorize(uuid);
+        ajax.put("authorizeUrl", authorizeUrl);
+        return ajax;
+    }
+
+
+    @PostMapping("/loginByGitee")
+    public AjaxResult loginByGitee(@RequestBody LoginByOtherSourceBody loginByOtherSourceBody, HttpSession session) {
+        String storedUuid = String.valueOf(session.getAttribute("UUID"));
+
+
+//        if (!loginByOtherSourceBody.getUuid().equals(storedUuid)) {
+//            // UUIDs do not match, possible CSRF attack
+//            return AjaxResult.error("Invalid UUID");
+//        }
+//        // UUIDs match, continue with login
+        AjaxResult ajax = AjaxResult.success();
+        String token = loginService.loginByOtherSource(loginByOtherSourceBody.getCode(), loginByOtherSourceBody.getSource(), loginByOtherSourceBody.getUuid());
+//        ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
+}
+
