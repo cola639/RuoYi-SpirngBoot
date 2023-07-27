@@ -24,6 +24,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.validation.Validator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -252,15 +253,18 @@ public class SysUserServiceImpl implements ISysUserService {
     @Override
     @Transactional
     public int updateUser(SysUser user) {
+
         Long userId = user.getUserId();
         // 删除用户与角色关联
         userRoleMapper.deleteUserRoleByUserId(userId);
         // 新增用户与角色管理
+        System.out.printf("userMapper updateUser user>> " + user);
         insertUserRole(user);
         // 删除用户与岗位关联
         userPostMapper.deleteUserPostByUserId(userId);
         // 新增用户与岗位管理
         insertUserPost(user);
+
         return userMapper.updateUser(user);
     }
 
@@ -340,6 +344,7 @@ public class SysUserServiceImpl implements ISysUserService {
      * @param user 用户对象
      */
     public void insertUserRole(SysUser user) {
+        System.out.println("insertUserRole >> " + user + "getUserId >>  " + user.getUserId() + "getRoleIds >>  " + Arrays.toString(user.getRoleIds()));
         this.insertUserRole(user.getUserId(), user.getRoleIds());
     }
 
@@ -371,6 +376,7 @@ public class SysUserServiceImpl implements ISysUserService {
      */
     public void insertUserRole(Long userId, Long[] roleIds) {
         if (StringUtils.isNotEmpty(roleIds)) {
+            System.out.println("isNotEmpty " + roleIds);
             // 新增用户与角色管理
             List<SysUserRole> list = new ArrayList<SysUserRole>(roleIds.length);
             for (Long roleId : roleIds) {
@@ -480,7 +486,7 @@ public class SysUserServiceImpl implements ISysUserService {
         return user.getUserId();
     }
 
-   
+
     @Override
     public List<SysUser> selectUserListNoDataScope(SysUser user) {
         return userMapper.selectUserList(user);

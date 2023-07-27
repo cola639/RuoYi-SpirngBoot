@@ -9,11 +9,9 @@ import com.ruoyi.common.exception.ServiceException;
 import com.ruoyi.common.exception.user.CaptchaException;
 import com.ruoyi.common.exception.user.CaptchaExpireException;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;
-import com.ruoyi.common.utils.DateUtils;
-import com.ruoyi.common.utils.MessageUtils;
-import com.ruoyi.common.utils.ServletUtils;
-import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.*;
 import com.ruoyi.common.utils.ip.IpUtils;
+import com.ruoyi.framework.config.ThirdLogins;
 import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.system.service.ISysConfigService;
@@ -32,6 +30,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -55,6 +54,13 @@ public class SysLoginService {
 
     @Autowired
     private ISysConfigService configService;
+
+    @Autowired
+    private SysPermissionService permissionService;
+
+    @Autowired
+    private ThirdLogins thirdLogins;
+
 
     /**
      * 登录验证
@@ -87,7 +93,9 @@ public class SysLoginService {
             }
         }
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+        // 此处与第三方区别
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        System.out.println("loginUser" + loginUser);
         recordLoginInfo(loginUser.getUserId());
         // 生成token
         return tokenService.createToken(loginUser);
@@ -130,52 +138,131 @@ public class SysLoginService {
     }
 
     public String loginByOtherSource(String code, String source, String uuid) {
+        // 输出传入参数的值，用于跟踪代码执行
+        System.out.println("code  " + code + " source " + source + " uuid " + uuid);
 
-
-        System.out.println("loginByOtherSource  " + code + " " + source + " " + uuid);
-
-
-        // 先到数据库查询这个人曾经有没有登录过，没有就注册
-        // 创建授权request
+        // 创建授权request，包括clientId, clientSecret, redirectUri，这些通常在 OAuth 认证中使用
+        System.out.println("GiteeClientId GiteeClientSecret getGiteeRedirectURL " + thirdLogins.getGiteeClientId() + thirdLogins.getGiteeClientSecret() + thirdLogins.getGiteeRedirectURL());
         AuthRequest authRequest = new AuthGiteeRequest(AuthConfig.builder()
-                .clientId("0706c1bde0c468ea9948")
-                .clientSecret("ed770f5b466e2a9fc77e0803eb985122977ce380")
-                .redirectUri("http://localhost")
+                .clientId(thirdLogins.getGiteeClientId())
+                .clientSecret(thirdLogins.getGiteeClientSecret())
+                .redirectUri(thirdLogins.getGiteeRedirectURL())
                 .build());
+
+
+        // 通过AuthRequest对象执行登录，获取AuthResponse
         AuthResponse<AuthUser> login = authRequest.login(AuthCallback.builder().state(uuid).code(code).build());
+        // 输出登录结果
         System.out.println("login" + login);
 
-
-        // 先查询数据库有没有该用户
+        // 从AuthResponse中获取AuthUser数据
         AuthUser authUser = login.getData();
+        // 创建SysUser对象，并将AuthUser的username和source设定到SysUser
         SysUser sysUser = new SysUser();
         sysUser.setUserName(authUser.getUsername());
         sysUser.setSource(authUser.getSource());
+        // 输出sysUser的信息
         System.out.println("sysUser" + sysUser);
 
+        // 查询数据库中是否有匹配的SysUser
         List<SysUser> sysUsers = userService.selectUserListNoDataScope(sysUser);
+        // 判断匹配的SysUser数量，如果有多个则抛出异常，如果没有则注册新用户，如果只有一个则直接获取
         if (sysUsers.size() > 1) {
             throw new ServiceException("第三方登录异常，账号重叠");
         } else if (sysUsers.size() == 0) {
-            // 相当于注册
+            // 如果没有找到匹配的SysUser，则注册新用户
             sysUser.setNickName(authUser.getNickname());
             sysUser.setAvatar(authUser.getAvatar());
             sysUser.setEmail(authUser.getEmail());
-            sysUser.setRemark(authUser.getRemark());
-            userService.registerUserAndGetUserId(sysUser);
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.REGISTER,
-                    MessageUtils.message("user.register.success")));
+            sysUser.setRemark("");
+            sysUser.setPassword(SecurityUtils.encryptPassword("123456"));
+            sysUser.setRemark("Gitee授权登录用户");
+            sysUser.setCreateBy("third_gite_token");
+            sysUser.setDeptId(105L);
+            sysUser.setCreateTime(new Date());
+            sysUser.setRoleIds(new Long[]{4L});
+            try {
+                // 注册新用户并获取新的userId
+                Long newUserId = userService.registerUserAndGetUserId(sysUser);
+                System.out.println("newUserId" + newUserId);
+                // 记录注册信息
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.REGISTER,
+                        MessageUtils.message("user.register.success")));
+
+                // 如果没有异常被抛出，那么用户注册成功，可以进行下一步
+                Long[] roleIds = new Long[]{4L};
+                userService.insertUserAuth(newUserId, roleIds);
+                Authentication authentication = authenticationManager
+                        .authenticate(new UsernamePasswordAuthenticationToken(authUser.getUsername(), 123456));
+
+                // 记录登录成功的信息
+                AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+
+
+                LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+
+                recordLoginInfo(loginUser.getUserId());
+                // 生成token
+                return tokenService.createToken(loginUser);
+
+            } catch (Exception e) {
+                // 如果有异常被抛出，那么用户注册失败，处理异常...
+                e.printStackTrace();
+            }
+
+
         } else {
+            // 如果找到了一个匹配的SysUser，则获取该SysUser
             sysUser = sysUsers.get(0);
         }
+
+
+        // 记录登录成功的信息
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
-        // 注册成功或者是已经存在的用户
-        SysPermissionService permissionService = new SysPermissionService();
+
+        // 输出permissionService的信息
+        System.out.println("permissionService: " + permissionService);
+
+        // 创建LoginUser对象，这通常包含用户的ID、部门ID、SysUser信息和用户权限信息
         LoginUser loginUser = new LoginUser(sysUser.getUserId(), sysUser.getDeptId(), sysUser, permissionService.getMenuPermission(sysUser));
+
+
+        // 记录登录用户的信息
         recordLoginInfo(loginUser.getUserId());
-        // 生成token
+
+        // 生成token，并返回token值
         return tokenService.createToken(loginUser);
     }
 
-
+//    private void registerNewGiteeUser(AuthUser authUser, SysUser sysUser) {
+//        sysUser.setNickName(authUser.getNickname());
+//        sysUser.setAvatar(authUser.getAvatar());
+//        sysUser.setEmail(authUser.getEmail());
+//        sysUser.setRemark("Gitee授权登录用户");
+//        sysUser.setPassword(SecurityUtils.encryptPassword("123456"));
+//        sysUser.setCreateBy("third_gite_token");
+//        sysUser.setDeptId(105L);
+//        sysUser.setCreateTime(new Date());
+//        sysUser.setRoleIds(new Long[]{4L});
+//
+//        try {
+//            Long newUserId = userService.registerUserAndGetUserId(sysUser);
+//
+//
+//            AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.REGISTER,
+//                    MessageUtils.message("user.register.success")));
+//
+//            Long[] roleIds = new Long[]{4L};
+//            userService.insertUserAuth(newUserId, roleIds);
+//            Authentication authentication = authenticationManager
+//                    .authenticate(new UsernamePasswordAuthenticationToken(authUser.getUsername(), 123456));
+//
+//            AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+//
+//            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+//            recordLoginInfo(loginUser.getUserId());
+//
+//        } catch (Exception e) {
+//        }
+//    }
 }

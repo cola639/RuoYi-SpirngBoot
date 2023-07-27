@@ -1,5 +1,6 @@
 package com.ruoyi.web.controller.login;
 
+import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.uuid.IdUtils;
 import com.ruoyi.framework.web.service.SysLoginService;
@@ -24,32 +25,30 @@ public class GiteeLogin {
     @GetMapping("/PreLoginByGitee")
     public AjaxResult PreLoginByGitee(HttpSession session) {
         AjaxResult ajax = AjaxResult.success();
-        String uuid = IdUtils.fastUUID();
         AuthRequest authRequest = new AuthGiteeRequest(AuthConfig.builder()
                 .clientId("1d62c1d8bd139bde2d0c9c4429fc455cfe11b325e0b2b190124bc7680bf7731c")
                 .clientSecret("a9d63856aa2e89d90449acf5888278a9056e31502065ac393d00b697196fb05b")
-                .redirectUri("http://localhost?uuid=" + uuid) // 将 UUID 作为参数添加到回调 URL
+                .redirectUri("http://localhost")
                 .build());
-        session.setAttribute("UUID", uuid);
-        String authorizeUrl = authRequest.authorize(uuid);
+
+        String uuid = IdUtils.fastUUID();
+        System.out.println("uuid" + uuid);
+
+        String authorizeUrl = authRequest.authorize(uuid); // 将 UUID 作为参数添加到回调 URL
+        //存储
         ajax.put("authorizeUrl", authorizeUrl);
+        ajax.put("uuid", uuid);
         return ajax;
+
     }
 
 
     @PostMapping("/loginByGitee")
-    public AjaxResult loginByGitee(@RequestBody LoginByOtherSourceBody loginByOtherSourceBody, HttpSession session) {
-        String storedUuid = String.valueOf(session.getAttribute("UUID"));
-
-
-//        if (!loginByOtherSourceBody.getUuid().equals(storedUuid)) {
-//            // UUIDs do not match, possible CSRF attack
-//            return AjaxResult.error("Invalid UUID");
-//        }
-//        // UUIDs match, continue with login
+    public AjaxResult loginByGitee(@RequestBody LoginByOtherSourceBody loginByOtherSourceBody) {
         AjaxResult ajax = AjaxResult.success();
-        String token = loginService.loginByOtherSource(loginByOtherSourceBody.getCode(), loginByOtherSourceBody.getSource(), loginByOtherSourceBody.getUuid());
-//        ajax.put(Constants.TOKEN, token);
+        String token = loginService
+                .loginByOtherSource(loginByOtherSourceBody.getCode(), loginByOtherSourceBody.getSource(), loginByOtherSourceBody.getUuid());
+        ajax.put(Constants.TOKEN, token);
         return ajax;
     }
 }

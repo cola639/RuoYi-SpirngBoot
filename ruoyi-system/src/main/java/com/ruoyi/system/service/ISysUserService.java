@@ -126,6 +126,7 @@ public interface ISysUserService {
      * @param user 用户信息
      * @return 结果
      */
+
     public int updateUser(SysUser user);
 
     /**
