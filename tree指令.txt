@@ -1,3 +1,5 @@
 tree -I '.git|.github|.idea|bin|doc|sql|target' -l -all -6 
 
 tree -I '.git|.github|.idea|bin|doc|sql|target'  -L 10 > springboot-tree.txt
+
+tree -I '.git|.github|.idea|bin|doc|sql|target|.gitignore|Dockerfile|Jenkinsfile|LICENSE|MY_README.md|out.txt|pom.xml|README.md|ry.bat|ry.sh|springboot-tree.md|tree.md|tree指令.txt'  -L 10
