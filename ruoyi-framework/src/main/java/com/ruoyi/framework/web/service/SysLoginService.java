@@ -61,7 +61,6 @@ public class SysLoginService {
     @Autowired
     private ThirdLogins thirdLogins;
 
-
     /**
      * 登录验证
      *
@@ -77,6 +76,7 @@ public class SysLoginService {
         if (captchaOnOff) {
             validateCaptcha(username, code, uuid);
         }
+
         // 用户验证
         Authentication authentication = null;
         try {
@@ -100,7 +100,6 @@ public class SysLoginService {
         // 生成token
         return tokenService.createToken(loginUser);
     }
-
 
     /**
      * 校验验证码
@@ -149,7 +148,6 @@ public class SysLoginService {
                 .redirectUri(thirdLogins.getGiteeRedirectURL())
                 .build());
 
-
         // 通过AuthRequest对象执行登录，获取AuthResponse
         AuthResponse<AuthUser> login = authRequest.login(AuthCallback.builder().state(uuid).code(code).build());
         // 输出登录结果
@@ -183,6 +181,7 @@ public class SysLoginService {
             sysUser.setRoleIds(new Long[]{4L});
             try {
                 // 注册新用户并获取新的userId
+
                 Long newUserId = userService.registerUserAndGetUserId(sysUser);
                 System.out.println("newUserId" + newUserId);
                 // 记录注册信息
@@ -198,7 +197,6 @@ public class SysLoginService {
                 // 记录登录成功的信息
                 AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
 
-
                 LoginUser loginUser = (LoginUser) authentication.getPrincipal();
 
                 recordLoginInfo(loginUser.getUserId());
@@ -210,12 +208,10 @@ public class SysLoginService {
                 e.printStackTrace();
             }
 
-
         } else {
             // 如果找到了一个匹配的SysUser，则获取该SysUser
             sysUser = sysUsers.get(0);
         }
-
 
         // 记录登录成功的信息
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
@@ -225,7 +221,6 @@ public class SysLoginService {
 
         // 创建LoginUser对象，这通常包含用户的ID、部门ID、SysUser信息和用户权限信息
         LoginUser loginUser = new LoginUser(sysUser.getUserId(), sysUser.getDeptId(), sysUser, permissionService.getMenuPermission(sysUser));
-
 
         // 记录登录用户的信息
         recordLoginInfo(loginUser.getUserId());

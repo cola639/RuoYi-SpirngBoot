@@ -9,12 +9,12 @@ import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.bean.BeanValidators;
 import com.ruoyi.common.utils.spring.SpringUtils;
+import com.ruoyi.system.domain.SysPost;
+import com.ruoyi.system.domain.SysUserPost;
+import com.ruoyi.system.domain.SysUserRole;
+import com.ruoyi.system.mapper.*;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
-import com.ruoyi.system.service.impl.domain.SysPost;
-import com.ruoyi.system.service.impl.domain.SysUserPost;
-import com.ruoyi.system.service.impl.domain.SysUserRole;
-import com.ruoyi.system.service.impl.mapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -485,7 +485,6 @@ public class SysUserServiceImpl implements ISysUserService {
         userMapper.insertUser(user);
         return user.getUserId();
     }
-
 
     @Override
     public List<SysUser> selectUserListNoDataScope(SysUser user) {

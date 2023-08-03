@@ -1,6 +1,6 @@
-package com.ruoyi.system.service.impl.mapper;
+package com.ruoyi.system.mapper;
 
-import com.ruoyi.system.service.impl.domain.SysUserPost;
+import com.ruoyi.system.domain.SysUserPost;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
