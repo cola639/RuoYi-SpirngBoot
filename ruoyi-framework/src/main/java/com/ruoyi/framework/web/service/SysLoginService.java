@@ -136,6 +136,13 @@ public class SysLoginService {
         userService.updateUserProfile(sysUser);
     }
 
+    /**
+     * 扩展第三方登录
+     *
+     * @param code   用户授权
+     * @param source 用户来源平台
+     * @param uuid   会话uuid
+     */
     public String loginByOtherSource(String code, String source, String uuid) {
         // 输出传入参数的值，用于跟踪代码执行
         System.out.println("code  " + code + " source " + source + " uuid " + uuid);

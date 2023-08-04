@@ -179,10 +179,11 @@ xss:
   # 匹配链接
   urlPatterns: /system/*,/monitor/*,/tool/*
 
+# 第三方登录授权配置
 third-login:
-  # gitee clientId
+  # gitee
   giteeClientId: 1d62c1d8bd139bde2d0c9c4429fc455cfe11b325e0b2b190124bc7680bf7731c
-  # gitee clientSecret
   giteeClientSecret: a9d63856aa2e89d90449acf5888278a9056e31502065ac393d00b697196fb05b
-  # gitee redirectURL
   giteeRedirectURL: http://localhost
+  # wechat
+  wechatAppId:

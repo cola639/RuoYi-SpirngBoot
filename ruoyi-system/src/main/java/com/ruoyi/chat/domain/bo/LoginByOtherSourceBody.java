@@ -1,4 +1,4 @@
-package com.ruoyi.web.controller.login;
+package com.ruoyi.chat.domain.bo;
 
 public class LoginByOtherSourceBody {
 
