@@ -186,4 +186,6 @@ third-login:
   giteeClientSecret: a9d63856aa2e89d90449acf5888278a9056e31502065ac393d00b697196fb05b
   giteeRedirectURL: http://localhost
   # wechat
-  wechatAppId:
+  wechatAppId: wx1f0d8819538e9511
+  wechatAppSecret: cada9a4be2e08dcd6167ca5203a09abe
+  wechatUrl: https://api.weixin.qq.com/sns/jscode2session

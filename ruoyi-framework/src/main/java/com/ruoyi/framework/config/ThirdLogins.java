@@ -1,5 +1,6 @@
 package com.ruoyi.framework.config;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -8,34 +9,17 @@ import org.springframework.stereotype.Component;
  *
  * @author cola639
  */
+@Data
 @Component
 @ConfigurationProperties(prefix = "third-login")
 public class ThirdLogins {
+
     private String giteeClientId;
     private String giteeClientSecret;
     private String giteeRedirectURL;
 
-    public String getGiteeClientId() {
-        return giteeClientId;
-    }
+    private String wechatAppId;
+    private String wechatAppSecret;
+    private String wechatUrl;
 
-    public void setGiteeClientId(String giteeClientId) {
-        this.giteeClientId = giteeClientId;
-    }
-
-    public String getGiteeClientSecret() {
-        return giteeClientSecret;
-    }
-
-    public void setGiteeClientSecret(String giteeClientSecret) {
-        this.giteeClientSecret = giteeClientSecret;
-    }
-
-    public String getGiteeRedirectURL() {
-        return giteeRedirectURL;
-    }
-
-    public void setGiteeRedirectURL(String giteeRedirectURL) {
-        this.giteeRedirectURL = giteeRedirectURL;
-    }
 }
