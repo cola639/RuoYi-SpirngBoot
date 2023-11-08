@@ -136,6 +136,13 @@ public class SysLoginService {
         userService.updateUserProfile(sysUser);
     }
 
+    /**
+     * 扩展第三方登录
+     *
+     * @param code   用户授权
+     * @param source 用户来源平台
+     * @param uuid   会话uuid
+     */
     public String loginByOtherSource(String code, String source, String uuid) {
         // 输出传入参数的值，用于跟踪代码执行
         System.out.println("code  " + code + " source " + source + " uuid " + uuid);
@@ -229,35 +236,4 @@ public class SysLoginService {
         return tokenService.createToken(loginUser);
     }
 
-//    private void registerNewGiteeUser(AuthUser authUser, SysUser sysUser) {
-//        sysUser.setNickName(authUser.getNickname());
-//        sysUser.setAvatar(authUser.getAvatar());
-//        sysUser.setEmail(authUser.getEmail());
-//        sysUser.setRemark("Gitee授权登录用户");
-//        sysUser.setPassword(SecurityUtils.encryptPassword("123456"));
-//        sysUser.setCreateBy("third_gite_token");
-//        sysUser.setDeptId(105L);
-//        sysUser.setCreateTime(new Date());
-//        sysUser.setRoleIds(new Long[]{4L});
-//
-//        try {
-//            Long newUserId = userService.registerUserAndGetUserId(sysUser);
-//
-//
-//            AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.REGISTER,
-//                    MessageUtils.message("user.register.success")));
-//
-//            Long[] roleIds = new Long[]{4L};
-//            userService.insertUserAuth(newUserId, roleIds);
-//            Authentication authentication = authenticationManager
-//                    .authenticate(new UsernamePasswordAuthenticationToken(authUser.getUsername(), 123456));
-//
-//            AsyncManager.me().execute(AsyncFactory.recordLogininfor(sysUser.getUserName(), Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
-//
-//            LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-//            recordLoginInfo(loginUser.getUserId());
-//
-//        } catch (Exception e) {
-//        }
-//    }
 }

@@ -1,8 +1,10 @@
-package com.ruoyi.web.controller.login;
+package com.ruoyi.web.controller.thirdlogin;
 
+import com.ruoyi.chat.domain.bo.LoginByOtherSourceBody;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.uuid.IdUtils;
+import com.ruoyi.framework.config.ThirdLogins;
 import com.ruoyi.framework.web.service.SysLoginService;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.request.AuthGiteeRequest;
@@ -13,22 +15,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpSession;
-
-
 @RestController
 public class GiteeLogin {
 
     @Autowired
     private SysLoginService loginService;
 
+    @Autowired
+    private ThirdLogins thirdLogins;
+
     @GetMapping("/PreLoginByGitee")
-    public AjaxResult PreLoginByGitee(HttpSession session) {
+    public AjaxResult PreLoginByGitee() {
         AjaxResult ajax = AjaxResult.success();
         AuthRequest authRequest = new AuthGiteeRequest(AuthConfig.builder()
-                .clientId("1d62c1d8bd139bde2d0c9c4429fc455cfe11b325e0b2b190124bc7680bf7731c")
-                .clientSecret("a9d63856aa2e89d90449acf5888278a9056e31502065ac393d00b697196fb05b")
-                .redirectUri("http://localhost")
+                .clientId(thirdLogins.getGiteeClientId())
+                .clientSecret(thirdLogins.getGiteeClientSecret())
+                .redirectUri(thirdLogins.getGiteeRedirectURL())
                 .build());
 
         String uuid = IdUtils.fastUUID();
@@ -41,7 +43,6 @@ public class GiteeLogin {
         return ajax;
 
     }
-
 
     @PostMapping("/loginByGitee")
     public AjaxResult loginByGitee(@RequestBody LoginByOtherSourceBody loginByOtherSourceBody) {
