@@ -36,7 +36,7 @@ import java.util.List;
 /**
  * 登录校验方法
  *
- * @author ruoyi
+ * @author 大帅和
  */
 @Component
 public class SysLoginService {

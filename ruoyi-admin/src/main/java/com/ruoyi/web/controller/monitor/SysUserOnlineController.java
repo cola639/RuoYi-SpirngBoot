@@ -23,7 +23,7 @@ import java.util.List;
 /**
  * 在线用户监控
  *
- * @author ruoyi
+ * @author 大帅和
  */
 @RestController
 @RequestMapping("/monitor/online")

@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * 公告 信息操作处理
  *
- * @author ruoyi
+ * @author 大帅和
  */
 @RestController
 @RequestMapping("/system/notice")

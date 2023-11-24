@@ -31,7 +31,7 @@ import java.util.Map;
 /**
  * 操作日志记录处理
  *
- * @author ruoyi
+ * @author 大帅和
  */
 @Aspect
 @Component

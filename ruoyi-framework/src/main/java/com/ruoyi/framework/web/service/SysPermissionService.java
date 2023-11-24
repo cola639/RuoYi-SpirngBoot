@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * 用户权限处理
  *
- * @author ruoyi
+ * @author 大帅和
  */
 @Component
 public class SysPermissionService {

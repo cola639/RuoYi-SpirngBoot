@@ -12,7 +12,7 @@ import javax.validation.constraints.Size;
 /**
  * 参数配置表 sys_config
  *
- * @author ruoyi
+ * @author 大帅和
  */
 public class SysConfig extends BaseEntity {
     private static final long serialVersionUID = 1L;

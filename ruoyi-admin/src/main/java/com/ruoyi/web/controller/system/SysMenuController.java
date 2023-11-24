@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 菜单信息
  *
- * @author ruoyi
+ * @author 大帅和
  */
 @RestController
 @RequestMapping("/system/menu")

@@ -3,7 +3,7 @@ package com.ruoyi.system.domain;
 /**
  * 当前在线会话
  *
- * @author ruoyi
+ * @author 大帅和
  */
 public class SysUserOnline {
     /**

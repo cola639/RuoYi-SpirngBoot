@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * 岗位信息操作处理
  *
- * @author ruoyi
+ * @author 大帅和
  */
 @RestController
 @RequestMapping("/system/post")

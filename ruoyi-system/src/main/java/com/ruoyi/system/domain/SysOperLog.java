@@ -10,7 +10,7 @@ import java.util.Date;
 /**
  * 操作日志记录表 oper_log
  *
- * @author ruoyi
+ * @author 大帅和
  */
 public class SysOperLog extends BaseEntity {
     private static final long serialVersionUID = 1L;

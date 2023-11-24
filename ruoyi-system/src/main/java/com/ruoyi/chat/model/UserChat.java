@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * 用户聊天 UserChat
  *
- * @author ruoyi
+ * @author 大帅和
  */
 public class UserChat implements Serializable {
 

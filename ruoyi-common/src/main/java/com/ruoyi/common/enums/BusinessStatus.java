@@ -2,12 +2,10 @@ package com.ruoyi.common.enums;
 
 /**
  * 操作状态
- * 
- * @author ruoyi
  *
+ * @author 大帅和
  */
-public enum BusinessStatus
-{
+public enum BusinessStatus {
     /**
      * 成功
      */
