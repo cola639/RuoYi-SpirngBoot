@@ -1,0 +1,4 @@
+spring:
+  profiles:
+    # 传不同参数启动
+    active: $spring.active$
