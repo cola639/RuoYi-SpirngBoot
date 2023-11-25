@@ -1,14 +1,14 @@
 package com.colaclub.generator.domain;
 
-import javax.validation.constraints.NotBlank;
-
 import com.colaclub.common.core.domain.BaseEntity;
 import com.colaclub.common.utils.StringUtils;
+
+import javax.validation.constraints.NotBlank;
 
 /**
  * 代码生成业务字段表 gen_table_column
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class GenTableColumn extends BaseEntity {
     private static final long serialVersionUID = 1L;

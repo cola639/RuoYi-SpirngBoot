@@ -12,7 +12,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 /**
  * redis配置
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Configuration
 @EnableCaching

@@ -3,7 +3,7 @@ package com.colaclub.common.enums;
 /**
  * 操作人类别
  *
- * @author 大帅和
+ * @author colaclub
  */
 public enum OperatorType {
     /**

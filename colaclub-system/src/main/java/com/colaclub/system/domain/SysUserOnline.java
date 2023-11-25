@@ -3,7 +3,7 @@ package com.colaclub.system.domain;
 /**
  * 当前在线会话
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SysUserOnline {
     /**

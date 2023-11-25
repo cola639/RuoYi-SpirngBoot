@@ -21,7 +21,7 @@ import org.springframework.stereotype.Component;
 /**
  * 注册校验方法
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Component
 public class SysRegisterService {

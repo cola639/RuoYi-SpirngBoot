@@ -3,7 +3,7 @@ package com.colaclub.common.enums;
 /**
  * 操作状态
  *
- * @author 大帅和
+ * @author colaclub
  */
 public enum BusinessStatus {
     /**

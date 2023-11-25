@@ -13,7 +13,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * spring工具类 方便在非spring管理环境中获取bean
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {

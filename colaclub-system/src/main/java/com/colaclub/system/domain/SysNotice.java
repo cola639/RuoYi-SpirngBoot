@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 /**
  * 通知公告表 sys_notice
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SysNotice extends BaseEntity {
     private static final long serialVersionUID = 1L;

@@ -3,7 +3,7 @@ package com.colaclub.common.utils.poi;
 /**
  * Excel数据格式处理适配器
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface ExcelHandlerAdapter {
     /**

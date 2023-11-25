@@ -3,7 +3,7 @@ package com.colaclub.common.exception.job;
 /**
  * 计划策略异常
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class TaskException extends Exception {
     private static final long serialVersionUID = 1L;

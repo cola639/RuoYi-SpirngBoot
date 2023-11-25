@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * 系统访问记录
  *
- * @author 大帅和
+ * @author colaclub
  */
 @RestController
 @RequestMapping("/monitor/logininfor")

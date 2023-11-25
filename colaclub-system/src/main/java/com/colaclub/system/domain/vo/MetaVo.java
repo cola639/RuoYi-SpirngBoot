@@ -5,7 +5,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 路由显示信息
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class MetaVo {
     /**

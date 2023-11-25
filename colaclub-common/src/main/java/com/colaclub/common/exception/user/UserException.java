@@ -5,7 +5,7 @@ import com.colaclub.common.exception.base.BaseException;
 /**
  * 用户信息异常类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class UserException extends BaseException {
     private static final long serialVersionUID = 1L;

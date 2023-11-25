@@ -1,12 +1,12 @@
 package com.colaclub.quartz.task;
 
-import org.springframework.stereotype.Component;
 import com.colaclub.common.utils.StringUtils;
+import org.springframework.stereotype.Component;
 
 /**
  * 定时任务调度测试
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Component("ryTask")
 public class RyTask {

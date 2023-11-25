@@ -6,7 +6,7 @@ import com.colaclub.system.domain.SysUserOnline;
 /**
  * 在线用户 服务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface ISysUserOnlineService {
     /**

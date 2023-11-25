@@ -3,7 +3,7 @@ package com.colaclub.common.utils.sign;
 /**
  * Base64工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public final class Base64 {
     static private final int BASELENGTH = 128;

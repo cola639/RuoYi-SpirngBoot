@@ -3,7 +3,7 @@ package com.colaclub.common.exception;
 /**
  * 全局异常
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class GlobalException extends RuntimeException {
 

@@ -14,7 +14,7 @@ import com.colaclub.common.core.text.StrFormatter;
 /**
  * 字符串工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**

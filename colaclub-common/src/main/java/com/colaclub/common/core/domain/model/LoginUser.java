@@ -11,7 +11,7 @@ import com.colaclub.common.core.domain.entity.SysUser;
 /**
  * 登录用户身份权限
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class LoginUser implements UserDetails {
     private static final long serialVersionUID = 1L;

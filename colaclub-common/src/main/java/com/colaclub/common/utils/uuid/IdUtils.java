@@ -3,7 +3,7 @@ package com.colaclub.common.utils.uuid;
 /**
  * ID生成器工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class IdUtils {
     /**

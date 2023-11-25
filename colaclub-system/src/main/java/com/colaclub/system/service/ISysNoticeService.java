@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 公告 服务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface ISysNoticeService {
     /**

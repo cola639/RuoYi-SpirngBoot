@@ -21,7 +21,7 @@ import java.util.List;
 /**
  * 参数配置 服务层实现
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Service
 public class SysConfigServiceImpl implements ISysConfigService {

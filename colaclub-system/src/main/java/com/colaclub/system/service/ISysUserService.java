@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 用户 业务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface ISysUserService {
     /**

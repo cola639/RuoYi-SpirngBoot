@@ -15,7 +15,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * Repeatable 过滤器
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class RepeatableFilter implements Filter {
     @Override

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * 定时任务调度信息信息 服务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface ISysJobService {
     /**

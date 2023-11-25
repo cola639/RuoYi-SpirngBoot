@@ -7,7 +7,7 @@ import org.springframework.context.i18n.LocaleContextHolder;
 /**
  * 获取i18n资源文件
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class MessageUtils {
     /**

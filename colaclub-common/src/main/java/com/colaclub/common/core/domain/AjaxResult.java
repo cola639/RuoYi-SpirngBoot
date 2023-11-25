@@ -1,14 +1,14 @@
 package com.colaclub.common.core.domain;
 
-import java.util.HashMap;
-
 import com.colaclub.common.constant.HttpStatus;
 import com.colaclub.common.utils.StringUtils;
+
+import java.util.HashMap;
 
 /**
  * 操作消息提醒
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class AjaxResult extends HashMap<String, Object> {
     /**

@@ -3,7 +3,7 @@ package com.colaclub.common.enums;
 /**
  * 业务操作类型
  *
- * @author 大帅和
+ * @author colaclub
  */
 public enum BusinessType {
     /**

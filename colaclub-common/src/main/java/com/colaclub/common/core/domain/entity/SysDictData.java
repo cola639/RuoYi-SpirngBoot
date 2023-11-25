@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 /**
  * 字典数据表 sys_dict_data
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SysDictData extends BaseEntity {
     private static final long serialVersionUID = 1L;

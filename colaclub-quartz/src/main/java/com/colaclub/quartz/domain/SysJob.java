@@ -1,23 +1,23 @@
 package com.colaclub.quartz.domain;
 
-import java.util.Date;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.colaclub.common.annotation.Excel;
 import com.colaclub.common.annotation.Excel.ColumnType;
 import com.colaclub.common.constant.ScheduleConstants;
 import com.colaclub.common.core.domain.BaseEntity;
 import com.colaclub.common.utils.StringUtils;
 import com.colaclub.quartz.util.CronUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * 定时任务调度表 sys_job
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SysJob extends BaseEntity {
     private static final long serialVersionUID = 1L;

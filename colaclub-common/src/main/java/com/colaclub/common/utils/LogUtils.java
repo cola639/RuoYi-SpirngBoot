@@ -3,7 +3,7 @@ package com.colaclub.common.utils;
 /**
  * 处理并记录日志文件
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class LogUtils {
     public static String getBlock(Object msg) {

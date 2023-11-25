@@ -5,7 +5,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 缓存信息
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SysCache {
     /**

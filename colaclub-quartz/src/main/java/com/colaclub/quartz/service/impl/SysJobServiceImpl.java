@@ -1,15 +1,5 @@
 package com.colaclub.quartz.service.impl;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
-
-import org.quartz.JobDataMap;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.colaclub.common.constant.ScheduleConstants;
 import com.colaclub.common.exception.job.TaskException;
 import com.colaclub.quartz.domain.SysJob;
@@ -17,11 +7,21 @@ import com.colaclub.quartz.mapper.SysJobMapper;
 import com.colaclub.quartz.service.ISysJobService;
 import com.colaclub.quartz.util.CronUtils;
 import com.colaclub.quartz.util.ScheduleUtils;
+import org.quartz.JobDataMap;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * 定时任务调度信息 服务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Service
 public class SysJobServiceImpl implements ISysJobService {

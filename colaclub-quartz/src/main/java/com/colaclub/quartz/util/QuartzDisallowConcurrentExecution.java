@@ -7,7 +7,7 @@ import com.colaclub.quartz.domain.SysJob;
 /**
  * 定时任务处理（禁止并发执行）
  *
- * @author 大帅和
+ * @author colaclub
  */
 @DisallowConcurrentExecution
 public class QuartzDisallowConcurrentExecution extends AbstractQuartzJob {

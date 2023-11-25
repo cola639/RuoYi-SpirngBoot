@@ -3,7 +3,7 @@ package com.colaclub.common.enums;
 /**
  * 限流类型
  *
- * @author 大帅和
+ * @author colaclub
  */
 
 public enum LimitType {

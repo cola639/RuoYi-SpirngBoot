@@ -5,7 +5,7 @@ import com.colaclub.common.utils.Arith;
 /**
  * CPU相关信息
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class Cpu {
     /**

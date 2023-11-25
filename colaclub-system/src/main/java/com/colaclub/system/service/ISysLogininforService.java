@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 系统访问日志情况信息 服务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface ISysLogininforService {
     /**

@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * 设置Anonymous注解允许匿名访问的url
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Configuration
 public class PermitAllUrlProperties implements InitializingBean, ApplicationContextAware {

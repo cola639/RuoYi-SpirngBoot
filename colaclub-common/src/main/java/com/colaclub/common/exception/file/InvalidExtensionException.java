@@ -7,7 +7,7 @@ import java.util.Arrays;
 /**
  * 文件上传 误异常类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class InvalidExtensionException extends FileUploadException {
     private static final long serialVersionUID = 1L;

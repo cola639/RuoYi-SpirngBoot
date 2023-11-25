@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 /**
  * 获取IP方法
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class IpUtils {
     /**

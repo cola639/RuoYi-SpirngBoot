@@ -6,7 +6,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 基础异常
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;

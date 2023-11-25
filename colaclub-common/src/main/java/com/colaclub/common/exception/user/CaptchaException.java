@@ -3,7 +3,7 @@ package com.colaclub.common.exception.user;
 /**
  * 验证码错误异常类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class CaptchaException extends UserException {
     private static final long serialVersionUID = 1L;

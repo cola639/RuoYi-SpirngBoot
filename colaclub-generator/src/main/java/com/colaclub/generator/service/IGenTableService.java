@@ -8,7 +8,7 @@ import com.colaclub.generator.domain.GenTable;
 /**
  * 业务 服务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface IGenTableService {
     /**

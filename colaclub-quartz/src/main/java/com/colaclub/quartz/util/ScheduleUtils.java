@@ -12,7 +12,7 @@ import org.quartz.*;
 /**
  * 定时任务工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class ScheduleUtils {
     /**

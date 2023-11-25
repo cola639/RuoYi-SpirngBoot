@@ -23,7 +23,7 @@ import java.io.IOException;
 /**
  * 自定义退出处理类 返回成功
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Configuration
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {

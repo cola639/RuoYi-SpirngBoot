@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 注册验证
  *
- * @author 大帅和
+ * @author colaclub
  */
 @RestController
 public class SysRegisterController extends BaseController {

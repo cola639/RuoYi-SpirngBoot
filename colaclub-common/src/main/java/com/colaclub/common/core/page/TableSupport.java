@@ -6,7 +6,7 @@ import com.colaclub.common.utils.ServletUtils;
 /**
  * 表格数据处理
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class TableSupport {
     /**

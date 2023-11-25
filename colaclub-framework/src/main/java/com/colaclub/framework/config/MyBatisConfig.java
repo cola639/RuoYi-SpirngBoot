@@ -28,7 +28,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * Mybatis支持*匹配扫描包
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Configuration
 public class MyBatisConfig {

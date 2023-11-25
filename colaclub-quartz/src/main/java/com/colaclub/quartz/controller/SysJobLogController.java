@@ -1,16 +1,5 @@
 package com.colaclub.quartz.controller;
 
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import com.colaclub.common.annotation.Log;
 import com.colaclub.common.core.controller.BaseController;
 import com.colaclub.common.core.domain.AjaxResult;
@@ -19,11 +8,17 @@ import com.colaclub.common.enums.BusinessType;
 import com.colaclub.common.utils.poi.ExcelUtil;
 import com.colaclub.quartz.domain.SysJobLog;
 import com.colaclub.quartz.service.ISysJobLogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 调度日志操作处理
  *
- * @author 大帅和
+ * @author colaclub
  */
 @RestController
 @RequestMapping("/monitor/jobLog")

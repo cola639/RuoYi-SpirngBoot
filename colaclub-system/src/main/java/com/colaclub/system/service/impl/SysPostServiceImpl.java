@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * 岗位信息 服务层处理
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Service
 public class SysPostServiceImpl implements ISysPostService {

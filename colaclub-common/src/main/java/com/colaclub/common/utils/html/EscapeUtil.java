@@ -5,7 +5,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 转义和反转义工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class EscapeUtil {
     public static final String RE_HTML_MARK = "(<[^<]*?>)|(<[\\s]*?/[^<]*?>)|(<[^<]*?/[\\s]*?>)";

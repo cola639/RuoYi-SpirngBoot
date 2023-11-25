@@ -13,7 +13,7 @@ import java.util.List;
 /**
  * 菜单权限表 sys_menu
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SysMenu extends BaseEntity {
     private static final long serialVersionUID = 1L;

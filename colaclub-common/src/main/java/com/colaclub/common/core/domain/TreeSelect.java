@@ -1,8 +1,8 @@
 package com.colaclub.common.core.domain;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.colaclub.common.core.domain.entity.SysDept;
 import com.colaclub.common.core.domain.entity.SysMenu;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.io.Serializable;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 /**
  * Treeselect树结构实体类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class TreeSelect implements Serializable {
     private static final long serialVersionUID = 1L;

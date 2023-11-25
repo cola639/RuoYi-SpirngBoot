@@ -1,14 +1,14 @@
 package com.colaclub.common.core.text;
 
+import com.colaclub.common.utils.StringUtils;
+
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-
-import com.colaclub.common.utils.StringUtils;
 
 /**
  * 字符集工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class CharsetKit {
     /**

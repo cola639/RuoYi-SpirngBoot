@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * token过滤器 验证token有效性
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Component
 public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {

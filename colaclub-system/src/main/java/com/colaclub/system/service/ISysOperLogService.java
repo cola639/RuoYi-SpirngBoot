@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 操作日志 服务层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface ISysOperLogService {
     /**

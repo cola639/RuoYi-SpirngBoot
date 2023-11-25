@@ -41,7 +41,7 @@ import com.colaclub.generator.util.VelocityUtils;
 /**
  * 业务 服务层实现
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Service
 public class GenTableServiceImpl implements IGenTableService {

@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * 响应信息主体
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class R<T> implements Serializable {
     /**

@@ -1,18 +1,18 @@
 package com.colaclub.quartz.util;
 
+import com.colaclub.common.utils.StringUtils;
+import com.colaclub.common.utils.spring.SpringUtils;
+import com.colaclub.quartz.domain.SysJob;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.colaclub.common.utils.StringUtils;
-import com.colaclub.common.utils.spring.SpringUtils;
-import com.colaclub.quartz.domain.SysJob;
-
 /**
  * 任务执行工具
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class JobInvokeUtil {
     /**

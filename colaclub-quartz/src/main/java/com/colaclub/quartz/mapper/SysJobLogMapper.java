@@ -7,7 +7,7 @@ import com.colaclub.quartz.domain.SysJobLog;
 /**
  * 调度任务日志信息 数据层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface SysJobLogMapper {
     /**

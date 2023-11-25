@@ -17,7 +17,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 图片处理工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class ImageUtils {
     private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);

@@ -8,7 +8,7 @@ import java.lang.annotation.*;
 /**
  * 限流注解
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

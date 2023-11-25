@@ -3,7 +3,7 @@ package com.colaclub.framework.web.domain.server;
 /**
  * 系统相关信息
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class Sys {
     /**

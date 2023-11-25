@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 /**
  * 在线用户 服务层处理
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Service
 public class SysUserOnlineServiceImpl implements ISysUserOnlineService {

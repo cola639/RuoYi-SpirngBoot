@@ -17,7 +17,7 @@ import java.net.URLEncoder;
 /**
  * 客户端工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class ServletUtils {
     /**

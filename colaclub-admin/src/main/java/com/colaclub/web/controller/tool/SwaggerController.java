@@ -9,7 +9,7 @@ import com.colaclub.common.core.controller.BaseController;
 /**
  * swagger 接口
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Controller
 @RequestMapping("/tool/swagger")

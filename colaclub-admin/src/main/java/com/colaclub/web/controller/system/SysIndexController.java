@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 首页
  *
- * @author 大帅和
+ * @author colaclub
  */
 @RestController
 public class SysIndexController {

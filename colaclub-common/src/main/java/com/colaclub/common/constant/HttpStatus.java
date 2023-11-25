@@ -3,7 +3,7 @@ package com.colaclub.common.constant;
 /**
  * 返回状态码
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class HttpStatus {
     /**

@@ -8,7 +8,7 @@ import com.colaclub.common.utils.sql.SqlUtil;
 /**
  * 分页工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class PageUtils extends PageHelper {
     /**

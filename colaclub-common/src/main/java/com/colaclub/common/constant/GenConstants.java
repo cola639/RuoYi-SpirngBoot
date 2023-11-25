@@ -3,7 +3,7 @@ package com.colaclub.common.constant;
 /**
  * 代码生成通用常量
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class GenConstants {
     /**

@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 个人信息 业务处理
  *
- * @author 大帅和
+ * @author colaclub
  */
 @RestController
 @RequestMapping("/system/user/profile")

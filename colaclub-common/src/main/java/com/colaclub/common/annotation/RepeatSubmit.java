@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 /**
  * 自定义注解防止表单重复提交
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Inherited
 @Target(ElementType.METHOD)

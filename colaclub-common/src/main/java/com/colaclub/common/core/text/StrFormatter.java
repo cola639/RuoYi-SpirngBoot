@@ -5,7 +5,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 字符串格式化
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class StrFormatter {
     public static final String EMPTY_JSON = "{}";

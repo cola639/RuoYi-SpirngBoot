@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * swagger 用户测试方法
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Api("用户信息管理")
 @RestController

@@ -3,7 +3,7 @@ package com.colaclub.common.exception;
 /**
  * 业务异常
  *
- * @author 大帅和
+ * @author colaclub
  */
 public final class ServiceException extends RuntimeException {
     private static final long serialVersionUID = 1L;

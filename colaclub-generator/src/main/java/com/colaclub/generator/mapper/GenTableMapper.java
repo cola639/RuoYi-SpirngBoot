@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * 业务 数据层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface GenTableMapper {
     /**

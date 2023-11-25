@@ -6,7 +6,7 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 /**
  * web容器中进行部署
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class RuoYiServletInitializer extends SpringBootServletInitializer {
     @Override

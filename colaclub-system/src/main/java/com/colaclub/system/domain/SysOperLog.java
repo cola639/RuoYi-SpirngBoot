@@ -1,16 +1,16 @@
 package com.colaclub.system.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.colaclub.common.annotation.Excel;
 import com.colaclub.common.annotation.Excel.ColumnType;
 import com.colaclub.common.core.domain.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
 /**
  * 操作日志记录表 oper_log
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SysOperLog extends BaseEntity {
     private static final long serialVersionUID = 1L;

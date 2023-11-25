@@ -19,7 +19,7 @@ import java.util.Objects;
 /**
  * 文件上传工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class FileUploadUtils {
     /**

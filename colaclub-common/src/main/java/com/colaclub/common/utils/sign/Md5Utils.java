@@ -9,7 +9,7 @@ import java.security.MessageDigest;
 /**
  * Md5加密方法
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class Md5Utils {
     private static final Logger log = LoggerFactory.getLogger(Md5Utils.class);

@@ -25,7 +25,7 @@ import java.util.Map;
 /**
  * 代码生成 操作处理
  *
- * @author 大帅和
+ * @author colaclub
  */
 @RestController
 @RequestMapping("/tool/gen")

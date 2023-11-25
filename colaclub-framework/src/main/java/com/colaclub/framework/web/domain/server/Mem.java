@@ -5,7 +5,7 @@ import com.colaclub.common.utils.Arith;
 /**
  * 內存相关信息
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class Mem {
     /**

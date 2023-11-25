@@ -3,7 +3,7 @@ package com.colaclub.common.constant;
 /**
  * 任务调度通用常量
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class ScheduleConstants {
     public static final String TASK_CLASS_NAME = "TASK_CLASS_NAME";

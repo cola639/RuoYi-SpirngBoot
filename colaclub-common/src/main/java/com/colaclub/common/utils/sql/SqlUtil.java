@@ -6,7 +6,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * sql操作工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class SqlUtil {
     /**

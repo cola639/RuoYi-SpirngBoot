@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 /**
  * 部门管理 服务实现
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Service
 public class SysDeptServiceImpl implements ISysDeptService {

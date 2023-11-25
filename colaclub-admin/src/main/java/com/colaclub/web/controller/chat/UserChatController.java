@@ -19,7 +19,7 @@ import java.util.List;
 /**
  * 聊天信息
  *
- * @author 大帅和
+ * @author colaclub
  */
 
 @RestController

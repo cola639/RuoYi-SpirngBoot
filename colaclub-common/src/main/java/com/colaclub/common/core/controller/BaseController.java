@@ -25,7 +25,7 @@ import com.colaclub.common.utils.sql.SqlUtil;
 /**
  * web层通用数据处理
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class BaseController {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());

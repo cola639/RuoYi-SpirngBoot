@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * 菜单表 数据层
  *
- * @author 大帅和
+ * @author colaclub
  */
 public interface SysMenuMapper {
     /**

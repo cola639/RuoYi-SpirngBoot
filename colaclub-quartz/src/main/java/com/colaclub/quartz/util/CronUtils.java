@@ -1,14 +1,14 @@
 package com.colaclub.quartz.util;
 
+import org.quartz.CronExpression;
+
 import java.text.ParseException;
 import java.util.Date;
-
-import org.quartz.CronExpression;
 
 /**
  * cron表达式工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class CronUtils {
     /**

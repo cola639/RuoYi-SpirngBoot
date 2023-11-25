@@ -3,7 +3,7 @@ package com.colaclub.common.constant;
 /**
  * 缓存的key 常量
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class CacheConstants {
     /**

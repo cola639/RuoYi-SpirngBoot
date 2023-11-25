@@ -1,15 +1,11 @@
 package com.colaclub.common.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 数据权限过滤注解
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

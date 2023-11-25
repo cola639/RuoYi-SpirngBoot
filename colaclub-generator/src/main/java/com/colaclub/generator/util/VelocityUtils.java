@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * 模板处理工具类
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class VelocityUtils {
     /**

@@ -24,7 +24,7 @@ import java.util.Map;
 /**
  * druid 配置多数据源
  *
- * @author 大帅和
+ * @author colaclub
  */
 @Configuration
 public class DruidConfig {

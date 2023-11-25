@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * 防止XSS攻击的过滤器
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class XssFilter implements Filter {
     /**

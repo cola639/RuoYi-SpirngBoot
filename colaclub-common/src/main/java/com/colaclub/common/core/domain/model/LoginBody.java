@@ -3,7 +3,7 @@ package com.colaclub.common.core.domain.model;
 /**
  * 用户登录对象
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class LoginBody {
     /**

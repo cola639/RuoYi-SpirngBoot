@@ -5,7 +5,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 分页数据
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class PageDomain {
     /**

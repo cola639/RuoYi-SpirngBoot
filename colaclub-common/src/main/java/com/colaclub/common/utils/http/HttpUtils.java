@@ -26,7 +26,7 @@ import com.colaclub.common.utils.StringUtils;
 /**
  * 通用http发送方法
  *
- * @author 大帅和
+ * @author colaclub
  */
 public class HttpUtils {
     private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
