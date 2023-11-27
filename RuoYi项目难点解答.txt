@@ -85,3 +85,46 @@
    - 对于需要完整日期和时间信息的字段（如 `createdTime` 和 `updatedTime`），您可以使用不同的格式化来处理。
 
 总结：在Java中使用 `java.util.Date` 来表示数据库中的不同时间类型是一种常见做法，它提供了灵活性和框架兼容性。通过适当的注解和格式化，您可以确保在不同层（如数据库、Java对象、JSON）之间正确地处理和表示这些时间信息。
+
+### 左连接（LEFT JOIN）是什么？
+左连接（LEFT JOIN）的确是一种将多个表的数据基于某些条件组合起来的方式，但它并不是简单地将所有字段拼接成一个新的数据表。左连接的特点是它会从左表（即LEFT JOIN关键字左边的表）中取出所有记录，并将右表中匹配的记录与之配对。
+如果左表中的某条记录在右表中没有匹配项，则右表中对应的字段会以NULL值出现。
+
+让我们用一个简化的例子来说明：
+
+假设有两个表，一个是员工表（Employees），另一个是部门表（Departments）。
+
+**Employees**
+
+| EmployeeID | Name     | DepartmentID |
+|------------|----------|--------------|
+| 1          | Alice    | 101          |
+| 2          | Bob      | 102          |
+| 3          | Charlie  | 103          |
+
+**Departments**
+
+| DepartmentID | DepartmentName |
+|--------------|----------------|
+| 101          | HR             |
+| 102          | IT             |
+
+如果我们对这两个表进行左连接，以`DepartmentID`作为连接条件：
+
+```sql
+select Employees.Name, Departments.DepartmentName
+from Employees
+left join Departments ON Employees.DepartmentID = Departments.DepartmentID;
+```
+
+结果会是：
+
+| Name     | DepartmentName |
+|----------|----------------|
+| Alice    | HR             |
+| Bob      | IT             |
+| Charlie  | NULL           |
+
+在这个例子中，左连接确保了所有员工（Employees表）都被选中，即使他们没有对应的部门（Departments表）。对于Charlie，因为在Departments表中没有与之对应的记录，所以DepartmentName为NULL。
+
+总结来说，左连接是一种SQL连接类型，它会从左表中选择所有记录，并尝试从右表中找到匹配的记录。如果找不到匹配项，则右表的列会以NULL值出现。这种方式允许我们在一个查询中组合和比较来自不同表的数据。

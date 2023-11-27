@@ -77,6 +77,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     @Override
     public Set<String> selectMenuPermsByUserId(Long userId) {
         List<String> perms = menuMapper.selectMenuPermsByUserId(userId);
+        System.out.println("perms: " + perms);
         Set<String> permsSet = new HashSet<>();
         for (String perm : perms) {
             if (StringUtils.isNotEmpty(perm)) {
