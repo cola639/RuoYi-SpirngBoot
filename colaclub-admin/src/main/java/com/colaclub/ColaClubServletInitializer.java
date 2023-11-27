@@ -8,9 +8,9 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
  *
  * @author colaclub
  */
-public class RuoYiServletInitializer extends SpringBootServletInitializer {
+public class ColaClubServletInitializer extends SpringBootServletInitializer {
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-        return application.sources(RuoYiApplication.class);
+        return application.sources(ColaClubApplication.class);
     }
 }
