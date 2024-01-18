@@ -27,7 +27,7 @@
 
 `@JsonFormat` 和 `@DateTimeFormat` 是两个用于处理日期和时间格式的注解，但它们在 Java 应用中的作用和应用场景有所不同。
 
-1. **@JsonFormat**:  post jaon请求
+1. **@JsonFormat**:  post json请求
    - **来源**：来自 `com.fasterxml.jackson.annotation.JsonFormat`，是 Jackson 库的一部分。
    - **用途**：用于控制如何将 `java.util.Date`（或 `java.time` 包中的类）序列化为 JSON 字符串，以及如何从 JSON 字符串反序列化为日期/时间对象。
    - **应用场景**：主要用于 RESTful API 中，处理 JSON 数据的序列化和反序列化。例如，当您的 Spring Boot 应用需要发送或接收包含日期时间的 JSON 数据时。
@@ -128,3 +128,59 @@ left join Departments ON Employees.DepartmentID = Departments.DepartmentID;
 在这个例子中，左连接确保了所有员工（Employees表）都被选中，即使他们没有对应的部门（Departments表）。对于Charlie，因为在Departments表中没有与之对应的记录，所以DepartmentName为NULL。
 
 总结来说，左连接是一种SQL连接类型，它会从左表中选择所有记录，并尝试从右表中找到匹配的记录。如果找不到匹配项，则右表的列会以NULL值出现。这种方式允许我们在一个查询中组合和比较来自不同表的数据。
+
+### 时间格式问题
+在Java中，日期和时间格式字符串遵循特定的规则，其中每个字符都有其特定的含义。在`SimpleDateFormat`类和类似的格式化工具中，大小写是有区别的，并且具有不同的意义。例如，对于`SimpleDateFormat`:
+
+- `y` 代表年份。
+- `M` 代表月份。
+- `d` 代表月中的天数。
+- `H` 代表一天中的小时数（0-23）。
+- `h` 代表小时（am/pm中的1-12）。
+- `m` 代表分钟。
+- `s` 代表秒。
+
+因此，格式字符串`"yyyy-MM-dd HH:mm:ss"`遵循以下规则：
+
+- `yyyy` 表示四位年份，例如 `2023`。
+- `MM` 表示两位月份，例如 `01`（一月）或 `12`（十二月）。
+- `dd` 表示两位月份中的日子，例如 `05`。
+- `HH` 表示24小时制的小时数，例如 `14`（下午2点）。
+- `mm` 表示分钟。
+- `ss` 表示秒。
+
+如果您使用全大写（如`YYYY-MM-DD HH:MM:SS`），则解释会完全不同，甚至可能无效。例如，`DD`在`SimpleDateFormat`中代表一年中的天数，而不是月中的天数，而`YYYY`并不是有效的年份表示格式。因此，正确的格式化字符串是至关重要的，以确保日期和时间按预期格式解析和显示。
+
+### 自动创建create_time 更新update_time
+create table punch_apply_compensatory
+(
+    id            bigint(20) not null auto_increment comment '调休申请id',
+    user_id       bigint(20) default null comment '申请人id',
+    user_name     varchar(50)  default null comment '申请人姓名',
+    apply_time    datetime     default null comment '申请时间',
+    start_time    datetime     default null comment '调休开始时间',
+    end_time      datetime     default null comment '调休结束时间',
+    apply_reason  varchar(255) default null comment '调休原因',
+    apply_status  varchar(5)   default null comment '状态',
+    apply_opinion varchar(255) default null comment '审批意见',
+    remark        varchar(255) default null comment '备注',
+    create_time   datetime     default current_timestamp comment '创建时间',
+    update_time   datetime     default current_timestamp on update current_timestamp comment '更新时间',
+    primary key (id)
+) engine=innodb auto_increment=1 comment = '调休申请表';
+
+
+    create_time   datetime     default current_timestamp comment '创建时间',
+    update_time   datetime     default current_timestamp on update current_timestamp comment '更新时间',
+	default current_timestamp只有第一次写入的时候才会生成时间是吧
+	后续更新还会生成时间吗
+	在您提供的`punch_apply_compensatory`表中，`create_time`和`update_time`字段的行为如下：
+
+1. **create_time**: 这个字段被设置为`default current_timestamp`，这意味着当一个新记录被插入表中而没有为`create_time`指定一个值时，MySQL会自动将`create_time`设置为当前的时间戳。这个时间戳仅在记录首次创建时被设置，之后不会再改变。
+
+2. **update_time**: 这个字段被设置为`default current_timestamp on update current_timestamp`。这意味着，就像`create_time`一样，如果在插入记录时没有为`update_time`提供一个值，它将被设置为当前的时间戳。此外，每当记录被更新，`update_time`字段也会自动更新为当前时间戳。这是由`on update current_timestamp`部分控制的。
+
+总结一下：
+
+- `create_time`在记录首次插入时自动设置为当前时间戳，并在后续的更新操作中保持不变。
+- `update_time`在记录首次插入时设置为当前时间戳，但在每次记录更新时都会自动更新为新的当前时间戳。
