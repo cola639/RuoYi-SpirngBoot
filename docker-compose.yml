@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  ruoyi-mysql:
+    image: mysql:5.7
+    container_name: ruoyi-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: "123456"
+    ports:
+      - "6060:3306"
+    networks:
+      - ${NETWORK_NAME}  # 使用环境变量替代
+
+  ruoyi-redis:
+    image: redis
+    container_name: ruoyi-redis
+    ports:
+      - "6161:6379"
+    networks:
+      - ${NETWORK_NAME}  # 使用环境变量替代
+
+networks:
+  ${NETWORK_NAME}: # 使用环境变量定义网络名
+    driver: bridge

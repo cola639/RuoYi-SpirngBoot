@@ -3,8 +3,10 @@ pipeline{
     agent any
     // environment 用于在 pipeline 或者阶段级别定义环境变量
     environment {
-      IMAGE_NAME = "ruoyi-admin"  // 定义 Docker 镜像的名字
-      WS = "${WORKSPACE}"         // 定义工作空间路径
+	  // 前后端互通网络组  
+      NETWORK = "ruoyi"  
+      IMAGE_NAME = "ruoyi-springboot"  // 定义 Docker 镜像的名字
+      WS = "${WORKSPACE}"              // 定义工作空间路径
       PROFILE = "prod"
     }
 
@@ -19,6 +21,7 @@ pipeline{
                sh 'docker version' // 显示 Docker 版本
                sh 'java -version'  // 显示 Java 版本
                sh 'git --version'  // 显示 Git 版本
+			   sh 'docker network create ${NETWORK} || true' // 网络组
             }
         }
 
@@ -57,8 +60,8 @@ pipeline{
                sh 'docker rm -f ${IMAGE_NAME} || true && docker rmi $(docker images -q -f dangling=true) || true'
                sh 'docker start ruoyi-mysql && docker start ruoyi-redis'
                // 运行 Docker 镜像，链接到 MySQL 和 Redis 服务，并挂载宿主机日志目录
-               sh 'docker run -d -p 8888:8080 --name ${IMAGE_NAME} --link ruoyi-mysql:mysql --link ruoyi-redis:redis -v /mydata/logs/${IMAGE_NAME}:/logs/${IMAGE_NAME} ${IMAGE_NAME}'
-            }
+			  sh 'docker run -d --net ${NETWORK} -p 443:443 -p 8887:8080 --name ${IMAGE_NAME} -v /mydata/logs/${IMAGE_NAME}:/logs/${IMAGE_NAME} ${IMAGE_NAME}'
+			}
         }
     }
 }
