@@ -6,9 +6,9 @@ pipeline {
     environment {
         // 前后端互通网络组
         NETWORK = 'ruoyi'
-        IMAGE_NAME = 'ruoyi-springboot'         // 定义 Docker 镜像的名字
-        JAR_FILE = 'ruoyi-springboot.jar'            // 定义 JAR 文件名，可根据实际情况调整
-        WS = "${WORKSPACE}"                          // 定义工作空间路径
+        IMAGE_NAME = 'colaclub-admin'          // 定义 Docker 镜像的名字
+        JAR_FILE = 'colaclub-admin.jar'            // 定义 JAR 文件名，可根据实际情况调整
+        WS = "${WORKSPACE}"                           // 定义工作空间路径
         PROFILE = 'prod'
     }
 
