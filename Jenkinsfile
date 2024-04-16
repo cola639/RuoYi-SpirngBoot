@@ -50,7 +50,9 @@ pipeline {
                 sh 'echo ${WS}'                                      // 打印工作空间路径
                 sh 'ls -alh ${WS}/'                                  // 列出 ${WS} 目录的所有文件和文件夹
                 // 使用 Docker 构建镜像
-                sh 'docker build --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
+                sh 'docker build --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f ${WS}/${IMAGE_NAME}/Dockerfile ${WS}/${IMAGE_NAME}/target/'
+                // 运行 Docker 容器
+                sh 'docker run -d --net ${NETWORK} -p 8887:80 --name ${IMAGE_NAME} ${IMAGE_NAME}'
             }
         }
     }
