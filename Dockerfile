@@ -3,6 +3,8 @@ FROM openjdk:8-jre-alpine
 
 # Jenkinsfile构建镜像时定义参数
 ARG PROFILE
+# 定义一个参数用于接收 JAR 文件名
+ARG JAR_FILE
 
 # 将ARG转化为ENV，使其可以在运行容器时使用
 ENV PROFILE=${PROFILE}
@@ -19,8 +21,8 @@ RUN mkdir -p /home/ruoyi/logs && chown -R spring:spring /home/ruoyi/logs
 # 切换到新的用户
 USER spring:spring
 
-# 复制本地的 ruoyi-admin.jar 文件到容器的 /app.jar
-COPY ruoyi-admin.jar /app.jar
+# 复制本地的 JAR 文件到容器的 /app.jar
+COPY ${JAR_FILE} /app.jar
 
 # 声明作用 实际作用由 run port 暴露容器的 80 端口
 EXPOSE 80
