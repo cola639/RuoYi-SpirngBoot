@@ -16,7 +16,7 @@ RUN addgroup -S spring && adduser -S spring -G spring
 RUN apk add --no-cache ttf-dejavu
 
 # 创建日志文件在APP容器所需的目录
-RUN mkdir -p /home/ruoyi/logs && chown -R spring:spring /home/ruoyi/logs
+RUN mkdir -p /home/colaclub/logs && chown -R spring:spring /home/colaclub/logs
 
 # 切换到新的用户
 USER spring:spring
