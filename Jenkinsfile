@@ -53,7 +53,11 @@ pipeline {
                 sh 'docker build --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
                 // 存在同名容器删除 如果不存在则忽略错误
                 sh 'docker rm -f ${IMAGE_NAME} || true'
-                // 运行 Docker 容器
+            }
+        }
+
+        stage('4.Deploy') {
+            steps {
                 sh 'docker run -d --net ${NETWORK} -p 8887:80 --name ${IMAGE_NAME} ${IMAGE_NAME}'
             }
         }
