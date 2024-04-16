@@ -6,7 +6,7 @@ pipeline {
     environment {
         // 前后端互通网络组
         NETWORK = 'ruoyi'
-        IMAGE_NAME = 'ruoyi-springboot'              // 定义 Docker 镜像的名字
+        IMAGE_NAME = 'ruoyi-springboot'         // 定义 Docker 镜像的名字
         JAR_FILE = 'ruoyi-springboot.jar'            // 定义 JAR 文件名，可根据实际情况调整
         WS = "${WORKSPACE}"                          // 定义工作空间路径
         PROFILE = 'prod'
@@ -47,7 +47,8 @@ pipeline {
         stage('3.Build') {
             steps {
                 sh 'pwd && ls -alh'
-                sh 'echo ${WS}' //打印工作空间路径
+                sh 'echo ${WS}'                                      // 打印工作空间路径
+                sh 'ls -alh ${WS}/${IMAGE_NAME}/'   // 列出 IMAGE_NAME 目录的所有文件和文件夹
                 // 使用 Docker 构建镜像
                 sh 'docker build --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
             }
