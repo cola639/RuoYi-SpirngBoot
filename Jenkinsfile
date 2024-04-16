@@ -1,14 +1,14 @@
 /* groovylint-disable CompileStatic, DuplicateStringLiteral, GStringExpressionWithinString, LineLength */
+// Jenkinsfile先于Docker 并执行Dockerfile配置
 pipeline {
     // agent 指定在哪个节点上运行 Pipeline 或者阶段
     agent any
     // environment 用于在 pipeline 或者阶段级别定义环境变量
     environment {
-        // 前后端互通网络组
-        NETWORK = 'ruoyi'
-        IMAGE_NAME = 'colaclub-admin'          // 定义 Docker 镜像的名字
+        NETWORK = 'ruoyi'                          // 前后端互通网络组
+        IMAGE_NAME = 'colaclub-admin'              // 定义 Docker 镜像的名字 JAR存放目录名字
         JAR_FILE = 'colaclub-admin.jar'            // 定义 JAR 文件名，可根据实际情况调整
-        WS = "${WORKSPACE}"                           // 定义工作空间路径
+        WS = "${WORKSPACE}"                        // 定义工作空间路径
         PROFILE = 'prod'
     }
 
@@ -51,6 +51,8 @@ pipeline {
                 sh 'ls -alh ${WS}/'                                  // 列出 ${WS} 目录的所有文件和文件夹
                 // 使用 Docker 构建镜像
                 sh 'docker build --build-arg PROFILE=${PROFILE} -t ${IMAGE_NAME} -f Dockerfile ${WS}/${IMAGE_NAME}/target/'
+                // 存在同名容器删除
+                sh 'docker rm -f ${IMAGE_NAME} || true'  // 删除容器，如果不存在则忽略错误
                 // 运行 Docker 容器
                 sh 'docker run -d --net ${NETWORK} -p 8887:80 --name ${IMAGE_NAME} ${IMAGE_NAME}'
             }
