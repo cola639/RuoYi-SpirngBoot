@@ -25,7 +25,7 @@ RUN mkdir -p /logs && chown -R spring:spring /logs
 USER spring:spring
 
 # 复制本地的 JAR 文件到容器的 /app.jar
-COPY ${JAR_FILE} /app.jar
+COPY colaclub-admin.jar /app.jar
 
 # 声明作用 无实际作用 由 run port 暴露容器的 80 端口
 EXPOSE 80
