@@ -27,7 +27,7 @@ USER spring:spring
 # 复制本地的 JAR 文件到容器的 /app.jar
 COPY ${JAR_FILE} /app.jar
 
-# 声明作用 无实际作用 由 run port 暴露容器的 80 端口
+# 声明作用无实际作用 实际由docker run port 暴露容器端口
 EXPOSE 80
 
 # 设置容器的默认启动命令，配置 JVM 以优化容器环境运行，指定使用的 Spring 配置概要
