@@ -8,6 +8,7 @@ ARG JAR_FILE
 
 # 将ARG转化为ENV，使其可以在运行容器时使用
 ENV PROFILE=${PROFILE}
+ENV JAR_FILE=${JAR_FILE}
 
 # 创建一个新的用户和用户组
 RUN addgroup -S spring && adduser -S spring -G spring
@@ -23,7 +24,7 @@ RUN mkdir -p /home/colaclub/logs && chown -R spring:spring /home/colaclub/logs
 USER spring:spring
 
 # 复制本地的 JAR 文件到容器的 /app.jar
-COPY colaclub-admin.jar /app.jar
+COPY ${JAR_FILE} /app.jar
 
 # 声明作用 无实际作用 由 run port 暴露容器的 80 端口
 EXPOSE 80
