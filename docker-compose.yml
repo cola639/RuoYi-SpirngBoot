@@ -1,4 +1,9 @@
-version: '3.8'
+# 配置网络组 及 网络组容器
+# 启动步骤
+# 1 export NETWORK_NAME=ruoyi
+# 2 docker-compose up -d
+
+version: "3.8"
 
 services:
   ruoyi-mysql:
@@ -9,7 +14,7 @@ services:
     ports:
       - "6060:3306"
     networks:
-      - ${NETWORK_NAME}  # 使用环境变量替代
+      - ${NETWORK_NAME} # 使用环境变量替代
 
   ruoyi-redis:
     image: redis
@@ -17,7 +22,7 @@ services:
     ports:
       - "6161:6379"
     networks:
-      - ${NETWORK_NAME}  # 使用环境变量替代
+      - ${NETWORK_NAME} # 使用环境变量替代
 
 networks:
   ${NETWORK_NAME}: # 使用环境变量定义网络名
