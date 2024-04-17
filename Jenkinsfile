@@ -9,7 +9,7 @@ pipeline {
         IMAGE_NAME = 'colaclub-admin'              // 定义 Docker 镜像的名字 JAR存放目录名字
         JAR_FILE = 'colaclub-admin.jar'            // 定义 JAR 文件名，可根据实际情况调整
         WS = "${WORKSPACE}"                        // 定义工作空间路径
-        PROFILE = 'prod'
+        PROFILE = 'prod'                           // 读取yml配置  	
     }
 
     // stages 包含所有执行阶段
