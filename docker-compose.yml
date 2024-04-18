@@ -1,7 +1,7 @@
 # 配置网络组 及 网络组容器
 # 启动步骤
-# 1 export NETWORK_NAME=ruoyi
-# 2 docker-compose up -d
+# 1声明变量 export NETWORK_NAME=ruoyi
+# 2执行安装 docker-compose up -d
 
 version: "3.8"
 
