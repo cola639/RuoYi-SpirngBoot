@@ -16,6 +16,13 @@ RUN addgroup -S spring && adduser -S spring -G spring
 # 安装字体 Captcha 库
 RUN apk add --no-cache ttf-dejavu
 
+# 避免服务监控接口报错
+# 安装 libc6-compat, glibc, libudev-dev
+# libc6-compat: 提供对 glibc 二进制兼容性的支持，用于运行依赖 glibc 的应用
+# glibc: 在 Alpine 中安装 GNU libc，辅助确保对传统 glibc 依赖的应用兼容性
+# libudev-dev: 提供 udev 库的开发资源，用于应用需要与设备管理交互
+RUN apk add --no-cache libc6-compat glibc libudev-dev
+
 # 创建日志文件在APP容器所需的目录
 # 与文件logback.xml  <property name="log.path" value="./logs"/> 一致
 # 这里第一个 spring 代表用户名，第二个 spring 代表用户组名。这意味着你将文件或目录的所有权更改为用户 spring 和组 spring
