@@ -16,12 +16,16 @@ RUN addgroup -S spring && adduser -S spring -G spring
 # 安装字体 Captcha 库
 RUN apk add --no-cache ttf-dejavu
 
-# 避免服务监控接口报错
-# 安装 libc6-compat, glibc, libudev-dev
-# libc6-compat: 提供对 glibc 二进制兼容性的支持，用于运行依赖 glibc 的应用
-# glibc: 在 Alpine 中安装 GNU libc，辅助确保对传统 glibc 依赖的应用兼容性
-# libudev-dev: 提供 udev 库的开发资源，用于应用需要与设备管理交互
-RUN apk add --no-cache libc6-compat glibc libudev-dev
+# 避免服务监控报错
+# 添加glibc的安装源
+RUN apk --no-cache add ca-certificates wget &&
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub &&
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.33-r0/glibc-2.33-r0.apk &&
+    apk add glibc-2.33-r0.apk
+
+# 需要 libudev-dev 的替代方案
+# 安装udev或相关库
+RUN apk --no-cache add eudev-dev
 
 # 创建日志文件在APP容器所需的目录
 # 与文件logback.xml  <property name="log.path" value="./logs"/> 一致
