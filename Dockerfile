@@ -18,10 +18,10 @@ RUN apk add --no-cache ttf-dejavu
 
 # 避免服务监控报错
 # 添加glibc的安装源
-RUN apk --no-cache add ca-certificates wget && \\
-wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \\
-wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.33-r0/glibc-2.33-r0.apk && \\
-apk add glibc-2.33-r0.apk
+RUN apk --no-cache add ca-certificates wget && \
+    wget -q -O /etc/apk/keys/sgerrand.rsa.pub https://alpine-pkgs.sgerrand.com/sgerrand.rsa.pub && \
+    wget https://github.com/sgerrand/alpine-pkg-glibc/releases/download/2.33-r0/glibc-2.33-r0.apk && \
+    apk add glibc-2.33-r0.apk
 
 # 需要 libudev-dev 的替代方案
 # 安装udev或相关库
