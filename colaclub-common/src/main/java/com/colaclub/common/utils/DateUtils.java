@@ -39,6 +39,21 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
     }
 
     /**
+     * 获取当前系统日期的 java.sql.Date 对象。
+     * 用于需要 java.sql.Date 类型的数据库操作。
+     * 示例：
+     * java.sql.Date sqlDate = DateUtils.getCurrentSqlDate();
+     * System.out.println(sqlDate); // 输出格式: YYYY-MM-DD, 如 2024-04-21
+     *
+     * @return 当前日期的 java.sql.Date 对象
+     */
+    public static Date getCurrentSqlDate() {
+        // 将当前系统日期的LocalDate实例转换为java.sql.Date实例
+        java.sql.Date sqlDate = java.sql.Date.valueOf(LocalDate.now());
+        return sqlDate;
+    }
+
+    /**
      * 获取当前日期, 默认格式为yyyy-MM-dd
      *
      * @return String
@@ -157,4 +172,5 @@ public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
         ZonedDateTime zdt = localDateTime.atZone(ZoneId.systemDefault());
         return Date.from(zdt.toInstant());
     }
+
 }

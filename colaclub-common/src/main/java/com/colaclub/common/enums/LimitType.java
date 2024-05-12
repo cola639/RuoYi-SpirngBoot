@@ -15,5 +15,15 @@ public enum LimitType {
     /**
      * 根据请求者IP进行限流
      */
-    IP
+    IP,
+
+    /**
+     * 用户帐户限流
+     */
+    USER,
+
+    /**
+     * 设备号限流
+     */
+    DEVICE
 }
