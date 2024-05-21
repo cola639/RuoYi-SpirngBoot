@@ -1,4 +1,4 @@
-package com.colaclub.web.controller.limit;
+package com.colaclub.web.controller.demo;
 
 import com.colaclub.common.annotation.RateLimiter;
 import com.colaclub.common.core.controller.BaseController;

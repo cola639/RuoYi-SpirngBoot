@@ -3,16 +3,22 @@
    - **功能**：表明方法是重写父类或实现接口中的方法。
    - **优势**：帮助捕获潜在错误，如方法名拼写错误或参数不匹配。
 
-2. **`@JsonFormat` 和 `@DateTimeFormat` 注解**
+2. **`@JsonFormat` 和 `@DateTimeFormat` **
    - **@JsonFormat**
      - **来源**：Jackson 库。
      - **用途**：控制 `java.util.Date` 的序列化和反序列化为 JSON。
      - **应用场景**：处理 JSON 数据，如 RESTful API。
+                                用于 REST API。
+                                控制 JSON 数据与 Java 对象之间的序列化和反序列化。
+                                适用于 JSON 请求体和响应体的日期格式处理。
      - **示例**：`@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")`。
    - **@DateTimeFormat**
      - **来源**：Spring 框架。
      - **用途**：绑定 URL 或表单参数到 Java 日期时间对象。
      - **应用场景**：处理 HTTP 请求参数，如 Spring MVC。
+                               用于表单数据（form data）。
+                               控制表单提交的数据与 Java 对象之间的绑定。
+                               适用于表单数据转换为对象属性时的日期格式处理。
      - **示例**：`@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")`。
 
 3. **`@JsonFormat` 在 `@RequestBody` 使用**
