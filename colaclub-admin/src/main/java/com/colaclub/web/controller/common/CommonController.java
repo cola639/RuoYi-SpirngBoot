@@ -6,6 +6,7 @@ import com.colaclub.common.core.domain.AjaxResult;
 import com.colaclub.common.utils.StringUtils;
 import com.colaclub.common.utils.file.FileUploadUtils;
 import com.colaclub.common.utils.file.FileUtils;
+import com.colaclub.common.utils.file.OssUtils;
 import com.colaclub.framework.config.ServerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+
+;
 
 /**
  * 通用请求处理
@@ -68,10 +71,13 @@ public class CommonController {
     public AjaxResult uploadFile(MultipartFile file) throws Exception {
         try {
             // 上传文件路径
-            String filePath = RuoYiConfig.getUploadPath();
+            //  String filePath = RuoYiConfig.getUploadPath();
             // 上传并返回新文件名称
-            String fileName = FileUploadUtils.upload(filePath, file);
-            String url = serverConfig.getUrl() + fileName;
+//            String fileName = FileUploadUtils.upload(filePath, file);
+            String fileName = OssUtils.uploadMultipartFile(file);
+            System.out.println("fileName = " + fileName);
+            String url = fileName;
+
             AjaxResult ajax = AjaxResult.success();
             ajax.put("url", url);
             ajax.put("fileName", fileName);

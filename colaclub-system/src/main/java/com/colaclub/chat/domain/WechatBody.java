@@ -1,4 +1,4 @@
-package com.colaclub.chat.domain.bo;
+package com.colaclub.chat.domain;
 
 import lombok.Data;
 

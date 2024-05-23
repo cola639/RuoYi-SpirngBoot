@@ -1,6 +1,6 @@
 package com.colaclub.chat.service;
 
-import com.colaclub.chat.model.UserChat;
+import com.colaclub.chat.domain.UserChat;
 
 import java.util.List;
 

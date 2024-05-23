@@ -1,7 +1,7 @@
 package com.colaclub.chat.service.impl;
 
+import com.colaclub.chat.domain.UserChat;
 import com.colaclub.chat.mapper.UserChatMapper;
-import com.colaclub.chat.model.UserChat;
 import com.colaclub.chat.service.IUserChatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

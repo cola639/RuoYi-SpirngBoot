@@ -1,6 +1,6 @@
 package com.colaclub.web.controller.thirdlogin;
 
-import com.colaclub.chat.domain.bo.LoginByOtherSourceBody;
+import com.colaclub.chat.domain.LoginByOtherSourceBody;
 import com.colaclub.common.constant.Constants;
 import com.colaclub.common.core.domain.AjaxResult;
 import com.colaclub.common.utils.uuid.IdUtils;

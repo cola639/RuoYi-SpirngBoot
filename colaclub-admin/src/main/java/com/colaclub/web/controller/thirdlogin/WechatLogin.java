@@ -1,7 +1,7 @@
 package com.colaclub.web.controller.thirdlogin;
 
-import com.colaclub.chat.domain.bo.LoginByOtherSourceBody;
-import com.colaclub.chat.domain.bo.WechatBody;
+import com.colaclub.chat.domain.LoginByOtherSourceBody;
+import com.colaclub.chat.domain.WechatBody;
 import com.colaclub.common.annotation.Anonymous;
 import com.colaclub.common.constant.Constants;
 import com.colaclub.common.core.domain.AjaxResult;

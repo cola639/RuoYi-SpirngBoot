@@ -1,7 +1,6 @@
 package com.colaclub.web.controller.chat;
 
-
-import com.colaclub.chat.model.UserChat;
+import com.colaclub.chat.domain.UserChat;
 import com.colaclub.chat.service.IUserChatService;
 import com.colaclub.common.annotation.Log;
 import com.colaclub.common.core.controller.BaseController;
@@ -14,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 /**
  * 聊天信息
@@ -64,6 +62,5 @@ public class UserChatController extends BaseController {
         }
 
     }
-
 
 }

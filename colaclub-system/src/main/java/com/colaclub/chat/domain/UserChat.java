@@ -1,4 +1,4 @@
-package com.colaclub.chat.model;
+package com.colaclub.chat.domain;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
@@ -26,7 +26,6 @@ public class UserChat implements Serializable {
     /**
      * 创建时间
      */
-
 
     private Date createTime;
 
