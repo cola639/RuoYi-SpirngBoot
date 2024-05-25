@@ -1,4 +1,4 @@
-package com.colaclub.demo.model;
+package com.colaclub.demo.domain;
 
 public class RedisRequest {
     private String key;

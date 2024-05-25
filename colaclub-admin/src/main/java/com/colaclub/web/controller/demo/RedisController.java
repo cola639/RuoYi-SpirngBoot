@@ -1,7 +1,7 @@
 package com.colaclub.web.controller.demo;
 
 import com.colaclub.common.core.redis.RedisCache;
-import com.colaclub.demo.model.RedisRequest;
+import com.colaclub.demo.domain.RedisRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
