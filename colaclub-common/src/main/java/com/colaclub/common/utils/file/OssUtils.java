@@ -1,21 +1,21 @@
-package com.colaclub.common.utils.file;
+ package com.colaclub.common.utils.file;
 
-import com.aliyun.oss.OSS;
-import com.aliyun.oss.OSSClientBuilder;
-import com.aliyun.oss.model.GetObjectRequest;
-import com.aliyun.oss.model.PutObjectRequest;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.web.multipart.MultipartFile;
+ import com.aliyun.oss.OSS;
+ import com.aliyun.oss.OSSClientBuilder;
+ import com.aliyun.oss.model.GetObjectRequest;
+ import com.aliyun.oss.model.PutObjectRequest;
+ import lombok.extern.log4j.Log4j2;
+ import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.time.LocalDateTime;
-import java.util.UUID;
+ import java.io.*;
+ import java.time.LocalDateTime;
+ import java.util.UUID;
 
-/**
+/ **
  * Oss服务调用
  */
-@Log4j2
-public class OssUtils {
+ @Log4j2
+ public class OssUtils {
 
     /**
      * Endpoint 存储对象概述  阿里云主账号AccessKey，accessKeySecret拥有所有API的访问权限  访问路径前缀  存储对象概述
@@ -57,7 +57,8 @@ public class OssUtils {
      * @param multipartFile
      */
     public static String uploadMultipartFile(MultipartFile multipartFile) {
-        return uploadMultipartFile(bucketName, getOssFilePath(multipartFile.getOriginalFilename()), multipartFile);
+        return uploadMultipartFile(bucketName,
+ getOssFilePath(multipartFile.getOriginalFilename()), multipartFile);
     }
 
     /**
@@ -67,7 +68,8 @@ public class OssUtils {
      * @param ossPath
      * @param multipartFile
      */
-    public static String uploadMultipartFile(String bucketName, String ossPath, MultipartFile multipartFile) {
+    public static String uploadMultipartFile(String bucketName, String ossPath, MultipartFile
+ multipartFile) {
         InputStream inputStream = null;
         try {
             inputStream = multipartFile.getInputStream();
@@ -87,7 +89,8 @@ public class OssUtils {
      */
     public static String uploadFileForBucket(String bucketName, String ossPath, String filePath) {
         // 创建PutObjectRequest对象。
-        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, ossPath, new File(filePath));
+        PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, ossPath, new
+ File(filePath));
 
         // 上传
         ossClient.putObject(putObjectRequest);
@@ -101,7 +104,8 @@ public class OssUtils {
      * @param ossPath    oss存储路径
      * @param filePath   本地文件路径
      */
-    public static String uploadFileInputStreamForBucket(String bucketName, String ossPath, String filePath) {
+    public static String uploadFileInputStreamForBucket(String bucketName, String ossPath, String
+ filePath) {
 
         // 填写本地文件的完整路径。如果未指定本地路径，则默认从示例程序所属项目对应本地路径中上传文件流。
         InputStream inputStream = null;
@@ -115,7 +119,8 @@ public class OssUtils {
         return accessPre + ossPath;
     }
 
-    public static void uploadFileInputStreamForBucket(String bucketName, String ossPath, InputStream inputStream) {
+    public static void uploadFileInputStreamForBucket(String bucketName, String ossPath,
+ InputStream inputStream) {
         ossClient.putObject(bucketName, ossPath, inputStream);
     }
 
@@ -136,7 +141,8 @@ public class OssUtils {
      * @param ossFilePath oss存储路径
      * @param filePath    本地文件路径
      */
-    public static void downloadFileForBucket(String bucketName, String ossFilePath, String filePath) {
+    public static void downloadFileForBucket(String bucketName, String ossFilePath, String
+ filePath) {
         ossClient.getObject(new GetObjectRequest(bucketName, ossFilePath), new File(filePath));
     }
 
@@ -159,4 +165,4 @@ public class OssUtils {
         return getOssDefaultPath() + UUID.randomUUID().toString() + "." + fileSuf;
     }
 
-}
+ }
