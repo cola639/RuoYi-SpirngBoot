@@ -366,3 +366,117 @@ user_id | username | nickname
 - **数据一致性**：所有数据都有明确的意义，避免了数据缺失的问题。
 
 通过为列设置默认值或使用特定的标记值，可以有效地避免`NULL`值，简化数据库操作，提升数据质量。
+
+在数据库设计中，为不同数据类型设置默认值时，具体语法和策略可能会有所不同。下面是一些常见的数据类型及其默认值的设置示例，包括字符串、整数、浮点数、布尔值、日期和时间类型。
+
+### 1. 字符串类型
+
+如果要为字符串类型（如VARCHAR、CHAR）设置默认值，可以使用以下语法：
+
+```sql
+CREATE TABLE users
+(
+    user_id  INT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    nickname VARCHAR(50) NOT NULL DEFAULT 'N/A'
+);
+```
+
+### 2. 整数类型
+
+对于整数类型（如INT、SMALLINT、BIGINT），可以设置一个默认数值：
+
+```sql
+CREATE TABLE products
+(
+    product_id   INT PRIMARY KEY,
+    product_name VARCHAR(100) NOT NULL,
+    quantity     INT          NOT NULL DEFAULT 0
+);
+```
+
+### 3. 浮点数类型
+
+对于浮点数类型（如FLOAT、DOUBLE、DECIMAL），可以设置一个默认浮点数值：
+
+```sql
+CREATE TABLE transactions
+(
+    transaction_id   INT PRIMARY KEY,
+    amount           DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    transaction_date DATE           NOT NULL
+);
+```
+
+### 4. 布尔类型
+
+对于布尔类型（如BOOLEAN或BIT），可以设置一个默认布尔值：
+
+```sql
+CREATE TABLE tasks
+(
+    task_id      INT PRIMARY KEY,
+    task_name    VARCHAR(100) NOT NULL,
+    is_completed BOOLEAN      NOT NULL DEFAULT FALSE
+);
+```
+
+### 5. 日期和时间类型
+
+对于日期和时间类型（如DATE、TIME、DATETIME、TIMESTAMP），可以设置一个默认日期或时间值：
+
+```sql
+CREATE TABLE events
+(
+    event_id   INT PRIMARY KEY,
+    event_name VARCHAR(100) NOT NULL,
+    event_date DATE         NOT NULL DEFAULT '2024-01-01'
+);
+
+CREATE TABLE logs
+(
+    log_id      INT PRIMARY KEY,
+    log_message VARCHAR(255) NOT NULL,
+    created_at  TIMESTAMP    NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+### 6. 其他数据类型示例
+
+#### 枚举类型
+
+如果使用枚举类型，可以为枚举设置一个默认值（具体语法取决于数据库系统）。
+
+```sql
+CREATE TABLE orders
+(
+    order_id INT PRIMARY KEY,
+    status   ENUM('pending', 'shipped', 'delivered', 'canceled') NOT NULL DEFAULT 'pending'
+);
+```
+
+#### 二进制类型
+
+对于二进制类型（如BLOB），通常不会设置默认值，但如果需要，可以设置一个空的默认值。
+
+```sql
+CREATE TABLE files
+(
+    file_id   INT PRIMARY KEY,
+    file_data BLOB DEFAULT NULL
+);
+```
+
+### 总结
+
+为不同数据类型设置默认值时，请确保默认值的类型与列的数据类型匹配。以下是一些常见的数据类型及其默认值的总结：
+
+- **字符串类型**: `nickname VARCHAR(50) NOT NULL DEFAULT 'N/A'`
+- **整数类型**: `quantity INT NOT NULL DEFAULT 0`
+- **浮点数类型**: `amount DECIMAL(10, 2) NOT NULL DEFAULT 0.00`
+- **布尔类型**: `is_completed BOOLEAN NOT NULL DEFAULT FALSE`
+- **日期和时间类型**: `event_date DATE NOT NULL DEFAULT '2024-01-01'`
+- **枚举类型**: `status ENUM('pending', 'shipped', 'delivered', 'canceled') NOT NULL DEFAULT 'pending'`
+- **二进制类型**: `file_data BLOB DEFAULT NULL`
+
+通过为不同类型的列设置适当的默认值，可以确保数据库中的数据在插入时具有一致性和合理的初始状态。
