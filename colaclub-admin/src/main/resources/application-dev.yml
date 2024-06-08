@@ -188,3 +188,11 @@ third-login:
   wechatAppId: wx1f0d8819538e9511
   wechatAppSecret: cada9a4be2e08dcd6167ca5203a09abe
   wechatUrl: https://api.weixin.qq.com/sns/jscode2session
+
+# OSS存储配置
+oss:
+  # minio OSS
+  minioEndpoint: http://148.135.43.239:9090/
+  minioAccessKey: d6iGB8RN1a4Cq6l00E87
+  minioSecretKey: RLogqIVYoHVsHAlD2Giairc2EAEt3p1gPg7jEPlN
+  minioBucket: dev-ruoyi
