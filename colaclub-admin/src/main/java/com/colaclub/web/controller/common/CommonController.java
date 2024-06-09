@@ -4,8 +4,10 @@ import com.colaclub.common.config.RuoYiConfig;
 import com.colaclub.common.constant.Constants;
 import com.colaclub.common.core.domain.AjaxResult;
 import com.colaclub.common.utils.StringUtils;
+import com.colaclub.common.utils.file.FileUploadUtils;
 import com.colaclub.common.utils.file.FileUtils;
-import com.colaclub.common.utils.file.MinioOSSUtils;
+import com.colaclub.common.utils.file.MinioTemplate;
+import com.colaclub.common.utils.uuid.UUID;
 import com.colaclub.framework.config.ServerConfig;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -31,7 +34,17 @@ import org.springframework.web.multipart.MultipartFile;
 public class CommonController {
   private static final Logger log = LoggerFactory.getLogger(CommonController.class);
   private static final String FILE_DELIMETER = ",";
+  private static ApplicationContext context;
   @Autowired private ServerConfig serverConfig;
+
+  @Autowired
+  public void setApplicationContext(ApplicationContext applicationContext) {
+    context = applicationContext;
+  }
+
+  private MinioTemplate getMinioTemplate() {
+    return context.getBean(MinioTemplate.class);
+  }
 
   /**
    * 通用下载请求
@@ -65,17 +78,28 @@ public class CommonController {
   @PostMapping("/upload")
   public AjaxResult uploadFile(MultipartFile file) throws Exception {
     try {
-      //  String filePath = RuoYiConfig.getUploadPath();       // 上传文件路径
-      //   String fileName = FileUploadUtils.upload(filePath, file);  // 上传并返回新文件名称
+      // 本地保存文件
+      //      String filePath = RuoYiConfig.getUploadPath(); // 上传文件路径
+      //      String fileName = FileUploadUtils.upload(filePath, file); // 上传并返回新文件名称
+      //      System.out.println(fileName);
+      //      String url = serverConfig.getUrl() + fileName;
 
-      String fileName = MinioOSSUtils.uploadMultipartFile(file);
-      System.out.println(fileName);
-      String url = serverConfig.getUrl() + fileName;
+      // minio 上传文件
+      System.out.println("文件正在上传");
+      String originalFilename = file.getOriginalFilename();
+      String uuid = UUID.randomUUID().toString();
+      String imgType = originalFilename.substring(originalFilename.lastIndexOf("."));
+      String finalFileName = "images/" + uuid + imgType;
+      MinioTemplate minioTemplate = getMinioTemplate();
+      String fileName = minioTemplate.putObject(finalFileName, file);
+
+      // 下面一致
       AjaxResult ajax = AjaxResult.success();
-      ajax.put("url", url);
+      ajax.put("url", fileName); // 上传文件保存返回路径
       ajax.put("fileName", fileName);
       ajax.put("newFileName", FileUtils.getName(fileName));
       ajax.put("originalFilename", file.getOriginalFilename());
+
       return ajax;
     } catch (Exception e) {
       return AjaxResult.error(e.getMessage());
@@ -94,8 +118,7 @@ public class CommonController {
       List<String> originalFilenames = new ArrayList<String>();
       for (MultipartFile file : files) {
         // 上传并返回新文件名称
-        //   String fileName = FileUploadUtils.upload(filePath, file);
-        String fileName = MinioOSSUtils.uploadMultipartFile(file);
+        String fileName = FileUploadUtils.upload(filePath, file);
         String url = serverConfig.getUrl() + fileName;
         urls.add(url);
         fileNames.add(fileName);

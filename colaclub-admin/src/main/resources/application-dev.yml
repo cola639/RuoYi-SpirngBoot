@@ -192,7 +192,7 @@ third-login:
 # OSS存储配置
 oss:
   # minio OSS
-  minioEndpoint: http://148.135.43.239:9090/
+  minioEndpoint: http://148.135.43.239:9000
   minioAccessKey: d6iGB8RN1a4Cq6l00E87
   minioSecretKey: RLogqIVYoHVsHAlD2Giairc2EAEt3p1gPg7jEPlN
   minioBucket: dev-ruoyi
