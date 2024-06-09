@@ -6,7 +6,7 @@ import com.colaclub.common.core.domain.AjaxResult;
 import com.colaclub.common.utils.StringUtils;
 import com.colaclub.common.utils.file.FileUploadUtils;
 import com.colaclub.common.utils.file.FileUtils;
-import com.colaclub.common.utils.file.MinioTemplate;
+import com.colaclub.common.utils.file.MinioOSSUtils;
 import com.colaclub.common.utils.uuid.UUID;
 import com.colaclub.framework.config.ServerConfig;
 import java.util.ArrayList;
@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,17 +33,9 @@ import org.springframework.web.multipart.MultipartFile;
 public class CommonController {
   private static final Logger log = LoggerFactory.getLogger(CommonController.class);
   private static final String FILE_DELIMETER = ",";
-  private static ApplicationContext context;
+
   @Autowired private ServerConfig serverConfig;
-
-  @Autowired
-  public void setApplicationContext(ApplicationContext applicationContext) {
-    context = applicationContext;
-  }
-
-  private MinioTemplate getMinioTemplate() {
-    return context.getBean(MinioTemplate.class);
-  }
+  @Autowired private MinioOSSUtils minioOSSUtils;
 
   /**
    * 通用下载请求
@@ -90,8 +81,8 @@ public class CommonController {
       String uuid = UUID.randomUUID().toString();
       String imgType = originalFilename.substring(originalFilename.lastIndexOf("."));
       String finalFileName = "images/" + uuid + imgType;
-      MinioTemplate minioTemplate = getMinioTemplate();
-      String fileName = minioTemplate.putObject(finalFileName, file);
+      // 使用 MinioOSSUtils 上传文件
+      String fileName = minioOSSUtils.putObject(finalFileName, file);
 
       // 下面一致
       AjaxResult ajax = AjaxResult.success();

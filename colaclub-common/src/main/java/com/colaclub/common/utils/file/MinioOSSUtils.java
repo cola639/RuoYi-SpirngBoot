@@ -14,17 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Component
-public class MinioTemplate {
+public class MinioOSSUtils {
   @Value("${oss.minioBucket}")
   public String bucketName;
 
@@ -42,7 +38,6 @@ public class MinioTemplate {
               .map(bucket -> bucket.name())
               .collect(Collectors.toList());
       System.out.println("buckets = " + buckets);
-
       return true;
     } catch (MinioException | IOException | InvalidKeyException | NoSuchAlgorithmException e) {
       System.out.println("e = " + e);
@@ -56,24 +51,17 @@ public class MinioTemplate {
    * @param bucketName
    * @return
    */
-  @SneakyThrows
-  public Boolean existBucket(String bucketName) {
-    boolean exist = minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
-    System.out.println("exist = " + exist);
-    if (!exist) {
-      return false;
-    }
-    return true;
+  public Boolean existBucket(String bucketName) throws Exception {
+    return minioClient.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
   }
 
   /**
    * 创建桶
    *
    * @param bucketName
-   * @return
+   * @throws Exception
    */
-  @SneakyThrows
-  public void makeBucket(String bucketName) {
+  public void makeBucket(String bucketName) throws Exception {
     minioClient.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
   }
 
@@ -82,19 +70,10 @@ public class MinioTemplate {
    *
    * @param objectName
    * @param file
-   * @return
-   * @throws Exception
-   */
-  /**
-   * 上传对象
-   *
-   * @param objectName
-   * @param file
    * @return 文件的预览或下载 URL
    * @throws Exception
    */
-  @SneakyThrows
-  public String putObject(String objectName, MultipartFile file) {
+  public String putObject(String objectName, MultipartFile file) throws Exception {
     System.out.println("objectName = " + objectName);
     System.out.println("bucketName = " + bucketName);
     // 判断桶是否存在
@@ -112,18 +91,16 @@ public class MinioTemplate {
       minioClient.putObject(args);
 
       // 返回文件的预览或下载 URL
-      System.out.println("url = " + minioEndpoint + "/" + bucketName + "/" + objectName);
       return minioEndpoint + "/" + bucketName + "/" + objectName;
 
-      // 返回带签名的 URL，有效期为7天
-      //      return minioClient.getPresignedObjectUrl(
-      //              GetPresignedObjectUrlArgs.builder()
-      //                      .method(Method.GET)
-      //                      .bucket(bucketName)
-      //                      .object(objectName)
-      //                      .expiry(7, TimeUnit.DAYS)
-      //                      .build());
-
+      // 如果需要带签名的 URL，可以使用下面的代码返回带签名的 URL
+      // return minioClient.getPresignedObjectUrl(
+      //    GetPresignedObjectUrlArgs.builder()
+      //       .method(Method.GET)
+      //       .bucket(bucketName)
+      //       .object(objectName)
+      //       .expiry(7, TimeUnit.DAYS)
+      //       .build());
     }
     return null;
   }
@@ -135,8 +112,7 @@ public class MinioTemplate {
    * @return
    * @throws Exception
    */
-  @SneakyThrows
-  public boolean removeObject(String objectName) {
+  public boolean removeObject(String objectName) throws Exception {
     boolean flag = existBucket(bucketName);
     if (flag) {
       RemoveObjectArgs args =
@@ -154,14 +130,11 @@ public class MinioTemplate {
    * @return
    * @throws Exception
    */
-  @SneakyThrows
-  public ObjectStat getMessage(String objectName) {
+  public ObjectStat getMessage(String objectName) throws Exception {
     boolean flag = existBucket(bucketName);
     if (flag) {
-      ObjectStat statObject =
-          minioClient.statObject(
-              StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
-      return statObject;
+      return minioClient.statObject(
+          StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
     }
     return null;
   }
@@ -171,15 +144,14 @@ public class MinioTemplate {
    *
    * @param objectName
    * @return
+   * @throws Exception
    */
-  @SneakyThrows
-  public String getObjectUrl(String objectName) {
-    Boolean flag = existBucket(bucketName);
-    String url = "";
+  public String getObjectUrl(String objectName) throws Exception {
+    boolean flag = existBucket(bucketName);
     if (flag) {
-      url = minioClient.getObjectUrl(bucketName, objectName);
+      return minioClient.getObjectUrl(bucketName, objectName);
     }
-    return url;
+    return null;
   }
 
   /**
@@ -195,7 +167,7 @@ public class MinioTemplate {
       in =
           minioClient.getObject(
               GetObjectArgs.builder().bucket(bucketName).object(filename).build());
-      int length = 0;
+      int length;
       byte[] buffer = new byte[1024];
       out = response.getOutputStream();
       response.reset();
@@ -208,19 +180,15 @@ public class MinioTemplate {
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      if (in != null) {
-        try {
+      try {
+        if (in != null) {
           in.close();
-        } catch (Exception e) {
-          throw new RuntimeException(e);
         }
-      }
-      if (out != null) {
-        try {
+        if (out != null) {
           out.close();
-        } catch (IOException e) {
-          e.printStackTrace();
         }
+      } catch (IOException e) {
+        e.printStackTrace();
       }
     }
   }

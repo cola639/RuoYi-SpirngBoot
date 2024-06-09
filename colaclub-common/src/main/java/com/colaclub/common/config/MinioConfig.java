@@ -12,18 +12,27 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "oss")
 public class MinioConfig {
   private static final Logger log = LoggerFactory.getLogger(MinioConfig.class);
-
   /** 地域节点 */
   private String minioEndpoint;
-
   /** AccessKey */
   private String minioAccessKey;
-
   /** SecretKey */
   private String minioSecretKey;
-
   /** bucket名称 */
   private String minioBucket;
+
+  /** 注入客户端 */
+  @Bean
+  public MinioClient minioClient() {
+    log.info("Initializing MinioClient with URL: {}", minioEndpoint);
+    MinioClient minioClient =
+        MinioClient.builder()
+            .credentials(minioAccessKey, minioSecretKey)
+            .endpoint(minioEndpoint)
+            .build();
+    log.info("MinioClient initialized successfully");
+    return minioClient;
+  }
 
   public String getMinioEndpoint() {
     return minioEndpoint;
@@ -73,18 +82,5 @@ public class MinioConfig {
         + minioBucket
         + '\''
         + '}';
-  }
-
-  /** 注入客户端 */
-  @Bean
-  public MinioClient minioClient() {
-    log.info("Initializing MinioClient with URL: {}", minioEndpoint);
-    MinioClient minioClient =
-        MinioClient.builder()
-            .credentials(minioAccessKey, minioSecretKey)
-            .endpoint(minioEndpoint)
-            .build();
-    log.info("MinioClient initialized successfully");
-    return minioClient;
   }
 }
