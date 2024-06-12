@@ -13,7 +13,7 @@ ENV JAR_FILE=${JAR_FILE}
 #  在 Docker 容器内创建一个名为 spring 的用户和用户组，用于运行容器进程，避免使用 root 权限，增强安全性
 RUN addgroup -S spring && adduser -S spring -G spring
 
-# 安装字体 Captcha 库
+# 安装生成Captcha需要的字体 库
 RUN apk add --no-cache ttf-dejavu
 
 # 避免服务监控报错
