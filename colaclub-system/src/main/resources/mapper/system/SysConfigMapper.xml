@@ -73,6 +73,26 @@
         where config_key = #{configKey} limit 1
     </select>
 
+    <!--
+     INSERT INTO sys_config (
+        config_name,
+        config_key,
+        config_value,
+        config_type,
+        create_by,
+        remark,
+        create_time
+    )
+    VALUES (
+        'ExampleConfig',
+        'exampleKey',
+        'exampleValue',
+        'type1',
+        'admin',
+        'This is a remark',
+        sysdate()
+    );
+    -->
     <insert id="insertConfig" parameterType="SysConfig">
         insert into sys_config (
         <if test="configName != null and configName != '' ">config_name,</if>

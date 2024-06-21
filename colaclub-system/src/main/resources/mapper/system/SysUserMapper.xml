@@ -46,6 +46,13 @@
         <result property="status" column="role_status"/>
     </resultMap>
 
+    <!--
+                `u`, `d`, 和 `r` 是表的别名
+              - `u`：代表 `sys_user` 表，用于存储用户信息。
+              - `d`：代表 `sys_dept` 表，用于存储部门信息。
+              -  `r`：代表 `sys_role` 表，用于存储角色信息。
+              left join 左连接
+     -->
     <sql id="selectUserVo">
         select u.user_id,
                u.dept_id,
@@ -209,6 +216,7 @@
         sysdate()
         )
     </insert>
+
 
     <update id="updateUser" parameterType="SysUser">
         update sys_user
