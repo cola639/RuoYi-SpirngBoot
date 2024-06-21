@@ -1,11 +1,11 @@
 package com.colaclub.web.controller.thirdlogin;
 
-import com.colaclub.chat.domain.LoginByOtherSourceBody;
 import com.colaclub.common.constant.Constants;
 import com.colaclub.common.core.domain.AjaxResult;
 import com.colaclub.common.utils.uuid.IdUtils;
 import com.colaclub.framework.config.ThirdLogins;
 import com.colaclub.framework.web.service.SysLoginService;
+import com.colaclub.thirdlogin.LoginByOtherSourceBody;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.request.AuthGiteeRequest;
 import me.zhyd.oauth.request.AuthRequest;
