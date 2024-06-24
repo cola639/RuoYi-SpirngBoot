@@ -144,8 +144,8 @@ token:
   header: Authorization
   # 令牌密钥
   secret: abcdefghijklmnopqrstuvwxyz
-  # 令牌有效期（默认30分钟）
-  expireTime: 1440
+  # 令牌有效期 -1代表永不过期（默认30分钟）单位分钟
+  expireTime: 60
 
 # MyBatis配置
 mybatis:

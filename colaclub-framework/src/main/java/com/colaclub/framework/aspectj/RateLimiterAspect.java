@@ -17,6 +17,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.List;
@@ -67,14 +68,38 @@ public class RateLimiterAspect {
     }
 
     public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) {
+        HttpServletRequest request = ServletUtils.getRequest();
         StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
+
+        // 根据限流类型添加不同的后缀到 key
         if (rateLimiter.limitType() == LimitType.IP) {
-            stringBuffer.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
+            stringBuffer.append(IpUtils.getIpAddr(request)).append("-");
+        } else if (rateLimiter.limitType() == LimitType.DEVICE) {
+            String deviceId = request.getHeader("Device-Id");  // 从请求头中获取设备号
+            if (StringUtils.isNotEmpty(deviceId)) {
+                stringBuffer.append(deviceId).append("-");
+            } else {
+                throw new ServiceException("设备号缺失，无法进行限流");
+            }
         }
+
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Class<?> targetClass = method.getDeclaringClass();
         stringBuffer.append(targetClass.getName()).append("-").append(method.getName());
         return stringBuffer.toString();
     }
+
+//    public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) {
+//        StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
+//        if (rateLimiter.limitType() == LimitType.IP) {
+//            stringBuffer.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
+//        }
+//        MethodSignature signature = (MethodSignature) point.getSignature();
+//        Method method = signature.getMethod();
+//        Class<?> targetClass = method.getDeclaringClass();
+//        stringBuffer.append(targetClass.getName()).append("-").append(method.getName());
+//        return stringBuffer.toString();
+//    }
+
 }
