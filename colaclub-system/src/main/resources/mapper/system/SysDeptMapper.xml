@@ -92,6 +92,8 @@
     <select id="selectChildrenDeptById" parameterType="Long" resultMap="SysDeptResult">
         select *
         from sys_dept
+        --           `find_in_set` 函数来检查 `ancestors` 列中是否包含指定的 `deptId`
+        --           `ancestors` 通常是一个以逗号分隔的字符串，表示该部门的所有上级部门ID。
         where find_in_set(#{deptId}, ancestors)
     </select>
 
