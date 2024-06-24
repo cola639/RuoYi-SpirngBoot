@@ -11,6 +11,7 @@
 7. `@Profile`
 8. `@PropertySource`
 9. `@Value`
+10. `@Component`
 
 ### 二、Web相关注解
 
@@ -98,6 +99,7 @@
 7. **`@Profile`**：指定配置的适用环境。
 8. **`@PropertySource`**：加载属性文件。
 9. **`@Value`**：注入属性值。
+10. **`@Component`**：一个基础注解，表明这个类是一个Spring Bean，应该被Spring容器自动检测和实例化。
 
 #### Web相关注解
 
@@ -130,8 +132,8 @@
 5. **`@Query`**：定义JPQL查询。
 6. **`@Modifying`**：声明更新查询。
 7. **`@Param`**：绑定查询参数。
-
-#### Spring AOP相关注解
+    
+#### Spring AOP相关注解 Action oriented programming
 
 1. **`@Aspect`**：定义切面。
 2. **`@Before`**：定义前置通知。
