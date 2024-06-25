@@ -1,11 +1,10 @@
 package com.colaclub.web.controller.demo;
 
-import com.colaclub.common.annotation.RateLimiter;
 import com.colaclub.common.annotation.RepeatSubmit;
 import com.colaclub.common.core.controller.BaseController;
-import com.colaclub.common.enums.LimitType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -14,18 +13,13 @@ import org.springframework.web.bind.annotation.RestController;
  * @author colaclub
  */
 @RestController
-@RequestMapping("/location")
+@RequestMapping("/repeatSubmit")
 public class RepeatController extends BaseController {
 
-  @RepeatSubmit()
-  @RateLimiter(key = "getLocation", time = 60, count = 10, limitType = LimitType.DEVICE)
+  @RepeatSubmit(interval = 5000, message = "请不要重复提交请求")
   @GetMapping("")
-  public String getLocation() {
-    // 假设的位置数据
-    String locationData = "{ \"latitude\": \"40.7128\", \"longitude\": \"-74.0060\" }"; // 纽约的经纬度
-    // 在实际应用中，这里可能会是从数据库或外部API获取的数据
-
-    // 返回位置数据
-    return locationData;
+  public String submitForm(@RequestParam String data) {
+    // 处理提交请求的逻辑
+    return "提交成功：" + data;
   }
 }
