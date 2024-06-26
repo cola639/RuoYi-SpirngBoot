@@ -22,6 +22,7 @@
     </resultMap>
 
     <sql id="selectRoleVo">
+        -- 期望返回的数据不存在重复数据
         select distinct r.role_id,
                         r.role_name,
                         r.role_key,

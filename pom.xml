@@ -267,7 +267,6 @@
                 <spring.active>dev</spring.active>
             </properties>
             <activation>
-
                 <activeByDefault>true</activeByDefault>
             </activation>
         </profile>

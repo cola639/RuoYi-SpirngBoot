@@ -95,6 +95,7 @@
     </select>
 
     <update id="cleanOperLog">
+        --     清空整个操作日志表
         truncate table sys_oper_log
     </update>
 
