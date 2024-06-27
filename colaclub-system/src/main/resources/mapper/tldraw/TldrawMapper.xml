@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.colaclub.tldraw.mapper.TldrawMapper">
+    
+    <resultMap type="Tldraw" id="TldrawResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="title"    column="title"    />
+        <result property="roomId"    column="room_id"    />
+        <result property="members"    column="members"    />
+        <result property="type"    column="type"    />
+        <result property="cover"    column="cover"    />
+        <result property="status"    column="status"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectTldrawVo">
+        select id, user_id, title, room_id, members, type, cover, status, remarks, create_by, update_by, create_time, update_time from tldraw
+    </sql>
+
+    <select id="selectTldrawList" parameterType="Tldraw" resultMap="TldrawResult">
+        <include refid="selectTldrawVo"/>
+        <where>  
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="roomId != null  and roomId != ''"> and room_id = #{roomId}</if>
+            <if test="members != null  and members != ''"> and members = #{members}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="cover != null  and cover != ''"> and cover = #{cover}</if>
+            <if test="status != null  and status != ''"> and status = #{status}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+        </where>
+    </select>
+    
+    <select id="selectTldrawById" parameterType="Long" resultMap="TldrawResult">
+        <include refid="selectTldrawVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTldraw" parameterType="Tldraw" useGeneratedKeys="true" keyProperty="id">
+        insert into tldraw
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="title != null and title != ''">title,</if>
+            <if test="roomId != null and roomId != ''">room_id,</if>
+            <if test="members != null and members != ''">members,</if>
+            <if test="type != null">type,</if>
+            <if test="cover != null">cover,</if>
+            <if test="status != null">status,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="title != null and title != ''">#{title},</if>
+            <if test="roomId != null and roomId != ''">#{roomId},</if>
+            <if test="members != null and members != ''">#{members},</if>
+            <if test="type != null">#{type},</if>
+            <if test="cover != null">#{cover},</if>
+            <if test="status != null">#{status},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTldraw" parameterType="Tldraw">
+        update tldraw
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="title != null and title != ''">title = #{title},</if>
+            <if test="roomId != null and roomId != ''">room_id = #{roomId},</if>
+            <if test="members != null and members != ''">members = #{members},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="cover != null">cover = #{cover},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTldrawById" parameterType="Long">
+        delete from tldraw where id = #{id}
+    </delete>
+
+    <delete id="deleteTldrawByIds" parameterType="String">
+        delete from tldraw where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
