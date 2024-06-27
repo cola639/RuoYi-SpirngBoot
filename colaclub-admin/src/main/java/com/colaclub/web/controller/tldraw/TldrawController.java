@@ -12,6 +12,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,7 +63,7 @@ public class TldrawController extends BaseController {
   @PreAuthorize("@ss.hasPermi('tldraw:add')")
   @Log(title = "tldraw", businessType = BusinessType.INSERT)
   @PostMapping
-  public AjaxResult add(@RequestBody Tldraw tldraw) {
+  public AjaxResult add(@Validated @RequestBody Tldraw tldraw) {
     return toAjax(tldrawService.insertTldraw(tldraw));
   }
 
