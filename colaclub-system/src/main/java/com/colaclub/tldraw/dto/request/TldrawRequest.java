@@ -1,4 +1,4 @@
-package com.colaclub.tldraw.domain;
+package com.colaclub.tldraw.dto.request;
 
 import com.colaclub.common.annotation.Excel;
 import com.colaclub.common.core.domain.BaseEntity;
@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author colaclub
  * @date 2024-06-27
  */
-public class Tldraw extends BaseEntity {
+public class TldrawRequest extends BaseEntity {
   private static final long serialVersionUID = 1L;
 
   /** ID */

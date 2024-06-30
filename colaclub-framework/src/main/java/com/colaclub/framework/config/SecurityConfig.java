@@ -25,6 +25,7 @@ import org.springframework.web.filter.CorsFilter;
  *
  * @author colaclub
  */
+/** 这个注解启用了 Spring Security 的全局方法安全性支持 */
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
   /** 自定义用户认证逻辑 */

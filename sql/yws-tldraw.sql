@@ -7,7 +7,7 @@ CREATE TABLE tldraw
 (
     id          bigint(20)   NOT NULL AUTO_INCREMENT COMMENT 'ID',
     user_id     bigint(20)   NOT NULL COMMENT '创建用户ID',
-    title       varchar(255) NOT NULL COMMENT '标题',
+    title       varchar(255) NOT NULL COMMENT '房间标题',
     room_id     varchar(255) NOT NULL COMMENT '房间ID',
     members     varchar(255) NOT NULL COMMENT '用户群组',
     type        varchar(50)  DEFAULT '' COMMENT '类型 (0文件夹 1白板)',
