@@ -9,7 +9,7 @@ pipeline {
         IMAGE_NAME = 'colaclub-admin'              // 定义 Docker 镜像的名字 JAR存放目录名字
         JAR_FILE = 'colaclub-admin.jar'            // 定义 JAR 文件名，可根据实际情况调整
         WS = "${WORKSPACE}"                        // 定义工作空间路径
-        PROFILE = 'prod'                           // 读取yml配置
+        PROFILE = 'prod'                           // 读取yml配置  	
     }
 
     // stages 包含所有执行阶段
@@ -59,7 +59,7 @@ pipeline {
         stage('4.Deploy') {
             steps {
                 // 前端nginx需配置后端服务监听的端口 即application-prod.yml中的port
-                sh 'docker run -d --net ${NETWORK} -p 80 --name ${IMAGE_NAME} ${IMAGE_NAME}'
+                sh 'docker run -d --net ${NETWORK} --name ${IMAGE_NAME} ${IMAGE_NAME}'
                 // 方式 2 -p 80 告诉 Docker 自动分配一个可用的宿主机端口，并将其映射到容器的 80 端口。
                 // docker run -d --net ${NETWORK} -p 80 --name ${IMAGE_NAME} ${IMAGE_NAME}
                 // 方式 3 如果需要对外暴露后端接口换下面 8887为宿主机端口
