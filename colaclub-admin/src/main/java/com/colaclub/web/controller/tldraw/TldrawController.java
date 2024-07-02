@@ -79,7 +79,6 @@ public class TldrawController extends BaseController {
   }
 
   /** roomNum获取UUID */
-  @PreAuthorize("@ss.hasPermi('tldraw:join')")
   @Log(title = "tldraw", businessType = BusinessType.UPDATE)
   @GetMapping("/getUUID")
   public AjaxResult join(@RequestParam String roomNum) {
@@ -89,7 +88,7 @@ public class TldrawController extends BaseController {
       return AjaxResult.error("房间号不存在");
     } else {
       AjaxResult ajax = AjaxResult.success();
-      ajax.put("data", uuid);
+      ajax.put("uuid", uuid);
       return ajax;
     }
   }
@@ -107,11 +106,12 @@ public class TldrawController extends BaseController {
 
     Long userId = SecurityUtils.getUserId();
     String members = tldraw.getMembers();
+    String status = tldraw.getStatus();
 
-    // members 转化为数组 判断userId 是否成员之一
+    // members 转化为数组 判断userId 是否成员之一 或是公开房间
     List<String> memberList = Arrays.asList(members.split(","));
 
-    if (memberList.contains(String.valueOf(userId))) {
+    if (memberList.contains(String.valueOf(userId)) || status.equals('1')) {
       return AjaxResult.success(tldraw);
     } else {
       return AjaxResult.error("您不在此房间的成员列表中");
