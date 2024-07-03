@@ -166,6 +166,7 @@ public class TldrawController extends BaseController {
   @GetMapping("/list")
   public TableDataInfo list(Tldraw tldraw) {
     startPage();
+    startOrderBy();
     List<Tldraw> list = tldrawService.selectTldrawList(tldraw);
     return getDataTable(list);
   }

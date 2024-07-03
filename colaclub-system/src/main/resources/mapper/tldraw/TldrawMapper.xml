@@ -40,14 +40,22 @@
     <select id="selectTldrawList" parameterType="Tldraw" resultMap="TldrawResult">
         <include refid="selectTldrawVo"/>
         <where>
-            <if test="userId != null ">and user_id = #{userId}</if>
-            <if test="title != null  and title != ''">and title = #{title}</if>
-            <if test="roomId != null  and roomId != ''">and room_id = #{roomId}</if>
-            <if test="members != null  and members != ''">and members = #{members}</if>
-            <if test="type != null  and type != ''">and type = #{type}</if>
-            <if test="cover != null  and cover != ''">and cover = #{cover}</if>
-            <if test="status != null  and status != ''">and status = #{status}</if>
-            <if test="remarks != null  and remarks != ''">and remarks = #{remarks}</if>
+            <if test="userId != null">and user_id = #{userId}</if>
+            <if test="title != null and title != ''">and title = #{title}</if>
+            <if test="roomId != null and roomId != ''">and room_id = #{roomId}</if>
+            <if test="members != null and members != ''">and members = #{members}</if>
+            <if test="type != null and type != ''">and type = #{type}</if>
+            <if test="cover != null and cover != ''">and cover = #{cover}</if>
+            <if test="status != null and status != ''">and status = #{status}</if>
+            <if test="remarks != null and remarks != ''">and remarks = #{remarks}</if>
+            <if test="params.beginTime != null and params.beginTime != ''">
+                <!-- 开始时间检索 -->
+                and date_format(update_time, '%y%m%d') &gt;= date_format(#{params.beginTime}, '%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''">
+                <!-- 结束时间检索 -->
+                and date_format(update_time, '%y%m%d') &lt;= date_format(#{params.endTime}, '%y%m%d')
+            </if>
         </where>
     </select>
 
