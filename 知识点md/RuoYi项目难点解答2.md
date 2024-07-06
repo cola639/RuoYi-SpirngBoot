@@ -238,3 +238,165 @@ public class UserServiceImpl {
 
 }
 通过上述步骤，成功配置了若依项目的多数据源。在调用 selectUserList 方法时，将使用从库数据源进行查询操作。
+
+### 详细解释 `getAuthentication().getPrincipal()`
+
+`getAuthentication().getPrincipal()` 获取当前用户的 `Principal` 对象时，这个对象通常是 `LoginUser`
+类型的实例，它包含了当前登录用户的详细信息。这个 `Principal` 对象确实是存在于内存中的，存储在 Spring Security 的上下文中。
+
+#### 1. 用户认证过程
+
+当用户登录时，Spring Security 会通过认证过程验证用户凭据，并将用户信息存储在内存中的 `SecurityContext` 中。这个过程通常如下：
+
+1. **用户提交登录请求**：用户通过登录表单提交用户名和密码。
+2. **Spring Security 认证过滤器**：Spring Security 的认证过滤器（如 `UsernamePasswordAuthenticationFilter`
+   ）拦截登录请求，并调用认证管理器（`AuthenticationManager`）进行认证。
+3. **`UserDetailsService` 加载用户信息**：认证管理器调用 `UserDetailsService` 的 `loadUserByUsername`
+   方法，从数据库或其他数据源加载用户信息。
+4. **创建 `Authentication` 对象**：如果用户认证成功，Spring Security 会创建一个 `Authentication`
+   对象，并将其存储在 `SecurityContextHolder` 中。
+
+#### 2. 存储用户信息
+
+用户信息存储在 `SecurityContextHolder` 中，直到用户会话结束或显式注销。这个信息包括用户的 `Principal`
+对象，通常是 `LoginUser` 类型的实例。`LoginUser` 对象包含用户的详细信息，如用户名、角色、权限等。
+
+```java
+public class LoginUser implements UserDetails {
+    private SysUser user;
+    private Set<String> roles;
+    private Set<String> permissions;
+
+    // Constructors, getters, setters, and other methods
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Return user roles and permissions
+    }
+
+    @Override
+    public String getPassword() {
+        return user.getPassword();
+    }
+
+    @Override
+    public String getUsername() {
+        return user.getUsername();
+    }
+
+    // Other methods from UserDetails interface
+}
+```
+
+#### 3. 获取当前用户信息
+
+你可以通过以下代码获取当前用户的 `Principal` 对象：
+
+```java
+public static LoginUser getLoginUser() {
+    try {
+        return (LoginUser) getAuthentication().getPrincipal();
+    } catch (Exception e) {
+        throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
+    }
+}
+
+public static Authentication getAuthentication() {
+    return SecurityContextHolder.getContext().getAuthentication();
+}
+```
+
+这段代码从 `SecurityContextHolder` 中获取当前的 `Authentication` 对象，然后从 `Authentication`
+对象中获取 `Principal`。`Principal` 通常是 `LoginUser` 对象，包含当前登录用户的详细信息。
+
+### 总结
+
+- **存储位置**：用户信息在认证成功后存储在内存中的 `SecurityContextHolder` 中，直到用户会话结束或显式注销。
+- **获取方式**：通过 `SecurityContextHolder.getContext().getAuthentication().getPrincipal()`
+  可以获取当前用户的 `Principal` 对象。
+- **`Principal` 对象类型**：`Principal` 对象通常是 `LoginUser` 类型的实例，包含用户的详细信息，如用户名、角色、权限等。
+
+这种设计使得你可以方便地在应用程序的任何地方获取当前登录用户的信息，而无需每次都查询数据库。
+
+是的，`username`（用户名）和 `nickname`（昵称）有明确的区别，虽然它们在某些情况下可能会混用或交叉使用。以下是它们的区别和各自的用途：
+
+### Username（用户名）
+
+1. **唯一性**：
+    - 用户名在系统中是唯一的标识符，用于区分不同的用户。每个用户都有一个唯一的用户名。
+
+2. **用途**：
+    - 用户名通常用于登录和认证。用户在登录时使用用户名和密码进行身份验证。
+    - 用户名可能用于系统内部的标识和追踪，例如日志记录、权限控制等。
+
+3. **格式**：
+    - 用户名通常遵循特定的格式和规则，可能只包含字母、数字和一些特殊字符，且长度有限制。
+
+4. **安全性**：
+    - 用户名是敏感信息，虽然不像密码那样敏感，但仍需要保护，以防止未经授权的用户获取。
+
+### Nickname（昵称）
+
+1. **非唯一性**：
+    - 昵称不需要是唯一的。多个用户可以有相同的昵称。
+
+2. **用途**：
+    - 昵称主要用于展示和社交。它通常用于显示在用户界面、评论、帖子、聊天等场合。
+    - 昵称是用户在与其他用户互动时的显示名，通常用于增强用户体验和个性化。
+
+3. **格式**：
+    - 昵称的格式通常较为宽松，用户可以选择任何喜欢的昵称，包括特殊字符、表情符号等，限制较少。
+
+4. **安全性**：
+    - 昵称一般不作为敏感信息处理，因为它主要用于展示和非安全性用途。
+
+### 示例
+
+#### 用户表结构
+
+在数据库中，用户表通常会包含用户名和昵称两个字段：
+
+```sql
+create table sys_user
+(
+    user_id     BIGINT primary key auto_increment,
+    user_name   VARCHAR(50)  not null unique, -- 用户名，唯一
+    nick_name   VARCHAR(50),                  -- 昵称，不需要唯一
+    password    VARCHAR(100) not null,
+    email       VARCHAR(100),
+    phonenumber VARCHAR(20),
+    status      CHAR(1),
+    create_time TIMESTAMP,
+    update_time TIMESTAMP
+);
+```
+
+#### Java 类示例
+
+在 Java 类中，用户类可能如下定义：
+
+```java
+public class SysUser {
+    private Long userId;
+    private String userName;  // 用户名
+    private String nickName;  // 昵称
+    private String password;
+    private String email;
+    private String phonenumber;
+    private String status;
+    private Date createTime;
+    private Date updateTime;
+
+    // Getters and setters
+}
+```
+
+### 用例示例
+
+- **登录**：
+  ```java
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+      SysUser user = userService.selectUserByUserName(username);
+      if (user == null) {
+          throw new UsernameNotFoundException("用户名不存在");
+      }

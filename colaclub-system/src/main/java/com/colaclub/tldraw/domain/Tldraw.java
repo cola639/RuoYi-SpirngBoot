@@ -25,7 +25,7 @@ public class Tldraw extends BaseEntity {
 
   /** 标题 */
   @NotBlank(message = "标题不能为空")
-  @Size(min = 5, max = 30)
+  @Size(min = 5, max = 30, message = "标题要大于5个字符,小于30个字符")
   @Excel(name = "标题")
   private String title;
 

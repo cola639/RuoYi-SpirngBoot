@@ -41,7 +41,7 @@
         <include refid="selectTldrawVo"/>
         <where>
             <if test="userId != null">and user_id = #{userId}</if>
-            <if test="title != null and title != ''">and title = #{title}</if>
+            <if test="title != null and title != ''">and title like concat('%', #{title}, '%')</if>
             <if test="roomId != null and roomId != ''">and room_id = #{roomId}</if>
             <if test="members != null and members != ''">and members = #{members}</if>
             <if test="type != null and type != ''">and type = #{type}</if>

@@ -11,6 +11,7 @@ import com.colaclub.common.utils.poi.ExcelUtil;
 import com.colaclub.common.utils.uuid.CombinationGenerator;
 import com.colaclub.common.utils.uuid.IdUtils;
 import com.colaclub.tldraw.domain.Tldraw;
+import com.colaclub.tldraw.enums.TldrawStatus;
 import com.colaclub.tldraw.service.ITldrawService;
 import java.util.Arrays;
 import java.util.List;
@@ -51,6 +52,8 @@ public class TldrawController extends BaseController {
     tldraw.setRoomId(uuid);
     tldraw.setMembers(String.valueOf(userId));
     tldraw.setStatus(requestTldraw.getStatus());
+    tldraw.setUserId(userId);
+    tldraw.setCreateBy(String.valueOf(userId));
 
     // redis 创建15分钟临时房间号
     Integer expireTime = 15;
@@ -111,7 +114,9 @@ public class TldrawController extends BaseController {
     // members 转化为数组 判断userId 是否成员之一 或是公开房间
     List<String> memberList = Arrays.asList(members.split(","));
 
-    if (memberList.contains(String.valueOf(userId)) || status.equals('1')) {
+    // 判断是否公开
+    if (memberList.contains(String.valueOf(userId))
+        || status.equals(TldrawStatus.PUBLIC.getCode())) {
       return AjaxResult.success(tldraw);
     } else {
       return AjaxResult.error("您不在此房间的成员列表中");
@@ -164,10 +169,14 @@ public class TldrawController extends BaseController {
   /** 查询tldraw列表 */
   @PreAuthorize("@ss.hasPermi('tldraw:list')")
   @GetMapping("/list")
-  public TableDataInfo list(Tldraw tldraw) {
-    startPage();
+  public TableDataInfo list(Tldraw reqTldraw) {
+    // Tldraw tldraw = new Tldraw();
+    // tldraw.setUserId(SecurityUtils.getUserId());
+    reqTldraw.setUserId(SecurityUtils.getUserId());
+
+    // startPage();
     startOrderBy();
-    List<Tldraw> list = tldrawService.selectTldrawList(tldraw);
+    List<Tldraw> list = tldrawService.selectTldrawList(reqTldraw);
     return getDataTable(list);
   }
 
