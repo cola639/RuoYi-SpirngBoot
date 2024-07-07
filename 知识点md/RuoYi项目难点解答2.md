@@ -400,3 +400,6 @@ public class SysUser {
       if (user == null) {
           throw new UsernameNotFoundException("用户名不存在");
       }
+
+@ConfigurationProperties 注解用于将属性绑定到一个 POJO 类上，通常用于处理一组相关的配置属性。它使用前缀来识别需要绑定的属性。
+@Value 注解用于将单个属性值注入到字段中。它通常用于简单的属性注入

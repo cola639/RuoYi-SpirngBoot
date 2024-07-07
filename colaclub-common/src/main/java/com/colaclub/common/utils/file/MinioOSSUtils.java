@@ -1,5 +1,6 @@
 package com.colaclub.common.utils.file;
 
+import com.colaclub.common.config.MinioConfig;
 import io.minio.*;
 import io.minio.errors.*;
 import java.io.IOException;
@@ -11,23 +12,22 @@ import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletResponse;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class MinioOSSUtils {
-  @Value("${oss.minioBucket}")
-  public String bucketName;
+  private final String bucketName;
+  private final String minioEndpoint;
+  private final MinioClient minioClient;
 
-  @Value("${oss.minioEndpoint}")
-  public String minioEndpoint;
-
-  @Autowired private MinioClient minioClient;
+  @Autowired
+  public MinioOSSUtils(MinioConfig minioConfig, MinioClient minioClient) {
+    this.bucketName = minioConfig.getMinioBucket();
+    this.minioEndpoint = minioConfig.getMinioEndpoint();
+    this.minioClient = minioClient;
+  }
 
   /** 列出桶 */
   public boolean listBucket() {
@@ -74,11 +74,11 @@ public class MinioOSSUtils {
    * @throws Exception
    */
   public String putObject(String objectName, MultipartFile file) throws Exception {
-    System.out.println("objectName = " + objectName);
-    System.out.println("bucketName = " + bucketName);
     // 判断桶是否存在
     boolean flag = existBucket(bucketName);
-    System.out.println("flag = " + flag);
+
+    // 过滤文件
+    FileUploadUtils.assertAllowed(file, MimeTypeUtils.DEFAULT_ALLOWED_EXTENSION);
 
     if (flag) {
       PutObjectArgs args =

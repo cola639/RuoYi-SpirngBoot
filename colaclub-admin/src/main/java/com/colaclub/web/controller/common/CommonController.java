@@ -76,7 +76,6 @@ public class CommonController {
       //      String url = serverConfig.getUrl() + fileName;
 
       // minio 上传文件
-      System.out.println("文件正在上传");
       String originalFilename = file.getOriginalFilename();
       String uuid = UUID.randomUUID().toString();
       String imgType = originalFilename.substring(originalFilename.lastIndexOf("."));

@@ -12,12 +12,16 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "oss")
 public class MinioConfig {
   private static final Logger log = LoggerFactory.getLogger(MinioConfig.class);
+
   /** 地域节点 */
   private String minioEndpoint;
+
   /** AccessKey */
   private String minioAccessKey;
+
   /** SecretKey */
   private String minioSecretKey;
+
   /** bucket名称 */
   private String minioBucket;
 
