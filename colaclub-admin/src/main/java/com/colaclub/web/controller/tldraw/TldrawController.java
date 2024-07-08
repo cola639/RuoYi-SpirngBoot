@@ -6,10 +6,13 @@ import com.colaclub.common.core.domain.AjaxResult;
 import com.colaclub.common.core.page.TableDataInfo;
 import com.colaclub.common.core.redis.RedisCache;
 import com.colaclub.common.enums.BusinessType;
+import com.colaclub.common.utils.DateUtils;
 import com.colaclub.common.utils.SecurityUtils;
+import com.colaclub.common.utils.file.MinioOSSUtils;
 import com.colaclub.common.utils.poi.ExcelUtil;
 import com.colaclub.common.utils.uuid.CombinationGenerator;
 import com.colaclub.common.utils.uuid.IdUtils;
+import com.colaclub.common.utils.uuid.UUID;
 import com.colaclub.tldraw.domain.Tldraw;
 import com.colaclub.tldraw.enums.TldrawStatus;
 import com.colaclub.tldraw.service.ITldrawService;
@@ -21,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * tldrawController
@@ -35,6 +39,14 @@ public class TldrawController extends BaseController {
   private static final String UUID_ROOM_KEY = "tldraw:uuid:";
   @Autowired private ITldrawService tldrawService;
   @Autowired private RedisCache redisCache;
+  @Autowired private MinioOSSUtils minioOSSUtils;
+
+  private static String getFileExtension(String mimeType) {
+    if (mimeType != null && mimeType.contains("/")) {
+      return mimeType.substring(mimeType.lastIndexOf("/") + 1);
+    }
+    return "";
+  }
 
   /** 生成房间 */
   @PreAuthorize("@ss.hasPermi('tldraw:generate')")
@@ -159,11 +171,34 @@ public class TldrawController extends BaseController {
   @PreAuthorize("@ss.hasPermi('tldraw:cover')")
   @Log(title = "tldraw", businessType = BusinessType.UPDATE)
   @PutMapping("/cover")
-  public AjaxResult updateCover(@RequestBody Tldraw reqTldraw) {
-    Tldraw tldraw = tldrawService.selectTldrawById(reqTldraw.getId());
-    tldraw.setCover(reqTldraw.getCover());
+  public AjaxResult updateCover(
+      @RequestParam("file") MultipartFile file, @RequestParam("roomId") String roomId)
+      throws Exception {
+    // 验证文件非空
+    if (file.isEmpty()) {
+      return AjaxResult.error("文件不能为空");
+    }
 
-    return toAjax(tldrawService.updateTldraw(tldraw));
+    try {
+      // minio 上传文件
+      String uuid = UUID.randomUUID().toString();
+      String mimeType = file.getContentType();
+      String fileExtension = getFileExtension(mimeType);
+      String date = DateUtils.dateTime(); // 生成日期如2024-07-08
+      String finalFileName = "images/" + date + "/" + roomId + "_" + uuid + "." + fileExtension;
+      String fileName = minioOSSUtils.putObject(finalFileName, file);
+
+      // 上传成功
+      Tldraw tldraw = tldrawService.selectTldrawByRoomId(roomId);
+      tldraw.setCover(fileName);
+      tldrawService.updateTldraw(tldraw);
+
+      // 下面一致
+      AjaxResult ajax = AjaxResult.success();
+      return ajax;
+    } catch (Exception e) {
+      return AjaxResult.error(e.getMessage());
+    }
   }
 
   /** 查询tldraw列表 */
