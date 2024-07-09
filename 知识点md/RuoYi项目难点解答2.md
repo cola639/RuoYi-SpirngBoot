@@ -403,3 +403,104 @@ public class SysUser {
 
 @ConfigurationProperties 注解用于将属性绑定到一个 POJO 类上，通常用于处理一组相关的配置属性。它使用前缀来识别需要绑定的属性。
 @Value 注解用于将单个属性值注入到字段中。它通常用于简单的属性注入
+
+### 密码问题
+
+在Spring Security中，`BCryptPasswordEncoder` 使用 bcrypt 算法来对密码进行加密。bcrypt 是一种哈希算法，
+它为每个输入生成不同的哈希值，即使输入的密码相同。bcrypt 内部会自动生成一个随机的 salt 来确保相同的输入生成不同的哈希值。
+
+### 代码示例解释
+
+#### 1. 加密密码
+
+```java
+public static String encryptPassword(String password) {
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    return passwordEncoder.encode(password);
+}
+```
+
+`encryptPassword` 方法使用 `BCryptPasswordEncoder` 来对输入的明文密码进行加密。
+`BCryptPasswordEncoder` 会自动生成一个随机的 salt
+并将其与密码结合，然后生成哈希值。因此，即使输入相同的密码，每次调用 `encode` 方法生成的哈希值也会不同。
+
+#### 2. 验证密码
+
+```java
+public static boolean matchesPassword(String rawPassword, String encodedPassword) {
+    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+    return passwordEncoder.matches(rawPassword, encodedPassword);
+}
+```
+
+`matchesPassword` 方法使用 `BCryptPasswordEncoder` 来验证输入的明文密码和已加密的密码是否匹配。
+`BCryptPasswordEncoder` 会从加密的密码中提取出 salt，并用这个 salt 对输入的明文密码进行哈希处理，然后将生成的哈希值与加密的密码进行比较。
+
+### bcrypt 工作原理
+
+- **随机 salt**：每次加密时，bcrypt 会生成一个随机的 salt。
+- **哈希计算**：bcrypt 将 salt 和密码结合进行哈希计算。
+- **存储格式**：生成的哈希值包括 salt 和哈希值，所以即使输入的密码相同，每次加密的结果也不同。
+
+### 示例代码
+
+下面是一个完整的示例，演示如何使用 `BCryptPasswordEncoder` 进行密码加密和验证：
+
+```java
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+public class PasswordUtils {
+
+    public static String encryptPassword(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.encode(password);
+    }
+
+    /**
+     * 判断密码是否相同
+     *
+     * @param rawPassword     真实密码
+     * @param encodedPassword 加密后字符
+     * @return 结果
+     */
+    public static boolean matchesPassword(String rawPassword, String encodedPassword) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    public static void main(String[] args) {
+        String password = "myPassword";
+
+        // 加密密码
+        String encryptedPassword1 = encryptPassword(password);
+        String encryptedPassword2 = encryptPassword(password);
+
+        System.out.println("Encrypted Password 1: " + encryptedPassword1);
+        System.out.println("Encrypted Password 2: " + encryptedPassword2);
+
+        // 验证密码
+        boolean matches1 = matchesPassword(password, encryptedPassword1);
+        boolean matches2 = matchesPassword(password, encryptedPassword2);
+
+        System.out.println("Matches 1: " + matches1);
+        System.out.println("Matches 2: " + matches2);
+    }
+}
+```
+
+### 输出示例
+
+```
+Encrypted Password 1: $2a$10$EIX/hKpKPQzAblhPlc1C0e6QeJ2uTI2Lbc4Q.Qc.DU/xu/y5Z2Fey
+Encrypted Password 2: $2a$10$uJdWzy8kO3GzA9OBFbWqHe.G5Rr7fBHpGCHhAqvayGgRBcNGvO9cG
+Matches 1: true
+Matches 2: true
+```
+
+你会注意到，即使两次加密相同的明文密码，生成的加密结果也是不同的。这是因为 bcrypt 使用了随机生成的 salt。
+
+### 总结
+
+- `BCryptPasswordEncoder` 使用 bcrypt 算法，它为每个密码生成一个唯一的 salt。
+- 即使输入相同的密码，每次加密生成的哈希值也是不同的。
+- 哈希值包括 salt 和哈希值，因此在验证时，可以从哈希值中提取出 salt，用于对输入的明文密码进行哈希处理和比较。
