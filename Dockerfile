@@ -46,4 +46,4 @@ EXPOSE 80 8888
 # 使用 MaxRAMPercentage 设置 JVM 使用的最大内存百分比
 # 使用 java.security.egd 改进随机数生成性能
 # 启动指定的 Jar 文件并设置 Spring 的活动配置概要
-ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=90.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.profiles.active=${PROFILE}"]
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=95.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.profiles.active=${PROFILE}"]
