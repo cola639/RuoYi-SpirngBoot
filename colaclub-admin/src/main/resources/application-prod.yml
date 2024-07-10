@@ -189,7 +189,7 @@ third-login:
 # OSS存储配置
 oss:
   # minio OSS
-  minioEndpoint: https://minio.win-gavin.top
+  minioEndpoint: https://148.135.43.239:9090
   minioAccessKey: d6iGB8RN1a4Cq6l00E87
   minioSecretKey: RLogqIVYoHVsHAlD2Giairc2EAEt3p1gPg7jEPlN
   minioBucket: dev-ruoyi
