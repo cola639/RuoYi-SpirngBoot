@@ -39,11 +39,11 @@ USER spring:spring
 COPY ${JAR_FILE} /app.jar
 
 # 声明作用无实际作用 实际由docker run port 暴露容器端口
-EXPOSE 80
+EXPOSE 80 8888
 
 # 设置容器的默认启动命令，配置 JVM 以优化容器环境运行，指定使用的 Spring 配置概要
 # 使用 UseContainerSupport 来使 JVM 识别容器内存限制
 # 使用 MaxRAMPercentage 设置 JVM 使用的最大内存百分比
 # 使用 java.security.egd 改进随机数生成性能
 # 启动指定的 Jar 文件并设置 Spring 的活动配置概要
-ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.profiles.active=${PROFILE}"]
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=90.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.profiles.active=${PROFILE}"]
