@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
  */
 public class SecurityUtils {
     /**
+     * SecurityContextHolder作用实现
      * 用户ID
      **/
     public static Long getUserId() {
@@ -51,7 +52,10 @@ public class SecurityUtils {
      **/
     public static LoginUser getLoginUser() {
         try {
-            return (LoginUser) getAuthentication().getPrincipal();
+            LoginUser loginUser = (LoginUser) getAuthentication().getPrincipal();
+            System.out.println(" LoginUser Details User ID:" + loginUser.getUserId());
+            System.out.println(" LoginUser Details Username: " + loginUser.getUsername());
+            return loginUser;
         } catch (Exception e) {
             throw new ServiceException("获取用户信息异常", HttpStatus.UNAUTHORIZED);
         }

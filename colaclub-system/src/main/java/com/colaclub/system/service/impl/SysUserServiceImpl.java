@@ -15,18 +15,17 @@ import com.colaclub.system.domain.SysUserRole;
 import com.colaclub.system.mapper.*;
 import com.colaclub.system.service.ISysConfigService;
 import com.colaclub.system.service.ISysUserService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import javax.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
-
-import javax.validation.Validator;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * 用户 业务层处理
@@ -98,6 +97,17 @@ public class SysUserServiceImpl implements ISysUserService {
         return userMapper.selectUserByUserName(userName);
     }
 
+    /**
+     * 通过手机号码查询用户
+     *
+     * @param phone 手机号
+     * @return 用户对象信息
+     */
+    @Override
+    public SysUser selectUserByPhone(String phone) {
+        return userMapper.selectUserByPhone(phone);
+    }
+    
     /**
      * 通过用户ID查询用户
      *

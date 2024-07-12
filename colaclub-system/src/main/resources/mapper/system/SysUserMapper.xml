@@ -162,6 +162,11 @@
         where u.user_name = #{userName}
     </select>
 
+    <select id="selectUserByPhone" parameterType="String" resultMap="SysUserResult">
+        <include refid="selectUserVo"/>
+        where u.phonenumber = #{phone}
+    </select>
+
     <select id="selectUserById" parameterType="Long" resultMap="SysUserResult">
         <include refid="selectUserVo"/>
         where u.user_id = #{userId}

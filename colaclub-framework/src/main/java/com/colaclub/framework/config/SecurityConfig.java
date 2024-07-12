@@ -4,6 +4,7 @@ import com.colaclub.framework.config.properties.PermitAllUrlProperties;
 import com.colaclub.framework.security.filter.JwtAuthenticationTokenFilter;
 import com.colaclub.framework.security.handle.AuthenticationEntryPointImpl;
 import com.colaclub.framework.security.handle.LogoutSuccessHandlerImpl;
+import com.colaclub.framework.smsConfig.SmsCodeAuthenticationSecurityConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -46,6 +47,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   /** 允许匿名访问的地址 */
   @Autowired private PermitAllUrlProperties permitAllUrl;
 
+  /** 短信验证码过滤器 */
+  @Autowired private SmsCodeAuthenticationSecurityConfig smsCodeAuthenticationSecurityConfig;
+
   /**
    * 解决 无法直接注入 AuthenticationManager
    *
@@ -73,6 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     permitAllUrl.getUrls().forEach(url -> registry.antMatchers(url).permitAll());
 
     httpSecurity
+        .apply(smsCodeAuthenticationSecurityConfig)
+        .and()
         // CSRF禁用，因为不使用session
         .csrf()
         .disable()
@@ -86,6 +92,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .and()
         // 过滤请求
         .authorizeRequests()
+        .antMatchers("/sms/**")
+        .permitAll()
         // 对于登录login 注册register 验证码captchaImage 允许匿名访问
         .antMatchers(
             "/login",
