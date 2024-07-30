@@ -1,0 +1,387 @@
+RuoYi-SpringBoot
+├── ruoyi-admin
+│ ├── src
+│ │ └── main
+│ │     ├── java
+│ │     │   └── com
+│ │     │       └── ruoyi
+│ │     │           ├── RuoYiApplication.java               // Spring Boot的入口类，项目的启动点。
+│ │     │           ├── RuoYiServletInitializer.java        // Servlet初始化配置。
+│ │     │           └── web
+│ │     │               ├── controller
+│ │     │               │   ├── chat
+│ │     │               │   │   └── UserChatController.java            // 有关用户聊天操作Controller
+│ │     │               │   ├── common
+│ │     │               │   │   ├── CaptchaController.java             // 获取验证码Controller
+│ │     │               │   │   └── CommonController.java              // 公共操作Controller
+│ │     │               │   ├── login
+│ │     │               │   │   ├── GiteeLogin.java                    // Gitee登录Controller
+│ │     │               │   │   └── LoginByOtherSourceBody.java        // 其他登录来源Controller
+│ │     │               │   ├── monitor
+│ │     │               │   │   ├── CacheController.java               // 缓存操作Controller
+│ │     │               │   │   ├── ServerController.java              // 服务器信息Controller
+│ │     │               │   │   ├── SysLogininforController.java       // 系统登录信息Controller
+│ │     │               │   │   ├── SysOperlogController.java          // 系统操作日志Controller
+│ │     │               │   │   └── SysUserOnlineController.java       // 在线用户信息Controller
+│ │     │               │   ├── system
+│ │     │               │   │   ├── SysConfigController.java           // 系统配置Controller
+│ │     │               │   │   ├── SysDeptController.java             // 部门信息Controller
+│ │     │               │   │   ├── SysDictDataController.java         // 字典数据Controller
+│ │     │               │   │   ├── SysDictTypeController.java         // 字典类型Controller
+│ │     │               │   │   ├── SysIndexController.java            // 系统首页Controller
+│ │     │               │   │   ├── SysLoginController.java            // 系统登录Controller
+│ │     │               │   │   ├── SysMenuController.java             // 系统菜单Controller
+│ │     │               │   │   ├── SysNoticeController.java           // 系统通知Controller
+│ │     │               │   │   ├── SysPostController.java             // 职位信息Controller
+│ │     │               │   │   ├── SysProfileController.java          // 用户个人信息Controller
+│ │     │               │   │   ├── SysRegisterController.java         // 系统注册Controller
+│ │     │               │   │   ├── SysRoleController.java             // 角色信息Controller
+│ │     │               │   │   └── SysUserController.java             // 用户信息Controller
+│ │     │               │   └── tool
+│ │     │               │       ├── SwaggerController.java             // Swagger API文档Controller
+│ │     │               │       └── TestController.java                // 测试功能Controller
+│ │     │               └── core
+│ │     │                   └── config
+│ │     │                       └── SwaggerConfig.java                  // Swagger配置文件
+│ │     └── resources
+│ │         ├── META-INF
+│ │         │   └── spring-devtools.properties                         // Spring Devtools配置文件
+│ │         ├── application-dev.yml                                    // 开发环境配置文件
+│ │         ├── application-prod.yml                                   // 生产环境配置文件
+│ │         ├── application.yml                                        // 应用主配置文件
+│ │         ├── banner.txt                                             // 启动时显示的Banner
+│ │         ├── i18n
+│ │         │   └── messages.properties                                // 国际化资源文件
+│ │         ├── logback.xml                                            // Logback日志配置文件
+│ │         └── mybatis
+│ │             └── mybatis-config.xml                                 // MyBatis配置文件
+├── ruoyi-common
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   │           └── com
+│   │               └── ruoyi
+│   │                   └── common
+│   │                       ├── annotation
+│   │                       │   ├── Anonymous.java                    // 匿名注解
+│   │                       │   ├── DataScope.java                    // 数据范围注解
+│   │                       │   ├── DataSource.java                   // 数据源注解
+│   │                       │   ├── Excel.java                        // Excel注解
+│   │                       │   ├── Excels.java                       // Excels注解
+│   │                       │   ├── Log.java                          // 日志注解
+│   │                       │   ├── RateLimiter.java                  // 速率限制注解
+│   │                       │   └── RepeatSubmit.java                 // 重复提交注解
+│   │                       ├── config
+│   │                       │   └── RuoYiConfig.java                  // RuoYi配置类
+│   │                       ├── constant
+│   │                       │   ├── CacheConstants.java               // 缓存常量
+│   │                       │   ├── Constants.java                    // 通用常量
+│   │                       │   ├── GenConstants.java                 // 生成器常量
+│   │                       │   ├── HttpStatus.java                   // HTTP状态常量
+│   │                       │   ├── ScheduleConstants.java            // 调度常量
+│   │                       │   └── UserConstants.java                // 用户常量
+│   │                       ├── core
+│   │                       │   ├── controller
+│   │                       │   │   └── BaseController.java           // 基础控制器类
+│   │                       │   ├── domain
+│   │                       │   │   ├── AjaxResult.java               // Ajax响应类
+│   │                       │   │   ├── BaseEntity.java               // 基础实体类
+│   │                       │   │   ├── R.java                        // 响应类
+│   │                       │   │   ├── TreeEntity.java               // 树形实体类
+│   │                       │   │   ├── TreeSelect.java               // 树形选择类
+│   │                       │   ├── page
+│   │                       │   │   ├── PageDomain.java               // 分页领域类
+│   │                       │   │   ├── TableDataInfo.java            // 表格数据信息类
+│   │                       │   │   └── TableSupport.java             // 表格支持类
+│   │                       │   ├── redis
+│   │                       │   │   └── RedisCache.java               // Redis缓存类
+│   │                       │   ├── text
+│   │                       │   │   ├── CharsetKit.java               // 字符集工具类
+│   │                       │   │   ├── Convert.java                  // 转换工具类
+│   │                       │   │   └── StrFormatter.java             // 字符串格式化工具类
+│   │                       ├── enums
+│   │                       │   ├── BusinessStatus.java               // 业务状态枚举
+│   │                       │   ├── BusinessType.java                 // 业务类型枚举
+│   │                       │   ├── DataSourceType.java               // 数据源类型枚举
+│   │                       │   ├── HttpMethod.java                   // HTTP方法枚举
+│   │                       │   ├── LimitType.java                    // 限制类型枚举
+│   │                       │   ├── OperatorType.java                 // 操作员类型枚举
+│   │                       │   └── UserStatus.java                   // 用户状态枚举
+│   │                       ├── exception
+│   │                       │   ├── DemoModeException.java            // 演示模式异常
+│   │                       │   ├── GlobalException.java              // 全局异常
+│   │                       │   ├── ServiceException.java             // 服务异常
+│   │                       │   ├── UtilException.java                // 工具异常
+│   │                       │   ├── file
+│   │                       │   │   ├── FileException.java            // 文件异常
+│   │                       │   │   ├── FileNameLengthLimitExceededException.java // 文件名长度超限异常
+│   │                       │   │   ├── FileSizeLimitExceededException.java // 文件大小超限异常
+│   │                       │   │   └── InvalidExtensionException.java // 无效扩展名异常
+│   │                       │   ├── job
+│   │                       │   │   └── TaskException.java            // 任务异常
+│   │                       │   ├── user
+│   │                       │   │   ├── CaptchaException.java         // 验证码异常
+│   │                       │   │   ├── CaptchaExpireException.java   // 验证码过期异常
+│   │                       │   │   ├── UserException.java            // 用户异常
+│   │                       │   │   └── UserPasswordNotMatchException.java // 用户密码不匹配异常
+│   │                       ├── filter
+│   │                       │   ├── RepeatableFilter.java             // 可重复过滤器
+│   │                       │   ├── RepeatedlyRequestWrapper.java     // 重复请求包装器
+│   │                       │   ├── XssFilter.java                    // XSS过滤器
+│   │                       │   └── XssHttpServletRequestWrapper.java // XSS HTTP请求包装器
+│   │                       ├── utils
+│   │                       │   ├── Arith.java                        // 算术工具类
+│   │                       │   ├── DateUtils.java                    // 日期工具类
+│   │                       │   ├── DictUtils.java                    // 字典工具类
+│   │                       │   ├── ExceptionUtil.java                // 异常工具类
+│   │                       │   ├── LogUtils.java                     // 日志工具类
+│   │                       │   ├── MessageUtils.java                 // 消息工具类
+│   │                       │   ├── PageUtils.java                    // 分页工具类
+│   │                       │   ├── SecurityUtils.java                // 安全工具类
+│   │                       │   ├── ServletUtils.java                 // Servlet工具类
+│   │                       │   ├── StringUtils.java                  // 字符串工具类
+│   │                       │   ├── Threads.java                      // 线程工具类
+│   │                       │   ├── file
+│   │                       │   │   ├── FileTypeUtils.java            // 文件类型工具类
+│   │                       │   │   ├── FileUploadUtils.java          // 文件上传工具类
+│   │                       │   │   ├── FileUtils.java                // 文件工具类
+│   │                       │   │   ├── ImageUtils.java               // 图像工具类
+│   │                       │   │   └── MimeTypeUtils.java            // MIME类型工具类
+│   │                       │   ├── html
+│   │                       │   │   ├── EscapeUtil.java               // 转义工具类
+│   │                       │   │   └── HTMLFilter.java               // HTML过滤器
+│   │                       │   ├── http
+│   │                       │   │   ├── HttpHelper.java               // HTTP帮助类
+│   │                       │   │   └── HttpUtils.java                // HTTP工具类
+│   │                       │   ├── ip
+│   │                       │   │   ├── AddressUtils.java             // 地址工具类
+│   │                       │   │   └── IpUtils.java                  // IP工具类
+│   │                       │   ├── poi
+│   │                       │   │   ├── ExcelHandlerAdapter.java      // Excel处理适配器
+│   │                       │   │   └── ExcelUtil.java                // Excel工具类
+│   │                       │   ├── reflect
+│   │                       │   │   └── ReflectUtils.java             // 反射工具类
+│   │                       │   ├── sign
+│   │                       │   │   ├── Base64.java                   // Base64工具类
+│   │                       │   │   └── Md5Utils.java                 // Md5工具类
+│   │                       │   ├── spring
+│   │                       │   │   └── SpringUtils.java              // Spring工具类
+│   │                       │   └── uuid
+│   │                       │   │   ├── IdUtils.java                  // ID工具类
+│   │                       │   │   ├── Seq.java                      // 序列化工具类
+│   │                       │   │   └── UUID.java                     // UUID工具类
+│   │                       └── xss
+│   │                           ├── Xss.java                         // XSS工具类
+│   │                           └── XssValidator.java                // XSS验证器
+├── ruoyi-framework
+│   ├── src
+│   │   └── main
+│   │       └── java
+│   │           └── com
+│   │               └── ruoyi
+│   │                   └── framework
+│   │                       ├── aspectj
+│   │                       │   ├── DataScopeAspect.java               // 数据权限切面，处理数据权限注解。
+│   │                       │   ├── DataSourceAspect.java              // 数据源切面，处理数据源切换。
+│   │                       │   ├── LogAspect.java                     // 日志切面，处理操作日志记录。
+│   │                       │   └── RateLimiterAspect.java             // 限流切面，处理访问频率限制。
+│   │                       ├── config
+│   │                       │   ├── ApplicationConfig.java             // 应用通用配置类。
+│   │                       │   ├── CaptchaConfig.java                 // 验证码配置类。
+│   │                       │   ├── DruidConfig.java                   // Druid连接池的配置类。
+│   │                       │   ├── FastJson2JsonRedisSerializer.java  // Redis序列化配置类。
+│   │                       │   ├── FilterConfig.java                  // 过滤器配置类。
+│   │                       │   ├── KaptchaTextCreator.java            // Kaptcha验证码文本生成类。
+│   │                       │   ├── MyBatisConfig.java                 // MyBatis配置类。
+│   │                       │   ├── RedisConfig.java                   // Redis配置类。
+│   │                       │   ├── ResourcesConfig.java               // 资源配置类。
+│   │                       │   ├── SecurityConfig.java                // 安全相关配置类。
+│   │                       │   ├── ServerConfig.java                  // 服务器配置类。
+│   │                       │   ├── ThirdLogins.java                   // 第三方登录配置类。
+│   │                       │   ├── ThreadPoolConfig.java              // 线程池配置类。
+│   │                       │   └── properties
+│   │                       │       ├── DruidProperties.java           // Druid配置属性类。
+│   │                       │       └── PermitAllUrlProperties.java    // URL权限配置属性类。
+│   │                       ├── datasource
+│   │                       │   ├── DynamicDataSource.java             // 动态数据源类，用于实现数据源切换。
+│   │                       │   └── DynamicDataSourceContextHolder.java// 动态数据源上下文，用于存储当前线程的数据源信息。
+│   │                       ├── interceptor
+│   │                       │   ├── RepeatSubmitInterceptor.java       // 重复提交拦截器，用于防止表单重复提交。
+│   │                       │   └── impl
+│   │                       │       └── SameUrlDataInterceptor.java    // 相同URL数据拦截器，用于处理相同URL的并发请求。
+│   │                       ├── manager
+│   │                       │   ├── AsyncManager.java                  // 异步任务管理器，用于处理异步任务。
+│   │                       │   ├── ShutdownManager.java               // 关闭管理器，用于处理应用关闭事件。
+│   │                       │   └── factory
+│   │                       │       └── AsyncFactory.java              // 异步任务工厂，用于创建异步任务。
+│   │                       ├── security
+│   │                       │   ├── filter
+│   │                       │   │   └── JwtAuthenticationTokenFilter.java // JWT认证过滤器，用于处理JWT认证。
+│   │                       │   └── handle
+│   │                       │       ├── AuthenticationEntryPointImpl.java // 认证入口点实现，用于处理认证失败的情况。
+│   │                       │       └── LogoutSuccessHandlerImpl.java     // 登出成功处理器实现，用于处理登出成功的情况。
+│   │                       └── web
+│   │                           ├── domain
+│   │                           │   ├── Server.java                     // 服务器信息类。
+│   │                           │   └── server
+│   │                           ├── exception
+│   │                           │   └── GlobalExceptionHandler.java     // 全局异常处理类，用于处理全局异常。
+│   │                           └── service
+│   │                               ├── PermissionService.java          // 权限服务接口。
+│   │                               ├── SysLoginService.java            // 系统登录服务接口。
+│   │                               ├── SysPermissionService.java       // 系统权限服务接口。
+│   │                               ├── SysRegisterService.java         // 系统注册服务接口。
+│   │                               ├── TokenService.java               // Token服务接口。
+│   │                               └── UserDetailsServiceImpl.java     // 用户详细信息服务实现，实现Spring Security的UserDetailsService接口。
+├── ruoyi-generator
+│   ├── src
+│   │   └── main
+│   │       ├── java
+│   │       │   └── com
+│   │       │       └── ruoyi
+│   │       │           └── generator
+│   │       │               ├── config
+│   │       │               │   └── GenConfig.java                     // 代码生成器配置类。
+│   │       │               ├── controller
+│   │       │               │   └── GenController.java                 // 代码生成器控制类，提供前端接口。
+│   │       │               ├── domain
+│   │       │               │   ├── GenTable.java                      // 代码生成器的数据库表模型类。
+│   │       │               │   └── GenTableColumn.java                // 代码生成器的数据库表列模型类。
+│   │       │               ├── mapper
+│   │       │               │   ├── GenTableColumnMapper.java          // 数据库表列的Mapper接口。
+│   │       │               │   └── GenTableMapper.java                // 数据库表的Mapper接口。
+│   │       │               ├── service
+│   │       │               │   ├── GenTableColumnServiceImpl.java     // 数据库表列的业务逻辑实现类。
+│   │       │               │   ├── GenTableServiceImpl.java           // 数据库表的业务逻辑实现类。
+│   │       │               │   ├── IGenTableColumnService.java        // 数据库表列的业务逻辑接口。
+│   │       │               │   └── IGenTableService.java              // 数据库表的业务逻辑接口。
+│   │       │               └── util
+│   │       │                   ├── GenUtils.java                      // 代码生成器的工具类。
+│   │       │                   ├── VelocityInitializer.java            // Velocity模板引擎的初始化类。
+│   │       │                   └── VelocityUtils.java                 // Velocity模板引擎的工具类。
+│   │       └── resources
+│   │           ├── generator.yml                                      // 代码生成器的配置文件。
+│   │           ├── mapper
+│   │           │   └── generator
+│   │           │       ├── GenTableColumnMapper.xml                   // 数据库表列的Mybatis映射文件。
+│   │           │       └── GenTableMapper.xml                         // 数据库表的Mybatis映射文件。
+│   │           └── vm
+│   │               ├── java
+│   │               │   ├── controller.java.vm                         // 控制层代码的模板文件。
+│   │               │   ├── domain.java.vm                             // 领域模型代码的模板文件。
+│   │               │   ├── mapper.java.vm                             // Mapper接口代码的模板文件。
+│   │               │   ├── service.java.vm                            // 服务接口代码的模板文件。
+│   │               │   ├── serviceImpl.java.vm                        // 服务实现类代码的模板文件。
+│   │               │   └── sub-domain.java.vm                         // 子领域模型代码的模板文件。
+│   │               ├── js
+│   │               │   └── api.js.vm                                  // 前端api接口代码的模板文件。
+│   │               ├── vue
+│   │               │   ├── index-tree.vue.vm                          // 树形结构界面代码的模板文件。
+│   │               │   ├── index.vue.vm                               // 常规界面代码的模板文件。
+│   │               │   └── v3
+│   │               │       ├── index-tree.vue.vm                      // Vue 3版本的树形结构界面代码模板文件。
+│   │               │       ├── index.vue.vm                           // Vue 3版本的常规界面代码模板文件。
+│   │               │       └── readme.txt                             // Vue 3版本的说明文件。
+│   │               └── xml
+│   │                   └── mapper.xml.vm                              // Mybatis映射文件的模板文件。
+├── ruoyi-quartz
+│   ├── src
+│   │   └── main
+│   │       ├── java
+│   │       │   └── com
+│   │       │       └── ruoyi
+│   │       │           └── quartz
+│   │       │               ├── config
+│   │       │               │   └── ScheduleConfig.java                // 定时任务配置类。
+│   │       │               ├── controller
+│   │       │               │   ├── SysJobController.java              // 系统任务控制类，提供前端接口。
+│   │       │               │   └── SysJobLogController.java           // 系统任务日志控制类，提供前端接口。
+│   │       │               ├── domain
+│   │       │               │   ├── SysJob.java                        // 系统任务模型类。
+│   │       │               │   └── SysJobLog.java                     // 系统任务日志模型类。
+│   │       │               ├── mapper
+│   │       │               │   ├── SysJobLogMapper.java               // 系统任务日志的Mapper接口。
+│   │       │               │   └── SysJobMapper.java                  // 系统任务的Mapper接口。
+│   │       │               ├── service
+│   │       │               │   ├── ISysJobLogService.java             // 系统任务日志的业务逻辑接口。
+│   │       │               │   ├── ISysJobService.java                // 系统任务的业务逻辑接口。
+│   │       │               │   └── impl
+│   │       │               │       ├── SysJobLogServiceImpl.java      // 系统任务日志的业务逻辑实现类。
+│   │       │               │       └── SysJobServiceImpl.java         // 系统任务的业务逻辑实现类。
+│   │       │               ├── task
+│   │       │               │   └── RyTask.java                        // 系统定时任务类。
+│   │       │               └── util
+│   │       │                   ├── AbstractQuartzJob.java              // 抽象的Quartz任务类。
+│   │       │                   ├── CronUtils.java                     // Cron表达式工具类。
+│   │       │                   ├── JobInvokeUtil.java                 // 任务调用工具类。
+│   │       │                   ├── QuartzDisallowConcurrentExecution.java // Quartz任务不并发执行注解。
+│   │       │                   ├── QuartzJobExecution.java            // Quartz任务执行类。
+│   │       │                   └── ScheduleUtils.java                 // 定时任务工具类。
+│   │       └── resources
+│   │           └── mapper
+│   │               └── quartz
+│   │                   ├── SysJobLogMapper.xml                        // 系统任务日志的Mybatis映射文件。
+│   │                   └── SysJobMapper.xml                           // 系统任务的Mybatis映射文件。
+├── ruoyi-system
+│   ├── src
+│   │   └── main
+│   │       ├── java
+│   │       │   └── com
+│   │       │       └── ruoyi
+│   │       │           ├── chat
+│   │       │           │   ├── mapper
+│   │       │           │   │   └── UserChatMapper.java               // 用户聊天信息的数据访问接口
+│   │       │           │   ├── model
+│   │       │           │   │   └── UserChat.java                     // 用户聊天信息的数据模型
+│   │       │           │   └── service
+│   │       │           │       ├── IUserChatService.java              // 用户聊天信息的服务接口
+│   │       │           │       └── impl
+│   │       │           │           └── UserChatServiceImpl.java       // 用户聊天信息的服务接口实现类
+│   │       │           └── system
+│   │       │               └── service
+│   │       │                   ├── ISysConfigService.java             // 系统配置的服务接口
+│   │       │                   ├── ISysDeptService.java               // 系统部门的服务接口
+│   │       │                   ├── ISysDictDataService.java           // 系统字典数据的服务接口
+│   │       │                   ├── ISysDictTypeService.java           // 系统字典类型的服务接口
+│   │       │                   ├── ISysLogininforService.java         // 系统登录信息的服务接口
+│   │       │                   ├── ISysMenuService.java               // 系统菜单的服务接口
+│   │       │                   ├── ISysNoticeService.java             // 系统通知的服务接口
+│   │       │                   ├── ISysOperLogService.java            // 系统操作日志的服务接口
+│   │       │                   ├── ISysPostService.java               // 系统岗位的服务接口
+│   │       │                   ├── ISysRoleService.java               // 系统角色的服务接口
+│   │       │                   ├── ISysUserOnlineService.java         // 系统在线用户的服务接口
+│   │       │                   ├── ISysUserService.java               // 系统用户的服务接口
+│   │       │                   └── impl
+│   │       │                       ├── SysConfigServiceImpl.java       // 系统配置的服务接口实现类
+│   │       │                       ├── SysDeptServiceImpl.java         // 系统部门的服务接口实现类
+│   │       │                       ├── SysDictDataServiceImpl.java     // 系统字典数据的服务接口实现类
+│   │       │                       ├── SysDictTypeServiceImpl.java     // 系统字典类型的服务接口实现类
+│   │       │                       ├── SysLogininforServiceImpl.java   // 系统登录信息的服务接口实现类
+│   │       │                       ├── SysMenuServiceImpl.java         // 系统菜单的服务接口实现类
+│   │       │                       ├── SysNoticeServiceImpl.java       // 系统通知的服务接口实现类
+│   │       │                       ├── SysOperLogServiceImpl.java      // 系统操作日志的服务接口实现类
+│   │       │                       ├── SysPostServiceImpl.java         // 系统岗位的服务接口实现类
+│   │       │                       ├── SysRoleServiceImpl.java         // 系统角色的服务接口实现类
+│   │       │                       ├── SysUserOnlineServiceImpl.java   // 系统在线用户的服务接口实现类
+│   │       │                       └── SysUserServiceImpl.java         // 系统用户的服务接口实现类
+│   │       └── resources
+│   │           └── mapper
+│   │               ├── chat
+│   │               │   └── ChatMapper.xml                             // 用户聊天信息的数据访问接口的MyBatis映射文件
+│   │               └── system
+│   │                   ├── SysConfigMapper.xml                         // 系统配置的数据访问接口的MyBatis映射文件
+│   │                   ├── SysDeptMapper.xml                           // 系统部门的数据访问接口的MyBatis映射文件
+│   │                   ├── SysDictDataMapper.xml                       // 系统字典数据的数据访问接口的MyBatis映射文件
+│   │                   ├── SysDictTypeMapper.xml                       // 系统字典类型的数据访问接口的MyBatis映射文件
+│   │                   ├── SysLogininforMapper.xml                     // 系统登录信息的数据访问接口的MyBatis映射文件
+│   │                   ├── SysMenuMapper.xml                           // 系统菜单的数据访问接口的MyBatis映射文件
+│   │                   ├── SysNoticeMapper.xml                         // 系统通知的数据访问接口的MyBatis映射文件
+│   │                   ├── SysOperLogMapper.xml                        // 系统操作日志的数据访问接口的MyBatis映射文件
+│   │                   ├── SysPostMapper.xml                           // 系统岗位的数据访问接口的MyBatis映射文件
+│   │                   ├── SysRoleDeptMapper.xml                       // 系统角色与部门关系的数据访问接口的MyBatis映射文件
+│   │                   ├── SysRoleMapper.xml                           // 系统角色的数据访问接口的MyBatis映射文件
+│   │                   ├── SysRoleMenuMapper.xml                       // 系统角色与菜单关系的数据访问接口的MyBatis映射文件
+│   │                   ├── SysUserMapper.xml                           // 系统用户的数据访问接口的MyBatis映射文件
+│   │                   ├── SysUserPostMapper.xml                       // 系统用户与岗位关系的数据访问接口的MyBatis映射文件
+│   │                   └── SysUserRoleMapper.xml                       // 系统用户与角色关系的数据访问接口的MyBatis映射文件
+
