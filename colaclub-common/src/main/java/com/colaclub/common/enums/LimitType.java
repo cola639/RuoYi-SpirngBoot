@@ -25,5 +25,10 @@ public enum LimitType {
     /**
      * 设备号限流
      */
-    DEVICE
+    DEVICE,
+
+    /**
+     * 手机号
+     */
+    MOBILE,
 }

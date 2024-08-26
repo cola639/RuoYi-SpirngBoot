@@ -69,7 +69,7 @@ public class RateLimiterAspect {
         }
     }
 
-    public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) {
+    public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) throws ServiceException {
         HttpServletRequest request = ServletUtils.getRequest();
         StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
 

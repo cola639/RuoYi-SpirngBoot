@@ -18,40 +18,30 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class GiteeLogin {
 
-  @Autowired private SysLoginService loginService;
+    @Autowired
+    private SysLoginService loginService;
 
-  @Autowired private ThirdLogins thirdLogins;
+    @Autowired
+    private ThirdLogins thirdLogins;
 
-  @GetMapping("/PreLoginByGitee")
-  public AjaxResult PreLoginByGitee() {
-    AjaxResult ajax = AjaxResult.success();
-    AuthRequest authRequest =
-        new AuthGiteeRequest(
-            AuthConfig.builder()
-                .clientId(thirdLogins.getGiteeClientId())
-                .clientSecret(thirdLogins.getGiteeClientSecret())
-                .redirectUri(thirdLogins.getGiteeRedirectURL())
-                .build());
+    @GetMapping("/PreLoginByGitee")
+    public AjaxResult PreLoginByGitee() {
 
-    String uuid = IdUtils.fastUUID();
-    System.out.println("uuid" + uuid);
+        AuthRequest authRequest = new AuthGiteeRequest(AuthConfig.builder().clientId(thirdLogins.getGiteeClientId()).clientSecret(thirdLogins.getGiteeClientSecret()).redirectUri(thirdLogins.getGiteeRedirectURL()).build());
 
-    String authorizeUrl = authRequest.authorize(uuid); // 将 UUID 作为参数添加到回调 URL
-    // 存储
-    ajax.put("authorizeUrl", authorizeUrl);
-    ajax.put("uuid", uuid);
-    return ajax;
-  }
+        String uuid = IdUtils.fastUUID();
+        String authorizeUrl = authRequest.authorize(uuid); // 将 UUID 作为参数添加到回调 URL
+        AjaxResult ajax = AjaxResult.success(); // 存储
+        ajax.put("authorizeUrl", authorizeUrl);
+        ajax.put("uuid", uuid);
+        return ajax;
+    }
 
-  @PostMapping("/loginByGitee")
-  public AjaxResult loginByGitee(@RequestBody LoginByOtherSourceBody loginByOtherSourceBody) {
-    AjaxResult ajax = AjaxResult.success();
-    String token =
-        loginService.loginByOtherSource(
-            loginByOtherSourceBody.getCode(),
-            loginByOtherSourceBody.getSource(),
-            loginByOtherSourceBody.getUuid());
-    ajax.put(Constants.TOKEN, token);
-    return ajax;
-  }
+    @PostMapping("/loginByGitee")
+    public AjaxResult loginByGitee(@RequestBody LoginByOtherSourceBody loginByOtherSourceBody) {
+        String token = loginService.loginByOtherSource(loginByOtherSourceBody.getCode(), loginByOtherSourceBody.getSource(), loginByOtherSourceBody.getUuid());
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put(Constants.TOKEN, token);
+        return ajax;
+    }
 }

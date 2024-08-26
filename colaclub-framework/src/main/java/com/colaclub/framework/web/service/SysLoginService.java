@@ -168,7 +168,7 @@ public class SysLoginService {
         sysUser.setUserName(authUser.getUsername());
         sysUser.setSource(authUser.getSource());
         // 输出sysUser的信息
-        System.out.println("sysUser" + sysUser);
+        log.info("sysUser: '{}' ", sysUser);
 
         // 查询数据库中是否有匹配的SysUser
         List<SysUser> sysUsers = userService.selectUserListNoDataScope(sysUser);
@@ -255,18 +255,17 @@ public class SysLoginService {
         }
         // 异步日志记录
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(mobile, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
-
+        // 获取用户信息
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-
         SysUser user = userService.selectUserByPhone(mobile);
         loginUser.setUserId(user.getUserId());
+        // 生成token
+        String token = tokenService.createToken(loginUser);
 
         // 记录用户登录信息
         // recordLoginInfo(loginUser.getUserId());
 
         AjaxResult ajax = AjaxResult.success();
-        // 生成token
-        String token = tokenService.createToken(loginUser);
         ajax.put(Constants.TOKEN, token);
         return ajax;
     }
