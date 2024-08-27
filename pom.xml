@@ -187,6 +187,14 @@
                 <artifactId>colaclub-common</artifactId>
                 <version>${colaclub.version}</version>
             </dependency>
+
+            <!-- websocket模块-->
+            <dependency>
+                <groupId>com.colaclub</groupId>
+                <artifactId>colaclub-websocket</artifactId>
+                <version>${colaclub.version}</version>
+            </dependency>
+
             <!-- 第三方登录认证-->
             <dependency>
                 <groupId>me.zhyd.oauth</groupId>
@@ -212,7 +220,6 @@
         <module>colaclub-generator</module>
         <module>colaclub-common</module>
         <module>colaclub-websocket</module>
-
     </modules>
     <packaging>pom</packaging>
 

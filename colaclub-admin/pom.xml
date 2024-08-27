@@ -61,6 +61,12 @@
             <artifactId>colaclub-generator</artifactId>
         </dependency>
 
+        <!-- websocket -->
+        <dependency>
+            <groupId>com.colaclub</groupId>
+            <artifactId>colaclub-websocket</artifactId>
+        </dependency>
+
         <!-- 第三方登录认证-->
         <dependency>
             <groupId>me.zhyd.oauth</groupId>
