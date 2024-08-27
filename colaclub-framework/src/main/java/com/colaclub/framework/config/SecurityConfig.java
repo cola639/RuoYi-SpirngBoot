@@ -113,7 +113,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/PreLoginByGitee")
                 .anonymous()
                 // Demo匿名访问
-                .antMatchers("/location", "/repeatSubmit/**", "/redis/**", "/websocket/**")
+                .antMatchers("/location", "/repeatSubmit/**", "/redis/**", "/websocket/**", "/topic/**")
                 .anonymous()
                 // 静态资源，可匿名访问
                 .antMatchers(
