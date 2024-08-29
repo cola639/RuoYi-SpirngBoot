@@ -18,12 +18,14 @@ import com.colaclub.framework.manager.factory.AsyncFactory;
 import com.colaclub.framework.smsConfig.SmsCodeAuthenticationToken;
 import com.colaclub.system.service.ISysConfigService;
 import com.colaclub.system.service.ISysUserService;
+import com.xkcoding.http.config.HttpConfig;
 import lombok.extern.slf4j.Slf4j;
 import me.zhyd.oauth.config.AuthConfig;
 import me.zhyd.oauth.model.AuthCallback;
 import me.zhyd.oauth.model.AuthResponse;
 import me.zhyd.oauth.model.AuthUser;
 import me.zhyd.oauth.request.AuthGiteeRequest;
+import me.zhyd.oauth.request.AuthGithubRequest;
 import me.zhyd.oauth.request.AuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -150,7 +152,7 @@ public class SysLoginService {
      * @param source 用户来源平台
      * @param uuid   会话uuid
      */
-    public String loginByOtherSource(String code, String source, String uuid) {
+    public String loginByGitee(String code, String source, String uuid) {
         // 输出传入参数的值，用于跟踪代码执行
         log.info("code: '{}' source: '{}' uuid: '{}' ", code, source, uuid);
 
@@ -230,6 +232,82 @@ public class SysLoginService {
 
         // 生成token，并返回token值
         return tokenService.createToken(loginUser);
+    }
+
+    /**
+     * 扩展第三方登录
+     *
+     * @param code   用户授权
+     * @param source 用户来源平台
+     * @param uuid   会话uuid
+     */
+    public String loginByGithub(String code, String source, String uuid) {
+        log.info("code: '{}' source: '{}' uuid: '{}' ", code, source, uuid);
+
+        try {
+            // 验证 uuid 的有效性（假设您已经在会话中保存了这个 uuid）
+//            if (!isValidUuid(uuid)) {
+//                throw new ServiceException("无效的请求");
+//            }
+
+            AuthRequest authRequest = new AuthGithubRequest(AuthConfig.builder()
+                    .clientId(thirdLogins.getGithubClientId())
+                    .clientSecret(thirdLogins.getGithubClientSecret())
+                    .redirectUri(thirdLogins.getGithubRedirectURL())
+                    // 针对国外平台配置代理
+                    .httpConfig(HttpConfig.builder()
+                            .timeout(30 * 1000)  // 增加超时时间到30秒
+                            .build())
+                    .build());
+
+            AuthResponse<AuthUser> authResponse = authRequest.login(AuthCallback.builder().state(uuid).code(code).build());
+            log.info("authResponse code: {}, msg: {}, data: {}", authResponse.getCode(), authResponse.getMsg(), authResponse.getData());
+            if (authResponse.getCode() != 2000) {
+                throw new ServiceException("GitHub 登录失败：" + authResponse.getMsg());
+            }
+
+            AuthUser authUser = authResponse.getData();
+            SysUser sysUser = findOrCreateUser(authUser);
+
+            // 创建和返回 JWT Token
+            LoginUser loginUser = new LoginUser(sysUser.getUserId(), sysUser.getDeptId(), sysUser, permissionService.getMenuPermission(sysUser));
+            recordLoginInfo(loginUser.getUserId());
+
+            return tokenService.createToken(loginUser);
+
+        } catch (Exception e) {
+            log.error("GitHub 登录过程中出现错误", e);
+            throw new ServiceException("登录失败，请稍后再试。");
+        }
+    }
+
+    private SysUser findOrCreateUser(AuthUser authUser) throws ServiceException {
+        // 打印获取到的用户信息
+        log.info("获取到的用户信息: {}", authUser);
+        SysUser sysUser = new SysUser();
+        sysUser.setUserName(authUser.getUsername());
+        sysUser.setSource(authUser.getSource());
+
+        List<SysUser> sysUsers = userService.selectUserListNoDataScope(sysUser);
+
+        if (sysUsers.size() > 1) {
+            throw new ServiceException("第三方登录异常，账号重叠");
+        } else if (sysUsers.isEmpty()) {
+            sysUser.setNickName(authUser.getUsername());
+            sysUser.setAvatar(authUser.getAvatar());
+            sysUser.setEmail(authUser.getEmail());
+            sysUser.setPassword(SecurityUtils.encryptPassword("123456"));  // 在生产环境中应更加安全处理
+            sysUser.setCreateBy("third_github_token");
+            sysUser.setDeptId(105L);
+            sysUser.setCreateTime(new Date());
+            sysUser.setRoleIds(new Long[]{4L});
+
+            Long newUserId = userService.registerUserAndGetUserId(sysUser);
+            userService.insertUserAuth(newUserId, new Long[]{4L});
+            return sysUser;
+        } else {
+            return sysUsers.get(0);
+        }
     }
 
     /**

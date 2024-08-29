@@ -18,6 +18,10 @@ public class ThirdLogins {
     private String giteeClientSecret;
     private String giteeRedirectURL;
 
+    private String githubClientId;
+    private String githubClientSecret;
+    private String githubRedirectURL;
+
     private String wechatAppId;
     private String wechatAppSecret;
     private String wechatUrl;
