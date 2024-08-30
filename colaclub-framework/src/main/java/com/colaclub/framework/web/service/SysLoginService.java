@@ -104,6 +104,7 @@ public class SysLoginService {
         // 此处与第三方区别
         // 获取已认证用户信息
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+        log.info("loginUser:{}", loginUser);
         // 记录用户登录信息
         // recordLoginInfo(loginUser.getUserId());
         // 生成token
