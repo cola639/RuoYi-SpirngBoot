@@ -23,12 +23,15 @@ pipeline {
                 sh 'docker version'  // 显示 Docker 版本
                 sh 'java -version'   // 显示 Java 版本
                 sh 'git --version'   // 显示 Git 版本
+                sh 'cp /www/yml/cola/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
+                sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 验证文件是否已成功复制
             }
         }
 
         // 第二个阶段: 代码编译
         stage('2.Compile') {
             // agent 可以被用于改变某个阶段的执行位置
+            // 临时构建环境
             agent {
                 docker {
                     image 'maven:3-alpine' // 使用 Maven Docker 镜像
