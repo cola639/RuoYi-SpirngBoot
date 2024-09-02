@@ -16,6 +16,9 @@ RUN addgroup -S spring && adduser -S spring -G spring
 # 安装生成Captcha需要的字体 库
 RUN apk add --no-cache ttf-dejavu
 
+# 创建一个工作目录，用于存储日志
+RUN mkdir -p /www/logs
+
 # 避免服务监控报错
 # 添加glibc的安装源
 RUN apk --no-cache add ca-certificates wget && \
