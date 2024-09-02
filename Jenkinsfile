@@ -5,7 +5,7 @@ pipeline {
     agent any
     // environment 用于在 pipeline 或者阶段级别定义环境变量
     environment {
-        NETWORK = 'ruoyi'                          // 前后端互通网络组
+        NETWORK = 'bridge'                          // 前后端互通网络组
         IMAGE_NAME = 'colaclub-admin'              // 定义 Docker 镜像的名字 JAR存放目录名字
         JAR_FILE = 'colaclub-admin.jar'            // 定义 JAR 文件名，可根据实际情况调整
         WS = "${WORKSPACE}"                        // 定义工作空间路径
@@ -23,7 +23,7 @@ pipeline {
                 sh 'docker version'  // 显示 Docker 版本
                 sh 'java -version'   // 显示 Java 版本
                 sh 'git --version'   // 显示 Git 版本
-                sh 'cp /www/yml/cola/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
+                sh 'cp /www/yml/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
                 sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 验证文件是否已成功复制
             }
         }
