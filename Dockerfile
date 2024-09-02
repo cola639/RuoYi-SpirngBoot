@@ -1,7 +1,7 @@
 # 使用 openjdk:8-jre-alpine 作为基础镜像
 FROM openjdk:8-jre-alpine
 
-# Jenkinsfile构建镜像时定义参数
+# 读取Jenkinsfile构建镜像时定义参数
 ARG PROFILE
 # 定义一个参数用于接收 JAR 文件名
 ARG JAR_FILE
