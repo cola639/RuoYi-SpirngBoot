@@ -61,7 +61,7 @@ pipeline {
 
         stage('4.Deploy') {
             steps {
-                sh 'docker run -d --net bridge -p 8888:8888 --name ${IMAGE_NAME} ${IMAGE_NAME}'
+                sh 'docker run -d --net bridge -p 8888:80 --name ${IMAGE_NAME} ${IMAGE_NAME}'
                 // sh "docker run -d -p 8888:8888 --restart always --name ${IMAGE_NAME} ${IMAGE_NAME}"
                 // 前端nginx需配置后端服务监听的端口 即application-prod.yml中的port
                 // sh 'docker run -d --net ${NETWORK} --name ${IMAGE_NAME} ${IMAGE_NAME}'
