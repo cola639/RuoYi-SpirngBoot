@@ -62,7 +62,8 @@ pipeline {
         stage('4.Deploy') {
             steps {
                 // 对外端口:容器端口 将后端容器监听的8888端口暴露到宿主机8080 省略nginx配置
-                sh "docker run -d -p 8888:8888 --restart always --name ${IMAGE_NAME} ${IMAGE_NAME}"
+                sh "docker run -d -p 8888:8888 --name ${IMAGE_NAME} ${IMAGE_NAME}"
+                // sh "docker run -d -p 8888:8888 --restart always --name ${IMAGE_NAME} ${IMAGE_NAME}"
                 // 前端nginx需配置后端服务监听的端口 即application-prod.yml中的port
                 // sh 'docker run -d --net ${NETWORK} --name ${IMAGE_NAME} ${IMAGE_NAME}'
                 // 方式 2 -p 80 告诉 Docker 自动分配一个可用的宿主机端口，并将其映射到容器的 80 端口。
