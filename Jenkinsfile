@@ -23,24 +23,12 @@ pipeline {
                 sh 'docker version'  // 显示 Docker 版本
                 sh 'java -version'   // 显示 Java 版本
                 sh 'git --version'   // 显示 Git 版本
-               // sh 'cp /www/yml/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
-               // sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 验证文件是否已成功复制
-                echo 'Copying application-prod.yml to target directory...'
-                sh 'cp /www/yml/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
-
-                echo 'Verifying the copied file...'
-                sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 列出文件列表
-
-                echo 'Displaying the contents of application-prod.yml...'
-                sh 'cat ${WS}/colaclub-admin/src/main/resources/application-prod.yml' // 显示文件内容，确保其被正确复制
-
             }
         }
 
         // 第二个阶段: 代码编译
         stage('2.Compile') {
             // agent 可以被用于改变某个阶段的执行位置
-            // 临时构建环境
             agent {
                 docker {
                     image 'maven:3-alpine' // 使用 Maven Docker 镜像
@@ -70,10 +58,8 @@ pipeline {
 
         stage('4.Deploy') {
             steps {
-                sh 'docker run -d --net ${NETWORK} --name ${IMAGE_NAME} ${IMAGE_NAME}'
-                // sh "docker run -d -p 8888:8888 --restart always --name ${IMAGE_NAME} ${IMAGE_NAME}"
                 // 前端nginx需配置后端服务监听的端口 即application-prod.yml中的port
-                // sh 'docker run -d --net ${NETWORK} --name ${IMAGE_NAME} ${IMAGE_NAME}'
+                sh 'docker run -d --net ${NETWORK} --name ${IMAGE_NAME} ${IMAGE_NAME}'
                 // 方式 2 -p 80 告诉 Docker 自动分配一个可用的宿主机端口，并将其映射到容器的 80 端口。
                 // docker run -d --net ${NETWORK} -p 80 --name ${IMAGE_NAME} ${IMAGE_NAME}
                 // 方式 3 如果需要对外暴露后端接口换下面 8887为宿主机端口
