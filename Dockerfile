@@ -16,11 +16,6 @@ RUN addgroup -S spring && adduser -S spring -G spring
 # 安装生成Captcha需要的字体 库
 RUN apk add --no-cache ttf-dejavu
 
-# 创建日志和配置文件目录，并设置权限
-RUN mkdir -p /www/logs /www/yml \
-    && chown -R spring:spring /www \
-    && chmod -R 775 /www
-
 # 避免服务监控报错
 # 添加glibc的安装源
 RUN apk --no-cache add ca-certificates wget && \
@@ -39,6 +34,9 @@ RUN apk add --no-cache ffmpeg
 # 与文件logback.xml  <property name="log.path" value="./logs"/> 一致
 # 这里第一个 spring 代表用户名，第二个 spring 代表用户组名。这意味着你将文件或目录的所有权更改为用户 spring 和组 spring
 RUN mkdir -p /logs && chown -R spring:spring /logs
+
+# 创建日志和配置文件目录，并设置权限
+RUN mkdir -p /www/logs && chown -R spring:spring /www/logs
 
 # 切换到新的用户
 USER spring:spring
