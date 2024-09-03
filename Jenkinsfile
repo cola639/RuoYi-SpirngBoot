@@ -23,8 +23,17 @@ pipeline {
                 sh 'docker version'  // 显示 Docker 版本
                 sh 'java -version'   // 显示 Java 版本
                 sh 'git --version'   // 显示 Git 版本
+               // sh 'cp /www/yml/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
+               // sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 验证文件是否已成功复制
+                echo 'Copying application-prod.yml to target directory...'
                 sh 'cp /www/yml/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
-                sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 验证文件是否已成功复制
+
+                echo 'Verifying the copied file...'
+                sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 列出文件列表
+
+                echo 'Displaying the contents of application-prod.yml...'
+                sh 'cat ${WS}/colaclub-admin/src/main/resources/application-prod.yml' // 显示文件内容，确保其被正确复制
+
             }
         }
 
