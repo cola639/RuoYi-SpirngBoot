@@ -26,6 +26,8 @@ pipeline {
                 sh 'cp /www/yml/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
                 echo 'Ls directory...'
                 sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 列出文件列表
+                echo 'Displaying application-prod.yml...'
+                sh 'cat ${WS}/colaclub-admin/src/main/resources/application-prod.yml' // 显示文件内容，确保其被正确复制
             }
         }
 
