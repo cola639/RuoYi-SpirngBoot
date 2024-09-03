@@ -47,7 +47,7 @@ USER spring:spring
 COPY ${JAR_FILE} /app.jar
 
 # 声明作用无实际作用 实际由docker run port 暴露容器端口
-EXPOSE 80
+EXPOSE 80 8888
 
 # 该容器启动命令配置了 JVM 以优化其在容器环境中的性能，并指定了运行时的 Java 参数。
 # 该配置启动了一个 Spring Boot 应用程序，并使用环境变量控制 Spring 配置概要。
