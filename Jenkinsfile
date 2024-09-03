@@ -24,6 +24,7 @@ pipeline {
                 sh 'java -version'   // 显示 Java 版本
                 sh 'git --version'   // 显示 Git 版本
                 sh 'cp /www/yml/application-prod.yml ${WS}/colaclub-admin/src/main/resources/' // 将宿主机上的 application-prod.yml 复制到当前工作目录下的 colaclub-admin/src/main/resources
+                echo 'Ls directory...'
                 sh 'ls -alh ${WS}/colaclub-admin/src/main/resources/' // 列出文件列表
             }
         }
