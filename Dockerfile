@@ -67,22 +67,5 @@ EXPOSE 80 8888
 # -XX:SurvivorRatio=30：设置 Eden 区与 Survivor 区的比例为 30:1，优化新生代内存使用。
 # -XX:+UseParallelGC：启用并行垃圾回收器，适合多核 CPU 环境，提高 GC 效率。
 # -XX:+UseParallelOldGC：启用老年代的并行垃圾回收器，提高整体垃圾回收性能。
-ENTRYPOINT ["sh", "-c", "java \
-    -XX:+UseContainerSupport \
-    -XX:MaxRAMPercentage=70.0 \
-    -Djava.security.egd=file:/dev/./urandom \
-    -Dname=target/ruoyi-vue.jar \
-    -Duser.timezone=Asia/Shanghai \
-    -Xms512m \
-    -Xmx1024m \
-    -XX:MetaspaceSize=128m \
-    -XX:MaxMetaspaceSize=512m \
-    -XX:+HeapDumpOnOutOfMemoryError \
-    -XX:+PrintGCDateStamps \
-    -XX:+PrintGCDetails \
-    -XX:NewRatio=1 \
-    -XX:SurvivorRatio=30 \
-    -XX:+UseParallelGC \
-    -XX:+UseParallelOldGC \
-    -jar /app.jar --spring.profiles.active=${PROFILE}"]
+ENTRYPOINT ["sh", "-c", "java -XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0 -Djava.security.egd=file:/dev/./urandom -jar /app.jar --spring.profiles.active=${PROFILE}"]
 
