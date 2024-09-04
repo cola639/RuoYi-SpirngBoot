@@ -65,7 +65,7 @@ pipeline {
         stage('4.Deploy') {
             steps {
                 // 前端nginx需配置后端服务监听的端口 即application-prod.yml中的port
-                sh 'docker run -d --net ${NETWORK} -p 8888:8888 --name ${IMAGE_NAME} -v /www/logs:/www/logs ${IMAGE_NAME}'
+                sh 'docker run -d --net ${NETWORK} -p 8888:8888 --name ${IMAGE_NAME} --restart always -v /www/logs:/www/logs ${IMAGE_NAME}'
                 // 方式 2 -p 80 告诉 Docker 自动分配一个可用的宿主机端口，并将其映射到容器的 80 端口。
                 // docker run -d --net ${NETWORK} -p 80 --name ${IMAGE_NAME} ${IMAGE_NAME}
                 // 方式 3 如果需要对外暴露后端接口换下面 8887为宿主机端口
