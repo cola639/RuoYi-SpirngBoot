@@ -45,3 +45,8 @@ nbdist/
 !*/build/*.java
 !*/build/*.html
 !*/build/*.xml
+
+# 忽略 application-prod.yml
+*.yml
+# 忽略 application-dev.yml
+

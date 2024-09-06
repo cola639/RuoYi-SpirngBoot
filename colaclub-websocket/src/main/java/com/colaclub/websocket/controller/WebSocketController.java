@@ -14,6 +14,11 @@ public class WebSocketController {
 
     private final SimpMessagingTemplate messagingTemplate;
 
+    /**
+     * 接收客户端发送的消息
+     *
+     * @param message
+     */
     @MessageMapping("/topic/test")
     public void handleMessage(byte[] message) {
         String receivedMessage = new String(message);
@@ -21,6 +26,12 @@ public class WebSocketController {
         messagingTemplate.convertAndSend("/topic/test", receivedMessage);
     }
 
+    /**
+     * 发送消息
+     *
+     * @param destination
+     * @param request
+     */
     @PostMapping
     public void send(@RequestParam("destination") String destination, @RequestBody Object request) {
         log.info("request: '{}'", request);
