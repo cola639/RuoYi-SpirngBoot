@@ -1,6 +1,7 @@
 package com.colaclub.common.service;
 
 import cn.hutool.json.JSONUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.aliyun.dysmsapi20170525.Client;
 import com.aliyun.dysmsapi20170525.models.SendSmsRequest;
 import com.aliyun.dysmsapi20170525.models.SendSmsResponse;
@@ -31,6 +32,7 @@ public class AliyunSmsService {
     private String smsEndpoint;
     private String smsSignName;
     private String smsTemplateCode;
+    private String smsRegisterCode;
     private Client client;
 
     /**
@@ -59,12 +61,17 @@ public class AliyunSmsService {
      * @param phone 电话号码
      * @throws Exception 短信推送异常
      */
-    public boolean sendCode(String phone, String code) throws Exception {
+    public boolean sendCode(String phone, String code, String smsTemplateCode) throws Exception {
+        // 构建JSON参数
+        JSONObject templateParams = new JSONObject();
+        templateParams.put("code", code);
+        templateParams.put("time", 5);
+
         SendSmsRequest sendSmsRequest = new SendSmsRequest()
                 .setSignName(smsSignName)
-                .setTemplateCode(smsTemplateCode)
+                .setTemplateCode(smsRegisterCode)  // 使用传入的模板代码
                 .setPhoneNumbers(phone)
-                .setTemplateParam("{\"code\":\"" + code + "\"}");
+                .setTemplateParam(templateParams.toString());  // 将JSON对象转换为字符串
         try {
             log.info("发送短信入参: " + JSONUtil.toJsonStr(sendSmsRequest));
             SendSmsResponse sendSmsResponse = client.sendSms(sendSmsRequest);
@@ -74,17 +81,14 @@ public class AliyunSmsService {
                 return true;
             }
         } catch (TeaException error) {
-            // 如有需要，请打印 error
             log.error("短信推送异常结果: " + error.message);
             return false;
         } catch (Exception e) {
             TeaException error = new TeaException(e.getMessage(), e);
-            // 如有需要，请打印 error
             com.aliyun.teautil.Common.assertAsString(error.message);
             log.error("短信推送异常结果: " + error.message);
             return true;
         }
-
         return Boolean.FALSE;
     }
 }

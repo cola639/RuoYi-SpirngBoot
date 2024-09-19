@@ -32,10 +32,10 @@ public class GenerateSmsController {
     private AliyunSmsService smsService;
 
     @PostMapping("/sms/code")
-    @RateLimiter(time = 60, count = 1, limitType = LimitType.IP)
+    @RateLimiter(time = 60, count = 1, limitType = LimitType.PHONE)
     @ResponseBody
     public AjaxResult sms(@RequestBody LoginBody loginBody) throws Exception {
-        String mobile = loginBody.getMobile();
+        String phone = loginBody.getPhone();
 
         // 保存验证码信息
         String uuid = IdUtils.simpleUUID();
@@ -44,13 +44,40 @@ public class GenerateSmsController {
 
         // 缓存验证码
         Map<String, Object> map = new HashMap<>(16);
-        map.put("mobile", mobile);
+        map.put("phone", phone);
         map.put("code", code);
         redisCache.setCacheObject(verifyKey, map, Constants.SMS_CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
-        log.info(" 为 {} 设置短信验证码：{}", mobile, code);
+        log.info(" 为 {} 设置短信验证码：{}", phone, code);
 
         // 阿里云发送验证码通知
-        smsService.sendCode(mobile, code);
+        smsService.sendCode(phone, code, "smsTemplateCode");
+
+        // 返回验证码对应uuid
+        AjaxResult ajax = AjaxResult.success();
+        ajax.put("uuid", uuid);
+        return ajax;
+    }
+
+    @PostMapping("/sms/register")
+    @RateLimiter(time = 60, count = 1, limitType = LimitType.PHONE)
+    @ResponseBody
+    public AjaxResult register(@RequestBody LoginBody loginBody) throws Exception {
+        String phone = loginBody.getPhone();
+
+        // 保存验证码信息
+        String uuid = IdUtils.simpleUUID();
+        String verifyKey = Constants.SMS_REGISTER_CODE_KEY + uuid;
+        String code = RandomUtil.randomNumbers(4);
+
+        // 缓存验证码
+        Map<String, Object> map = new HashMap<>(16);
+        map.put("phone", phone);
+        map.put("code", code);
+        redisCache.setCacheObject(verifyKey, map, Constants.SMS_CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
+        log.info("smsRegisterCode 为 {} 设置短信验证码：{}", phone, code);
+
+        // 阿里云发送验证码通知
+        // smsService.sendCode(phone, code, "smsRegisterCode");
 
         // 返回验证码对应uuid
         AjaxResult ajax = AjaxResult.success();

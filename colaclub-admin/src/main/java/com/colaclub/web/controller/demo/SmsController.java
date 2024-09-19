@@ -20,7 +20,7 @@ public class SmsController extends BaseController {
     @Anonymous
     @GetMapping("/send")
     public AjaxResult send(String phone) throws Exception {
-        return toAjax(smsService.sendCode(phone, RandomUtil.randomNumbers(4)));
+        return toAjax(smsService.sendCode(phone, RandomUtil.randomNumbers(4), "smsTemplateCode"));
     }
 }
 

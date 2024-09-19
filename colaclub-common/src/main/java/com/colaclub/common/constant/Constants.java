@@ -12,7 +12,10 @@ public class Constants {
     public static final String SMS_CAPTCHA_CODE_KEY = "sms_captcha:";
 
     /** 短信验证码有效期（分钟） */
-    public static final Integer SMS_CAPTCHA_EXPIRATION = 1;
+    public static final Integer SMS_CAPTCHA_EXPIRATION = 5;
+
+    /** 重置密码短信验证码 */
+    public static final String SMS_REGISTER_CODE_KEY = "sms_register:";
 
     /** 重置密码短信验证码 */
     public static final String SMS_RESET_CODE_KEY = "sms_reset:";
@@ -49,6 +52,9 @@ public class Constants {
 
     /** 登录失败 */
     public static final String LOGIN_FAIL = "Error";
+
+    /** 注册失败 */
+    public static final String REGISTER_FAIL = "Register Error";
 
     /** 重置密码失败 */
     public static final String RESET_FAIL = "RESET FAIL";

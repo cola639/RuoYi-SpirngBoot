@@ -106,7 +106,7 @@ public class SysLoginService {
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         log.info("loginUser:{}", loginUser);
         // 记录用户登录信息
-        // recordLoginInfo(loginUser.getUserId());
+        recordLoginInfo(loginUser.getUserId());
         // 生成token
         return tokenService.createToken(loginUser);
     }
@@ -134,7 +134,7 @@ public class SysLoginService {
     }
 
     /**
-     * 记录登录信息
+     * sys_user表 记录登录信息或更新用户登录信息
      *
      * @param userId 用户ID
      */

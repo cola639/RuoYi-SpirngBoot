@@ -194,7 +194,7 @@ public class SysUserController extends BaseController {
     @RateLimiter(key = "resetPwd", time = 1000, count = 1, limitType = LimitType.IP)
     @PostMapping("/resetPwd/sms")
     public AjaxResult sms(@RequestBody LoginBody loginBody) throws Exception {
-        String mobile = loginBody.getMobile();
+        String mobile = loginBody.getPhone();
 
         // 保存验证码信息
         String uuid = IdUtils.simpleUUID();
@@ -209,7 +209,7 @@ public class SysUserController extends BaseController {
         logger.info(" 为 {} 设置短信验证码：{}", mobile, code);
 
         // 阿里云发送验证码通知
-        smsService.sendCode(mobile, code);
+        smsService.sendCode(mobile, code, "smsTemplateCode");
 
         // 返回验证码对应uuid
         AjaxResult ajax = AjaxResult.success();
@@ -223,23 +223,23 @@ public class SysUserController extends BaseController {
     @Log(title = "用户管理", businessType = BusinessType.UPDATE)
     @PutMapping("/resetPwdByCode")
     public AjaxResult resetPwd(@RequestBody LoginBody loginBody) {
-        String mobile = loginBody.getMobile();
+        String phone = loginBody.getPhone();
         String code = loginBody.getCode();
         String uuid = loginBody.getUuid();
         String password = loginBody.getPassword();
 
         try {
-            pwdService.smsResetPwd(mobile, code, uuid, password);
+            pwdService.smsResetPwd(phone, code, uuid, password);
             return AjaxResult.success();
         } catch (ServiceException e) {
             // 记录错误日志
-            logger.error("重置密码失败，手机号：{}，错误信息：{}", mobile, e.getMessage());
+            logger.error("重置密码失败，手机号：{}，错误信息：{}", phone, e.getMessage());
             // 记录登录失败信息
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(mobile, Constants.RESET_FAIL, e.getMessage()));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(phone, Constants.RESET_FAIL, e.getMessage()));
             return AjaxResult.error(e.getMessage());
         } catch (Exception e) {
             // 记录未知错误日志
-            logger.error("重置密码过程中发生未知错误，手机号：{}，错误信息：{}", mobile, e.getMessage());
+            logger.error("重置密码过程中发生未知错误，手机号：{}，错误信息：{}", phone, e.getMessage());
             return AjaxResult.error("重置密码失败，请稍后再试");
         }
     }

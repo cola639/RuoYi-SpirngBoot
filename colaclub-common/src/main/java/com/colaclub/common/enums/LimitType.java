@@ -30,5 +30,5 @@ public enum LimitType {
     /**
      * 手机号
      */
-    MOBILE,
+    PHONE,
 }

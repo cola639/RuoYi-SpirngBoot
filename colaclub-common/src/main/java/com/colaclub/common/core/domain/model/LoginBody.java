@@ -6,69 +6,69 @@ package com.colaclub.common.core.domain.model;
  * @author colaclub
  */
 public class LoginBody {
-  /** 用户名 */
-  private String username;
+    /** 用户名 */
+    private String username;
 
-  /** 用户密码 */
-  private String password;
+    /** 用户密码 */
+    private String password;
 
-  /** 验证码 */
-  private String code;
+    /** 验证码 */
+    private String code;
 
-  /** 唯一标识 */
-  private String uuid;
+    /** 唯一标识 */
+    private String uuid;
 
-  /** 手机号 */
-  private String mobile;
+    /** 手机号 */
+    private String phone;
 
-  /** 手机验证码 */
-  private String smsCode;
+    /** 手机验证码 */
+    private String smsCode;
 
-  public String getMobile() {
-    return mobile;
-  }
+    public String getPhone() {
+        return phone;
+    }
 
-  public void setMobile(String mobile) {
-    this.mobile = mobile;
-  }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-  public String getSmsCode() {
-    return smsCode;
-  }
+    public String getSmsCode() {
+        return smsCode;
+    }
 
-  public void setSmsCode(String smsCode) {
-    this.smsCode = smsCode;
-  }
+    public void setSmsCode(String smsCode) {
+        this.smsCode = smsCode;
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public String getCode() {
-    return code;
-  }
+    public String getCode() {
+        return code;
+    }
 
-  public void setCode(String code) {
-    this.code = code;
-  }
+    public void setCode(String code) {
+        this.code = code;
+    }
 
-  public String getUuid() {
-    return uuid;
-  }
+    public String getUuid() {
+        return uuid;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 }
