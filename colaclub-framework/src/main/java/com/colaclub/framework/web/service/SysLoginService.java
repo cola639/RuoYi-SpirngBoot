@@ -105,7 +105,7 @@ public class SysLoginService {
         // 获取已认证用户信息
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
         log.info("loginUser:{}", loginUser);
-        // 记录用户登录信息
+        // 记录或更新sys_user表用户登录信息
         recordLoginInfo(loginUser.getUserId());
         // 生成token
         return tokenService.createToken(loginUser);
@@ -247,9 +247,9 @@ public class SysLoginService {
 
         try {
             // 验证 uuid 的有效性（假设您已经在会话中保存了这个 uuid）
-//            if (!isValidUuid(uuid)) {
-//                throw new ServiceException("无效的请求");
-//            }
+            //            if (!isValidUuid(uuid)) {
+            //                throw new ServiceException("无效的请求");
+            //            }
 
             AuthRequest authRequest = new AuthGithubRequest(AuthConfig.builder()
                     .clientId(thirdLogins.getGithubClientId())
@@ -319,24 +319,24 @@ public class SysLoginService {
      * @param uuid   唯一标识
      * @return 结果
      */
-    public AjaxResult smsLogin(String mobile, String code, String uuid) {
+    public AjaxResult smsLogin(String phone, String code, String uuid) {
 
         // 用户验证
         Authentication authentication = null;
         try {
-            checkSmsCode(mobile, code, uuid);
+            checkSmsCode(phone, code, uuid);
 
             // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
-            authentication = authenticationManager.authenticate(new SmsCodeAuthenticationToken(mobile));
+            authentication = authenticationManager.authenticate(new SmsCodeAuthenticationToken(phone));
         } catch (Exception e) {
-            AsyncManager.me().execute(AsyncFactory.recordLogininfor(mobile, Constants.LOGIN_FAIL, e.getMessage()));
+            AsyncManager.me().execute(AsyncFactory.recordLogininfor(phone, Constants.LOGIN_FAIL, e.getMessage()));
             throw new ServiceException(e.getMessage());
         }
         // 异步日志记录
-        AsyncManager.me().execute(AsyncFactory.recordLogininfor(mobile, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
+        AsyncManager.me().execute(AsyncFactory.recordLogininfor(phone, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         // 获取用户信息
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        SysUser user = userService.selectUserByPhone(mobile);
+        SysUser user = userService.selectUserByPhone(phone);
         loginUser.setUserId(user.getUserId());
         // 生成token
         String token = tokenService.createToken(loginUser);
@@ -350,11 +350,11 @@ public class SysLoginService {
     }
 
     /**
-     * 检查手机号登录
+     * 检查手机号登录验证码
      *
      * @param
      */
-    private void checkSmsCode(String mobile, String inputCode, String uuid) {
+    private void checkSmsCode(String phone, String inputCode, String uuid) {
         // inputCode 转换为 int类型，首先检查 inputCode 是否为空或非数字
         if (StringUtils.isEmpty(inputCode)) {
             throw new BadCredentialsException("验证码不能为空");
@@ -374,7 +374,7 @@ public class SysLoginService {
             throw new BadCredentialsException("验证码失效");
         }
 
-        String applyMobile = (String) smsCode.get("mobile");
+        String applyPhone = (String) smsCode.get("phone");
         String codeStr = (String) smsCode.get("code");
 
         // codeStr转为数字 并检查 codeStr 是否为空或非数字
@@ -385,7 +385,7 @@ public class SysLoginService {
             throw new BadCredentialsException("验证码数据格式不正确");
         }
 
-        if (!applyMobile.equals(mobile)) {
+        if (!applyPhone.equals(phone)) {
             throw new BadCredentialsException("手机号码不一致");
         }
         if (code != inputCodeInt) {

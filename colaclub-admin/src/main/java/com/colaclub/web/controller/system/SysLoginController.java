@@ -100,10 +100,10 @@ public class SysLoginController {
     @ApiImplicitParam(name = "loginBody", value = "登录信息", dataType = "LoginBody")
     @PostMapping("/sms/login")
     public AjaxResult smsLogin(@RequestBody LoginBody loginBody) {
-        String mobile = loginBody.getPhone();
+        String phone = loginBody.getPhone();
         String smsCode = loginBody.getSmsCode();
         String uuid = loginBody.getUuid();
-        AjaxResult ajax = loginService.smsLogin(mobile, smsCode, uuid);
+        AjaxResult ajax = loginService.smsLogin(phone, smsCode, uuid);
         return ajax;
     }
 }
