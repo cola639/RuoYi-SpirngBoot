@@ -101,8 +101,6 @@ ENTRYPOINT ["sh", "-c", "java \
     -XX:InitiatingHeapOccupancyPercent=45 \
     -XX:+ParallelRefProcEnabled \
     -XX:+ExplicitGCInvokesConcurrent \
-    -XX:+PrintGCDateStamps \
-    -XX:+PrintGCDetails \
     -XX:+ExitOnOutOfMemoryError \
     -jar /app.jar --spring.profiles.active=${PROFILE}"]
 

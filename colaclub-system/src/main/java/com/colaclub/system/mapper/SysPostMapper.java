@@ -1,11 +1,9 @@
 package com.colaclub.system.mapper;
 
 import com.colaclub.system.domain.SysPost;
-import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
-@Mapper
 public interface SysPostMapper {
     /**
      * 查询岗位数据集合
