@@ -103,7 +103,6 @@ ENTRYPOINT ["sh", "-c", "java \
     -XX:+ExplicitGCInvokesConcurrent \
     -XX:+PrintGCDateStamps \
     -XX:+PrintGCDetails \
-    -Xlog:gc*:file=/app/logs/gc.log:time,uptime,level,tags \
     -XX:+ExitOnOutOfMemoryError \
     -jar /app.jar --spring.profiles.active=${PROFILE}"]
 
