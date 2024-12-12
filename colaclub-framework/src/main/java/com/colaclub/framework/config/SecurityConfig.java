@@ -87,7 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .apply(smsCodeAuthenticationSecurityConfig)
                 .and()
-                // CSRF禁用，因为不使用session
+                // 禁用了 Spring Security 的 CSRF 防护，因为不使用session
                 .csrf()
                 .disable()
                 // 认证失败处理类

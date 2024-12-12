@@ -49,38 +49,61 @@ EXPOSE 80 8888
 
 # 该容器启动命令配置了 JVM 以优化其在容器环境中的性能，并指定了运行时的 Java 参数。
 # 该配置启动了一个 Spring Boot 应用程序，并使用环境变量控制 Spring 配置概要。
-# -XX:+UseContainerSupport：启用容器支持，确保 JVM 能够识别和尊重容器的内存限制。
-# -XX:MaxRAMPercentage=70.0：设置 JVM 使用的最大内存为分配给容器内存的 70%，以确保合理的内存分配。
-# -Djava.security.egd=file:/dev/./urandom：优化随机数生成器的性能，缩短应用程序启动时间。
-# -Dname=target/ruoyi-vue.jar：指定 JVM 进程名称为 'target/ruoyi-vue.jar'，便于进程管理和监控。
-# -Duser.timezone=Asia/Shanghai：设置 JVM 的时区为上海，以确保时间相关操作符合预期。
-# -Xms512m：设置初始堆内存大小为 512MB，确保 JVM 启动时有足够的内存。
-# -Xmx1024m：设置最大堆内存大小为 1024MB，限制 JVM 的最大内存使用量。
-# -XX:MetaspaceSize=128m：配置元空间的初始大小为 128MB，优化类加载的内存使用。
-# -XX:MaxMetaspaceSize=512m：设置元空间的最大大小为 512MB，防止内存过度使用。
-# -XX:+HeapDumpOnOutOfMemoryError：在内存溢出时生成堆转储文件，便于分析内存问题。
-# -XX:+PrintGCDateStamps：启用垃圾回收（GC）日志中的时间戳，便于日志分析。
-# -XX:+PrintGCDetails：启用详细的垃圾回收日志，帮助优化内存管理。
-# -XX:NewRatio=1：设置新生代与老年代的比例为 1:1，平衡内存分配策略。
-# -XX:SurvivorRatio=30：设置 Eden 区与 Survivor 区的比例为 30:1，优化新生代内存使用。
-# -XX:+UseParallelGC：启用并行垃圾回收器，适合多核 CPU 环境，提高 GC 效率。
-# -XX:+UseParallelOldGC：启用老年代的并行垃圾回收器，提高整体垃圾回收性能。
+
+# -XX:+UnlockExperimentalVMOptions：解锁实验性 JVM 配置选项，允许使用最新的 GC 和内存管理参数。
+# -XX:+UseContainerSupport：启用容器支持，确保 JVM 能识别和尊重容器的内存、CPU 限制。
+# -XX:MaxRAMPercentage=75.0：设置 JVM 最大堆内存为容器分配内存的 75%，平衡内存使用。
+# -XX:+AlwaysPreTouch：在 JVM 启动时预分配内存页，确保内存访问更快，降低延迟。
+
+# -Djava.security.egd=file:/dev/./urandom：优化随机数生成器的性能，缩短应用启动时间。
+# -Duser.timezone=Asia/Shanghai：设置 JVM 的时区为上海，确保应用时间与本地时间一致。
+
+# -Xms512m：设置初始堆内存大小为 1024，避免启动时内存动态分配造成的性能问题。
+# -Xmx1024m：设置最大堆内存大小为 2048MB，限制 JVM 内存使用，避免过度使用容器资源。
+# -XX:MetaspaceSize=128m：设置元空间初始大小为 128MB，优化类加载的内存管理。
+# -XX:MaxMetaspaceSize=512m：限制元空间的最大大小为 512MB，防止类加载内存占用过多。
+
+# -XX:SurvivorRatio=8：设置 Eden 区与 Survivor 区的比例为 8:1，提升新生代垃圾回收效率。
+# -XX:MaxTenuringThreshold=15：设置对象在新生代的最大年龄为 15，优化对象晋升策略。
+
+# -XX:+HeapDumpOnOutOfMemoryError：内存溢出时生成堆转储文件，便于诊断内存问题。
+# -XX:HeapDumpPath=/app/dumps：指定堆转储文件存储路径，便于文件管理。
+
+# -XX:+UseG1GC：启用 G1 垃圾回收器，适用于大堆内存环境，提供更高的 GC 性能和低延迟。
+# -XX:InitiatingHeapOccupancyPercent=45：当堆内存使用达到 45% 时触发 GC，优化回收时机。
+# -XX:+ParallelRefProcEnabled：并行处理 GC 的引用队列，减少 GC 延迟。
+# -XX:+ExplicitGCInvokesConcurrent：确保显式调用 System.gc() 时，触发并发 GC，而非 Full GC。
+
+# -XX:+PrintGCDateStamps：在 GC 日志中打印时间戳，便于分析日志与性能问题。
+# -XX:+PrintGCDetails：启用详细的 GC 日志记录，帮助分析内存使用和回收情况。
+# -Xlog:gc*:file=/app/logs/gc.log:time,uptime,level,tags：记录 GC 日志到指定文件，便于长期分析。
+
+# -XX:+ExitOnOutOfMemoryError：内存溢出时强制退出应用，避免容器进入不确定状态。
+
+# -jar /app.jar：指定运行的 Spring Boot 可执行 Jar 包。
+# --spring.profiles.active=${PROFILE}：动态加载 Spring 配置文件，根据环境变量选择不同的配置。
 ENTRYPOINT ["sh", "-c", "java \
+    -XX:+UnlockExperimentalVMOptions \
     -XX:+UseContainerSupport \
-    -XX:MaxRAMPercentage=70.0 \
+    -XX:MaxRAMPercentage=75.0 \
+    -XX:+AlwaysPreTouch \
     -Djava.security.egd=file:/dev/./urandom \
-    -Dname=target/ruoyi-vue.jar \
     -Duser.timezone=Asia/Shanghai \
-    -Xms512m \
-    -Xmx1024m \
+    -Xms1024m \
+    -Xmx2048m \
     -XX:MetaspaceSize=128m \
     -XX:MaxMetaspaceSize=512m \
+    -XX:SurvivorRatio=8 \
+    -XX:MaxTenuringThreshold=15 \
     -XX:+HeapDumpOnOutOfMemoryError \
+    -XX:HeapDumpPath=/app/dumps \
+    -XX:+UseG1GC \
+    -XX:InitiatingHeapOccupancyPercent=45 \
+    -XX:+ParallelRefProcEnabled \
+    -XX:+ExplicitGCInvokesConcurrent \
     -XX:+PrintGCDateStamps \
     -XX:+PrintGCDetails \
-    -XX:NewRatio=1 \
-    -XX:SurvivorRatio=30 \
-    -XX:+UseParallelGC \
-    -XX:+UseParallelOldGC \
+    -Xlog:gc*:file=/app/logs/gc.log:time,uptime,level,tags \
+    -XX:+ExitOnOutOfMemoryError \
     -jar /app.jar --spring.profiles.active=${PROFILE}"]
 

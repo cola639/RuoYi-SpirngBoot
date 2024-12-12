@@ -47,6 +47,8 @@ nbdist/
 !*/build/*.xml
 
 # 忽略 application-prod.yml
-*.yml
-# 忽略 application-dev.yml
 
+# 忽略 application-dev.yml
+application-dev.yml
+application-prod.yml
+*.yml
