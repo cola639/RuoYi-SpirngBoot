@@ -36,6 +36,8 @@ public class SysConfigServiceImpl implements ISysConfigService {
      */
     @PostConstruct
     public void init() {
+        // 打印
+        System.out.println("加载参数缓存数据");
         loadingConfigCache();
     }
 

@@ -46,9 +46,13 @@ nbdist/
 !*/build/*.html
 !*/build/*.xml
 
-# 忽略 application-prod.yml
+
 
 # 忽略 application-dev.yml
 application-dev.yml
 application-prod.yml
 *.yml
+# 忽略配置文件
+application.yml
+application.properties
+config/*
